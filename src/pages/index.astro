@@ -4,7 +4,22 @@ import Layout from "../layouts/Layout.astro";
 
 <Layout>
   <Fragment slot="head">
-    <title>Ristorante TRE - Grill + Pizzeria</title>
+    <title>Ristorante TRE Grill + Pizzeria - Merate - Lecco</title>
+    <meta
+      name="description"
+      content="Cucina tradizionale italiana, pizze nel forno a legna e carni alla griglia. Organizza eventi personalizzati o partecipa alle nostre cene a tema."
+    />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://www.ristorantepizzeriatre.it/" />
+
+    <!-- Preload immagine HERO (LCP) -->
+    <link
+      rel="preload"
+      as="image"
+      href="/img/homepage/ristorante-pizzeria-tre-merate-esterno-hero-homepage.webp"
+      type="image/webp"
+    />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -22,14 +37,14 @@ import Layout from "../layouts/Layout.astro";
         unica di pizze e piatti della tradizione Italiana
       </p>
       <div class="hero-buttons">
-        <a href="#" class="btn btn-primary">Scopri i Menu</a>
-        <a href="#" class="btn btn-outline">Prenota Tavolo</a>
+        <a href="#scopri-menu" class="btn btn-primary">Scopri i Menu</a>
+        <a href="/contatti/" class="btn btn-outline">Prenota Tavolo</a>
       </div>
     </div>
   </section>
 
   <!-- Scopri i nostri Menu -->
-  <section class="menus-section">
+  <section class="menus-section" id="scopri-menu">
     <div class="container">
       <div class="section-header">
         <h2>Scopri i Nostri Menù</h2>
@@ -41,18 +56,9 @@ import Layout from "../layouts/Layout.astro";
       </div>
 
       <div class="carousel-wrapper">
-        <button
-          class="carousel-arrow carousel-arrow-left"
-          data-carousel="menu"
-          aria-label="Precedente"
-        >
+        <button class="carousel-arrow carousel-arrow-left" data-carousel="menu" aria-label="Precedente">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path
-              d="M15 18L9 12L15 6"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-            />
+            <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
           </svg>
         </button>
 
@@ -60,66 +66,73 @@ import Layout from "../layouts/Layout.astro";
           <div class="cards-grid carousel-track">
             <div class="menu-card">
               <img
-                src="https://placehold.co/400x600/333/fff?text=Menu+Pizza"
-                alt="Menu Pizza"
+                src="/img/homepage/menu-pizza-ristorante-pizzeria-tre-merate-carosello-homepage.webp"
+                alt="Menù pizze cotte nel forno a legna – Ristorante TRE, Merate"
+                loading="lazy"
+                decoding="async"
+                width="400"
+                height="600"
               />
               <div class="menu-card-overlay">
                 <h3>Menù Pizze</h3>
                 <p>Cotte nel forno a legna, ingredienti Freschi e di Stagione</p>
-                <a href="#" class="btn btn-primary">Menù Pizze</a>
+                <a href="/menu-pizze/" class="btn btn-primary">Menù Pizze</a>
               </div>
             </div>
 
             <div class="menu-card">
               <img
-                src="https://placehold.co/400x600/444/fff?text=Menu+Griglia"
-                alt="Menu alla Carta"
+                src="/img/homepage/menu-carta-ristorante-pizzeria-tre-merate-carosello-homepage.webp"
+                alt="Menù alla carta con cucina italiana e griglia – Ristorante TRE, Merate"
+                loading="lazy"
+                decoding="async"
+                width="400"
+                height="600"
               />
               <div class="menu-card-overlay">
                 <h3>Menù alla Carta</h3>
                 <p>Piatti italiani, carni alla griglia e specialità dello chef</p>
-                <a href="#" class="btn btn-primary">Menù alla Carta</a>
+                <a href="/menu-alla-carta/" class="btn btn-primary">Menù alla Carta</a>
               </div>
             </div>
 
             <div class="menu-card">
               <img
-                src="https://placehold.co/400x600/555/fff?text=Menu+Pranzo"
-                alt="Menu d'Asporto"
+                src="/img/homepage/menu-asporto-ristorante-pizzeria-tre-merate-carosello-homepage.webp"
+                alt="Menù d'asporto – Ristorante TRE, Merate"
+                loading="lazy"
+                decoding="async"
+                width="400"
+                height="600"
               />
               <div class="menu-card-overlay">
                 <h3>Menù d'Asporto</h3>
                 <p>Gusta i nostri piatti comodamente a casa tua</p>
-                <a href="#" class="btn btn-primary">Menù d'Asporto</a>
+                <a href="/menu-asporto/" class="btn btn-primary">Menù d'Asporto</a>
               </div>
             </div>
 
             <div class="menu-card">
               <img
-                src="https://placehold.co/400x600/666/fff?text=Carta+Vini"
-                alt="Menù Giorno"
+                src="/img/homepage/menu-giorno-ristorante-pizzeria-tre-merate-carosello-homepage.webp"
+                alt="Menù del giorno – Ristorante TRE, Merate"
+                loading="lazy"
+                decoding="async"
+                width="400"
+                height="600"
               />
               <div class="menu-card-overlay">
                 <h3>Menù del Giorno</h3>
                 <p>Proposte Giornaliere con ingredienti di Stagione</p>
-                <a href="#" class="btn btn-primary">Menù del Giorno</a>
+                <a href="/menu-del-giorno/" class="btn btn-primary">Menù del Giorno</a>
               </div>
             </div>
           </div>
         </div>
 
-        <button
-          class="carousel-arrow carousel-arrow-right"
-          data-carousel="menu"
-          aria-label="Successivo"
-        >
+        <button class="carousel-arrow carousel-arrow-right" data-carousel="menu" aria-label="Successivo">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path
-              d="M9 18L15 12L9 6"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-            />
+            <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
           </svg>
         </button>
       </div>
@@ -128,7 +141,6 @@ import Layout from "../layouts/Layout.astro";
     </div>
   </section>
 
-  <!-- Section Divider -->
   <div class="section-divider"></div>
 
   <!-- Organizza il tuo Evento -->
@@ -144,18 +156,9 @@ import Layout from "../layouts/Layout.astro";
       </div>
 
       <div class="carousel-wrapper">
-        <button
-          class="carousel-arrow carousel-arrow-left"
-          data-carousel="events"
-          aria-label="Precedente"
-        >
+        <button class="carousel-arrow carousel-arrow-left" data-carousel="events" aria-label="Precedente">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path
-              d="M15 18L9 12L15 6"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-            />
+            <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
           </svg>
         </button>
 
@@ -164,87 +167,98 @@ import Layout from "../layouts/Layout.astro";
             <div class="event-card">
               <div class="event-image">
                 <img
-                  src="https://placehold.co/400x300/F26522/fff?text=Compleanni"
-                  alt="Compleanni"
+                  src="/img/homepage/compleanni-ristorante-pizzeria-tre-merate-carosello-homepage.webp"
+                  alt="Compleanni al Ristorante TRE a Merate"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="300"
                 />
               </div>
               <div class="event-content">
                 <h3>Compleanni</h3>
                 <p>Festeggia in un'atmosfera unica e conviviale</p>
-                <a href="#" class="btn btn-primary">Compleanni</a>
+                <a href="/compleanni/" class="btn btn-primary">Compleanni</a>
               </div>
             </div>
 
             <div class="event-card">
               <div class="event-image">
                 <img
-                  src="https://placehold.co/400x300/F26522/fff?text=Cerimonie"
-                  alt="Cerimonie"
+                  src="/img/homepage/cerimonie-ristorante-pizzeria-tre-merate-carosello-homepage.webp"
+                  alt="Cerimonie, battesimi e comunioni al Ristorante TRE a Merate"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="300"
                 />
               </div>
               <div class="event-content">
                 <h3>Cerimonie</h3>
                 <p>Battesimi, Comunioni, e Cresime</p>
-                <a href="#" class="btn btn-primary">Cerimonie</a>
+                <a href="/battesimi-comunioni-cresime/" class="btn btn-primary">Cerimonie</a>
               </div>
             </div>
 
             <div class="event-card">
               <div class="event-image">
                 <img
-                  src="https://placehold.co/400x300/F26522/fff?text=Lauree"
-                  alt="Lauree"
+                  src="/img/homepage/lauree-ristorante-pizzeria-tre-merate-carosello-homepage.webp"
+                  alt="Feste di laurea al Ristorante TRE a Merate"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="300"
                 />
               </div>
               <div class="event-content">
                 <h3>Lauree</h3>
                 <p>Rendi la tua serata con una festa su misura</p>
-                <a href="#" class="btn btn-primary">Lauree</a>
+                <a href="/lauree/" class="btn btn-primary">Lauree</a>
               </div>
             </div>
 
             <div class="event-card">
               <div class="event-image">
                 <img
-                  src="https://placehold.co/400x300/F26522/fff?text=Anniversari"
-                  alt="Anniversari"
+                  src="/img/homepage/anniversari-ristorante-pizzeria-tre-merate-carosello-homepage.webp"
+                  alt="Anniversari al Ristorante TRE a Merate"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="300"
                 />
               </div>
               <div class="event-content">
                 <h3>Anniversari</h3>
                 <p>Cena romantica o festa con amici per celebrare il vostro amore</p>
-                <a href="#" class="btn btn-primary">Anniversari</a>
+                <a href="/anniversari/" class="btn btn-primary">Anniversari</a>
               </div>
             </div>
 
             <div class="event-card">
               <div class="event-image">
                 <img
-                  src="https://placehold.co/400x300/F26522/fff?text=Cene+Aziendali"
-                  alt="Feste Private"
+                  src="/img/homepage/meeting-cene-aziendali-ristorante-pizzeria-tre-merate-carosello-homepage.webp"
+                  alt="Cene aziendali e meeting al Ristorante TRE a Merate"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="300"
                 />
               </div>
               <div class="event-content">
                 <h3>Cene Aziendali</h3>
                 <p>Eventi professionali in un ambiente confortevole</p>
-                <a href="#" class="btn btn-primary">Cene Aziendali</a>
+                <a href="/meeting-cene-aziendali/" class="btn btn-primary">Cene Aziendali</a>
               </div>
             </div>
           </div>
         </div>
 
-        <button
-          class="carousel-arrow carousel-arrow-right"
-          data-carousel="events"
-          aria-label="Successivo"
-        >
+        <button class="carousel-arrow carousel-arrow-right" data-carousel="events" aria-label="Successivo">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path
-              d="M9 18L15 12L9 6"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-            />
+            <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
           </svg>
         </button>
       </div>
@@ -253,32 +267,17 @@ import Layout from "../layouts/Layout.astro";
     </div>
   </section>
 
-  <!-- Section Divider -->
   <div class="section-divider reverse"></div>
 
-  <!-- Viaggio Gastronomico -->
-  <section class="journey-section">
-    <div class="container journey-container">
-      <div class="journey-content">
-        <h2>Un Viaggio Gastronomico con le Nostre Carni e Pesce</h2>
-        <p>
-          Scopri la selezione dei nostri migliori tagli di carne e il pescato fresco
-          del giorno. Ogni piatto è un'opera d'arte culinaria, pensata per soddisfare
-          anche i palati più esigenti.
-        </p>
-        <a href="#" class="btn btn-primary">Scopri di più</a>
-      </div>
-
-      <div class="journey-image">
-        <img
-          src="https://placehold.co/800x500/333333/fff?text=Gastronomic+Journey"
-          alt="Viaggio Gastronomico"
-        />
-      </div>
+  <!-- Viaggio Gastronomico (HERO style) -->
+  <section class="journey-hero">
+    <div class="container journey-hero-content">
+      <h2>Un Viaggio Gastronomico con le Nostre Cene a Tema</h2>
+      <p>Scopri le nostre Serate a Tema che celebrano sapori Italiani e internazionali</p>
+      <a href="/cene-a-tema/" class="btn btn-primary">Scopri le Cene</a>
     </div>
   </section>
 
-  <!-- Section Divider -->
   <div class="section-divider"></div>
 
   <!-- Gallery Section -->
@@ -291,18 +290,9 @@ import Layout from "../layouts/Layout.astro";
     </div>
 
     <div class="carousel-wrapper gallery-carousel-wrapper">
-      <button
-        class="carousel-arrow carousel-arrow-left"
-        data-carousel="gallery"
-        aria-label="Precedente"
-      >
+      <button class="carousel-arrow carousel-arrow-left" data-carousel="gallery" aria-label="Precedente">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path
-            d="M15 18L9 12L15 6"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-          />
+          <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
         </svg>
       </button>
 
@@ -310,55 +300,141 @@ import Layout from "../layouts/Layout.astro";
         <div class="gallery-grid carousel-track">
           <div class="gallery-item">
             <img
-              src="https://placehold.co/600x400/333/fff?text=Sala+Interna"
-              alt="Sala Interna"
+              src="/img/homepage/ristorante-pizzeria-tre-merate-carosello-foto-uno-homepage.webp"
+              alt="Interni del Ristorante TRE a Merate – foto 1"
+              loading="lazy"
+              decoding="async"
+              width="600"
+              height="750"
             />
           </div>
+
           <div class="gallery-item">
             <img
-              src="https://placehold.co/600x400/444/fff?text=Dehor"
-              alt="Dehor"
+              src="/img/homepage/ristorante-pizzeria-tre-merate-carosello-foto-due-homepage.webp"
+              alt="Spazi e sale del Ristorante TRE a Merate – foto 2"
+              loading="lazy"
+              decoding="async"
+              width="600"
+              height="750"
             />
           </div>
+
           <div class="gallery-item">
             <img
-              src="https://placehold.co/600x400/555/fff?text=Dettagli"
-              alt="Dettagli"
+              src="/img/homepage/ristorante-pizzeria-tre-merate-carosello-foto-tre-homepage.webp"
+              alt="Atmosfera del Ristorante TRE a Merate – foto 3"
+              loading="lazy"
+              decoding="async"
+              width="600"
+              height="750"
             />
           </div>
+
           <div class="gallery-item">
             <img
-              src="https://placehold.co/600x400/666/fff?text=Cucina"
-              alt="Cucina"
+              src="/img/homepage/ristorante-pizzeria-tre-merate-carosello-foto-quattro-homepage.webp"
+              alt="Dettagli degli spazi del Ristorante TRE a Merate – foto 4"
+              loading="lazy"
+              decoding="async"
+              width="600"
+              height="750"
             />
           </div>
+
           <div class="gallery-item">
             <img
-              src="https://placehold.co/600x400/777/fff?text=Bar"
-              alt="Bar"
+              src="/img/homepage/ristorante-pizzeria-tre-merate-carosello-foto-cinque-homepage.webp"
+              alt="Ambienti del Ristorante TRE a Merate – foto 5"
+              loading="lazy"
+              decoding="async"
+              width="600"
+              height="750"
             />
           </div>
+
           <div class="gallery-item">
             <img
-              src="https://placehold.co/600x400/888/fff?text=Esterno"
-              alt="Esterno"
+              src="/img/homepage/ristorante-pizzeria-tre-merate-carosello-foto-sei-homepage.webp"
+              alt="Spazi del Ristorante TRE a Merate – foto 6"
+              loading="lazy"
+              decoding="async"
+              width="600"
+              height="750"
+            />
+          </div>
+
+          <div class="gallery-item">
+            <img
+              src="/img/homepage/ristorante-pizzeria-tre-merate-carosello-foto-sette-homepage.webp"
+              alt="Spazi del Ristorante TRE a Merate – foto 7"
+              loading="lazy"
+              decoding="async"
+              width="600"
+              height="750"
+            />
+          </div>
+
+          <div class="gallery-item">
+            <img
+              src="/img/homepage/ristorante-pizzeria-tre-merate-carosello-foto-otto-homepage.webp"
+              alt="Spazi del Ristorante TRE a Merate – foto 8"
+              loading="lazy"
+              decoding="async"
+              width="600"
+              height="750"
+            />
+          </div>
+
+          <div class="gallery-item">
+            <img
+              src="/img/homepage/ristorante-pizzeria-tre-merate-carosello-foto-nove-homepage.webp"
+              alt="Spazi del Ristorante TRE a Merate – foto 9"
+              loading="lazy"
+              decoding="async"
+              width="600"
+              height="750"
+            />
+          </div>
+
+          <div class="gallery-item">
+            <img
+              src="/img/homepage/ristorante-pizzeria-tre-merate-carosello-foto-dieci-homepage.webp"
+              alt="Spazi del Ristorante TRE a Merate – foto 10"
+              loading="lazy"
+              decoding="async"
+              width="600"
+              height="750"
+            />
+          </div>
+
+          <div class="gallery-item">
+            <img
+              src="/img/homepage/ristorante-pizzeria-tre-merate-carosello-foto-undici-homepage.webp"
+              alt="Spazi del Ristorante TRE a Merate – foto 11"
+              loading="lazy"
+              decoding="async"
+              width="600"
+              height="750"
+            />
+          </div>
+
+          <div class="gallery-item">
+            <img
+              src="/img/homepage/ristorante-pizzeria-tre-merate-carosello-foto-dodici-homepage.webp"
+              alt="Spazi del Ristorante TRE a Merate – foto 12"
+              loading="lazy"
+              decoding="async"
+              width="600"
+              height="750"
             />
           </div>
         </div>
       </div>
 
-      <button
-        class="carousel-arrow carousel-arrow-right"
-        data-carousel="gallery"
-        aria-label="Successivo"
-      >
+      <button class="carousel-arrow carousel-arrow-right" data-carousel="gallery" aria-label="Successivo">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path
-            d="M9 18L15 12L9 6"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-          />
+          <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
         </svg>
       </button>
     </div>
@@ -366,7 +442,6 @@ import Layout from "../layouts/Layout.astro";
     <div class="carousel-indicators" data-carousel="gallery"></div>
   </section>
 
-  <!-- Section Divider -->
   <div class="section-divider reverse"></div>
 
   <!-- Prenota un Tavolo CTA -->
@@ -377,10 +452,9 @@ import Layout from "../layouts/Layout.astro";
         Vieni a trovarci e lasciati coccolare dai nostri sapori. Prenota ora il tuo
         tavolo per assicurarti un posto.
       </p>
-      <a href="#" class="btn btn-primary">Prenota Ora</a>
+      <a href="/contatti/" class="btn btn-primary">Prenota Ora</a>
     </div>
   </section>
 
-  <!-- Section Divider -->
   <div class="section-divider"></div>
 </Layout>

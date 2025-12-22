@@ -1,23 +1,42 @@
 ---
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+
+const {
+  title = "Ristorante TRE - Grill + Pizzeria",
+  description = "",
+  robots = "noindex, nofollow",
+} = Astro.props;
 ---
 
 <!doctype html>
 <html lang="it">
   <head>
     <meta charset="utf-8" />
-	<meta name="robots" content="noindex, nofollow" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <slot name="head" />
+
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    <meta name="robots" content={robots} />
+
+    <!-- Font (sempre su tutte le pagine) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CSS globale -->
     <link rel="stylesheet" href="/css/style.css" />
+
+    <!-- Extra tag per singola pagina (se servono) -->
+    <slot name="head" />
   </head>
 
   <body>
     <Header />
-    <main>
-      <slot />
-    </main>
+    <slot />
     <Footer />
 
     <script src="/js/main.js" is:inline></script>
