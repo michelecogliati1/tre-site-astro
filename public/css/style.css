@@ -1409,3 +1409,8 @@ section { padding: 4rem 0; }
 }
 
 .carousel-track > * { animation: slideIn 0.5s ease-out; }
+
+
+@media (max-width: 768px) {
+  .carousel-track { transform: none !important; }
+}

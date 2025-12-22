@@ -1,229 +1,443 @@
-// ===== CAROUSEL CLASS CON INFINITE SCROLL (1 CARD ALLA VOLTA) =====
+// ===== CAROUSEL CLASS (DESKTOP: INFINITE TRANSFORM) (MOBILE: NATIVE SCROLL) =====
 class Carousel {
-    constructor(carouselId) {
-        this.carouselId = carouselId;
-        this.container = document.querySelector(`.carousel-container[data-carousel="${carouselId}"]`);
+  constructor(carouselId) {
+    this.carouselId = carouselId;
+    this.container = document.querySelector(`.carousel-container[data-carousel="${carouselId}"]`);
+    if (!this.container) return;
 
-        if (!this.container) return;
+    this.track = this.container.querySelector(".carousel-track");
+    this.originalItems = Array.from(this.track.children);
 
-        this.track = this.container.querySelector('.carousel-track');
-        this.originalItems = Array.from(this.track.children);
-        this.leftArrow = document.querySelector(`.carousel-arrow-left[data-carousel="${carouselId}"]`);
-        this.rightArrow = document.querySelector(`.carousel-arrow-right[data-carousel="${carouselId}"]`);
-        this.indicatorsContainer = document.querySelector(`.carousel-indicators[data-carousel="${carouselId}"]`);
+    this.leftArrow = document.querySelector(`.carousel-arrow-left[data-carousel="${carouselId}"]`);
+    this.rightArrow = document.querySelector(`.carousel-arrow-right[data-carousel="${carouselId}"]`);
+    this.indicatorsContainer = document.querySelector(`.carousel-indicators[data-carousel="${carouselId}"]`);
 
-        this.currentIndex = 0;
-        this.itemsPerView = this.getItemsPerView();
-        this.isTransitioning = false;
+    this.currentIndex = 0;
+    this.itemsPerView = this.getItemsPerView();
+    this.isTransitioning = false;
 
-        this.setupInfiniteScroll();
+    // mode
+    this.isMobile = window.matchMedia("(max-width: 768px)").matches;
 
-        this.items = Array.from(this.track.children);
-        this.totalOriginalItems = this.originalItems.length;
-        this.totalPages = this.totalOriginalItems;
+    // desktop-only infinite state
+    this.items = [];
+    this.totalOriginalItems = this.originalItems.length;
+    this.totalPages = this.totalOriginalItems;
 
-        this.init();
+    // mobile scroll state
+    this._raf = 0;
+    this._dragged = false;
+
+    this.init();
+  }
+
+  init() {
+    this.createIndicators();
+
+    if (this.leftArrow) this.leftArrow.addEventListener("click", () => this.prev());
+    if (this.rightArrow) this.rightArrow.addEventListener("click", () => this.next());
+
+    // Desktop: swipe “finto” (touchstart/end) → ok con transform
+    // Mobile: NON lo usiamo (altrimenti si mischia con scroll nativo)
+    if (!this.isMobile) this.addTouchSupport();
+
+    this.addKeyboardSupport();
+
+    window.addEventListener("resize", () => this.handleResize());
+
+    // Setup mode
+    if (this.isMobile) {
+      this.setupMobile();
+    } else {
+      this.setupDesktopInfinite();
+      this.updateCarousel();
+    }
+  }
+
+  // -----------------------------
+  // RESPONSIVE
+  // -----------------------------
+  handleResize() {
+    const newIsMobile = window.matchMedia("(max-width: 768px)").matches;
+    const newItemsPerView = this.getItemsPerView();
+
+    const modeChanged = newIsMobile !== this.isMobile;
+    const perViewChanged = newItemsPerView !== this.itemsPerView;
+
+    if (!modeChanged && !perViewChanged) return;
+
+    this.isMobile = newIsMobile;
+    this.itemsPerView = newItemsPerView;
+
+    // Cleanup: rimuovi cloni + reset
+    this.track.querySelectorAll(".clone").forEach((c) => c.remove());
+    this.track.style.transform = "none";
+    this.track.classList.add("no-transition");
+
+    // reset listeners mobile scroll (idempotente: non crea doppioni grazie a flag interni)
+    this.teardownMobileScroll();
+
+    // re-init per mode
+    this.createIndicators();
+
+    if (this.isMobile) {
+      this.setupMobile(true);
+    } else {
+      this.setupDesktopInfinite(true);
+      this.updateCarousel(false);
+    }
+  }
+
+  getItemsPerView() {
+    const width = window.innerWidth;
+
+    if (this.carouselId === "gallery") {
+      if (width < 768) return 1;
+      if (width < 992) return 2;
+      return 3;
     }
 
-    setupInfiniteScroll() {
-        const itemsToClone = Math.max(this.itemsPerView * 2, 6);
+    if (width < 768) return 1;
+    if (width < 1200) return 2;
+    return 3;
+  }
 
-        for (let i = 0; i < itemsToClone; i++) {
-            const clone = this.originalItems[i % this.originalItems.length].cloneNode(true);
-            clone.classList.add('clone');
-            this.track.appendChild(clone);
-        }
+  getGapPx() {
+    const gap = getComputedStyle(this.track).gap;
+    const n = parseFloat(gap || "0");
+    return Number.isFinite(n) ? n : 32;
+  }
 
-        for (let i = 0; i < itemsToClone; i++) {
-            const clone = this.originalItems[this.originalItems.length - 1 - (i % this.originalItems.length)].cloneNode(true);
-            clone.classList.add('clone');
-            this.track.insertBefore(clone, this.track.firstChild);
-        }
+  getStepPx() {
+    const first = this.track.children[0];
+    if (!first) return 0;
+    return first.getBoundingClientRect().width + this.getGapPx();
+  }
 
-        this.currentIndex = itemsToClone;
+  clamp(n, min, max) {
+    return Math.max(min, Math.min(max, n));
+  }
+
+  // -----------------------------
+  // INDICATORS
+  // -----------------------------
+  createIndicators() {
+    if (!this.indicatorsContainer) return;
+
+    this.indicatorsContainer.innerHTML = "";
+
+    for (let i = 0; i < this.totalPages; i++) {
+      const indicator = document.createElement("button");
+      indicator.classList.add("carousel-indicator");
+      indicator.setAttribute("aria-label", `Vai alla slide ${i + 1}`);
+      if (i === 0) indicator.classList.add("active");
+
+      indicator.addEventListener("click", () => this.goToPage(i));
+      this.indicatorsContainer.appendChild(indicator);
+    }
+  }
+
+  setActiveIndicator(index) {
+    const indicators = this.indicatorsContainer?.querySelectorAll(".carousel-indicator");
+    indicators?.forEach((indicator, i) => {
+      indicator.classList.toggle("active", i === index);
+    });
+  }
+
+  // -----------------------------
+  // MOBILE MODE (native scroll)
+  // -----------------------------
+  setupMobile(forceReset = false) {
+    // In mobile: niente cloni, niente transform
+    this.items = Array.from(this.track.children); // solo originali
+    this.totalPages = this.totalOriginalItems;
+
+    // reset transform e transition
+    this.track.style.transform = "none";
+    this.track.classList.add("no-transition");
+
+    if (forceReset) this.container.scrollLeft = 0;
+
+    // Sync indicator subito
+    this.currentIndex = this.getMobileIndexFromScroll();
+    this.setActiveIndicator(this.currentIndex);
+
+    this.updateMobileArrows();
+
+    // Scroll listener per sync indicator + arrows
+    this.setupMobileScroll();
+  }
+
+  setupMobileScroll() {
+    if (this._mobileScrollBound) return; // evita doppioni
+
+    // anti “ghost click” dopo swipe
+    let startX = 0;
+    let startScroll = 0;
+
+    const onPointerDown = (e) => {
+      startX = e.clientX;
+      startScroll = this.container.scrollLeft;
+      this._dragged = false;
+    };
+
+    const onPointerMove = (e) => {
+      const dx = Math.abs(e.clientX - startX);
+      const ds = Math.abs(this.container.scrollLeft - startScroll);
+      if (dx > 10 && ds > 10) this._dragged = true;
+    };
+
+    const onClickCapture = (e) => {
+      if (this._dragged) {
+        e.preventDefault();
+        e.stopPropagation();
+        this._dragged = false;
+      }
+    };
+
+    const onScroll = () => {
+      if (this._raf) cancelAnimationFrame(this._raf);
+      this._raf = requestAnimationFrame(() => {
+        const idx = this.getMobileIndexFromScroll();
+        this.currentIndex = idx;
+        this.setActiveIndicator(idx);
+        this.updateMobileArrows();
+      });
+    };
+
+    this._onPointerDown = onPointerDown;
+    this._onPointerMove = onPointerMove;
+    this._onClickCapture = onClickCapture;
+    this._onScroll = onScroll;
+
+    this.container.addEventListener("pointerdown", onPointerDown, { passive: true });
+    this.container.addEventListener("pointermove", onPointerMove, { passive: true });
+    this.container.addEventListener("click", onClickCapture, true);
+    this.container.addEventListener("scroll", onScroll, { passive: true });
+
+    this._mobileScrollBound = true;
+  }
+
+  teardownMobileScroll() {
+    if (!this._mobileScrollBound) return;
+
+    this.container.removeEventListener("pointerdown", this._onPointerDown);
+    this.container.removeEventListener("pointermove", this._onPointerMove);
+    this.container.removeEventListener("click", this._onClickCapture, true);
+    this.container.removeEventListener("scroll", this._onScroll);
+
+    this._mobileScrollBound = false;
+  }
+
+  getMobileIndexFromScroll() {
+    const step = this.getStepPx();
+    if (!step) return 0;
+    return this.clamp(Math.round(this.container.scrollLeft / step), 0, this.totalPages - 1);
+  }
+
+  scrollToMobileIndex(i) {
+    const step = this.getStepPx();
+    const left = i * step;
+    this.container.scrollTo({ left, behavior: "smooth" });
+  }
+
+  updateMobileArrows() {
+    const max = this.container.scrollWidth - this.container.clientWidth;
+    const atStart = this.container.scrollLeft <= 1;
+    const atEnd = this.container.scrollLeft >= max - 1;
+
+    if (this.leftArrow) {
+      this.leftArrow.style.opacity = atStart ? "0.35" : "1";
+      this.leftArrow.style.pointerEvents = atStart ? "none" : "auto";
+    }
+    if (this.rightArrow) {
+      this.rightArrow.style.opacity = atEnd ? "0.35" : "1";
+      this.rightArrow.style.pointerEvents = atEnd ? "none" : "auto";
+    }
+  }
+
+  // -----------------------------
+  // DESKTOP MODE (infinite transform)
+  // -----------------------------
+  setupDesktopInfinite(forceReset = false) {
+    // ricrea cloni e stato come nel tuo JS originale
+    this.itemsPerView = this.getItemsPerView();
+
+    if (forceReset) {
+      this.currentIndex = 0;
+      this.isTransitioning = false;
     }
 
-    init() {
-        this.createIndicators();
+    this.setupInfiniteScroll();
 
-        if (this.leftArrow) {
-            this.leftArrow.addEventListener('click', () => this.prev());
-        }
-        if (this.rightArrow) {
-            this.rightArrow.addEventListener('click', () => this.next());
-        }
+    this.items = Array.from(this.track.children);
+    this.totalPages = this.totalOriginalItems;
 
-        this.addTouchSupport();
-        this.addKeyboardSupport();
+    // riabilita transition
+    this.track.classList.remove("no-transition");
+  }
 
-        window.addEventListener('resize', () => this.handleResize());
+  setupInfiniteScroll() {
+    const itemsToClone = Math.max(this.itemsPerView * 2, 6);
 
-        this.updateCarousel();
+    // append clones
+    for (let i = 0; i < itemsToClone; i++) {
+      const clone = this.originalItems[i % this.originalItems.length].cloneNode(true);
+      clone.classList.add("clone");
+      this.track.appendChild(clone);
     }
 
-    getItemsPerView() {
-        const width = window.innerWidth;
-
-        if (this.carouselId === 'gallery') {
-            if (width < 768) return 1;
-            if (width < 992) return 2;
-            return 3;
-        }
-
-        if (width < 768) return 1;
-        if (width < 1200) return 2;
-        return 3;
+    // prepend clones
+    for (let i = 0; i < itemsToClone; i++) {
+      const clone = this.originalItems[this.originalItems.length - 1 - (i % this.originalItems.length)].cloneNode(true);
+      clone.classList.add("clone");
+      this.track.insertBefore(clone, this.track.firstChild);
     }
 
-    createIndicators() {
-        if (!this.indicatorsContainer) return;
+    this.currentIndex = itemsToClone;
+  }
 
-        this.indicatorsContainer.innerHTML = '';
-
-        for (let i = 0; i < this.totalPages; i++) {
-            const indicator = document.createElement('button');
-            indicator.classList.add('carousel-indicator');
-            indicator.setAttribute('aria-label', `Vai alla slide ${i + 1}`);
-
-            if (i === 0) indicator.classList.add('active');
-
-            indicator.addEventListener('click', () => this.goToPage(i));
-            this.indicatorsContainer.appendChild(indicator);
-        }
+  updateCarousel(animate = true) {
+    if (this.isMobile) {
+      // in mobile non usiamo transform
+      this.setActiveIndicator(this.currentIndex);
+      this.updateMobileArrows();
+      return;
     }
 
-    updateCarousel(animate = true) {
-        if (!this.items.length) return;
+    if (!this.items.length) return;
 
-        const itemWidth = this.items[0].offsetWidth;
-        const gap = parseInt(getComputedStyle(this.track).gap) || 32;
-        const offset = -(this.currentIndex * (itemWidth + gap));
+    const itemWidth = this.items[0].offsetWidth;
+    const gap = parseInt(getComputedStyle(this.track).gap) || 32;
+    const offset = -(this.currentIndex * (itemWidth + gap));
 
-        if (!animate) {
-            this.track.classList.add('no-transition');
-        }
+    if (!animate) this.track.classList.add("no-transition");
+    this.track.style.transform = `translateX(${offset}px)`;
 
-        this.track.style.transform = `translateX(${offset}px)`;
-
-        if (!animate) {
-            this.track.offsetHeight;
-            setTimeout(() => {
-                this.track.classList.remove('no-transition');
-            }, 50);
-        }
-
-        const itemsToClone = Math.max(this.itemsPerView * 2, 6);
-        const realIndex = (this.currentIndex - itemsToClone) % this.totalOriginalItems;
-        const positiveRealIndex = realIndex < 0 ? this.totalOriginalItems + realIndex : realIndex;
-
-        const indicators = this.indicatorsContainer?.querySelectorAll('.carousel-indicator');
-        indicators?.forEach((indicator, index) => {
-            indicator.classList.toggle('active', index === positiveRealIndex);
-        });
+    if (!animate) {
+      this.track.offsetHeight;
+      setTimeout(() => this.track.classList.remove("no-transition"), 50);
     }
 
-    next() {
-        if (this.isTransitioning) return;
+    const itemsToClone = Math.max(this.itemsPerView * 2, 6);
+    const realIndex = (this.currentIndex - itemsToClone) % this.totalOriginalItems;
+    const positiveRealIndex = realIndex < 0 ? this.totalOriginalItems + realIndex : realIndex;
 
-        this.isTransitioning = true;
-        this.currentIndex++;
-        this.updateCarousel();
+    this.setActiveIndicator(positiveRealIndex);
+  }
 
-        setTimeout(() => {
-            this.checkInfiniteScroll();
-            this.isTransitioning = false;
-        }, 500);
+  next() {
+    if (this.isMobile) {
+      const nextIndex = this.clamp(this.currentIndex + 1, 0, this.totalPages - 1);
+      this.currentIndex = nextIndex;
+      this.scrollToMobileIndex(nextIndex);
+      this.setActiveIndicator(nextIndex);
+      this.updateMobileArrows();
+      return;
     }
 
-    prev() {
-        if (this.isTransitioning) return;
+    if (this.isTransitioning) return;
+    this.isTransitioning = true;
+    this.currentIndex++;
+    this.updateCarousel();
 
-        this.isTransitioning = true;
-        this.currentIndex--;
-        this.updateCarousel();
+    setTimeout(() => {
+      this.checkInfiniteScroll();
+      this.isTransitioning = false;
+    }, 500);
+  }
 
-        setTimeout(() => {
-            this.checkInfiniteScroll();
-            this.isTransitioning = false;
-        }, 500);
+  prev() {
+    if (this.isMobile) {
+      const prevIndex = this.clamp(this.currentIndex - 1, 0, this.totalPages - 1);
+      this.currentIndex = prevIndex;
+      this.scrollToMobileIndex(prevIndex);
+      this.setActiveIndicator(prevIndex);
+      this.updateMobileArrows();
+      return;
     }
 
-    checkInfiniteScroll() {
-        const itemsToClone = Math.max(this.itemsPerView * 2, 6);
-        const totalItems = this.items.length;
+    if (this.isTransitioning) return;
+    this.isTransitioning = true;
+    this.currentIndex--;
+    this.updateCarousel();
 
-        if (this.currentIndex >= totalItems - itemsToClone) {
-            this.currentIndex = itemsToClone + (this.currentIndex - (totalItems - itemsToClone));
-            this.updateCarousel(false);
-        }
+    setTimeout(() => {
+      this.checkInfiniteScroll();
+      this.isTransitioning = false;
+    }, 500);
+  }
 
-        if (this.currentIndex < itemsToClone) {
-            this.currentIndex = totalItems - itemsToClone - (itemsToClone - this.currentIndex);
-            this.updateCarousel(false);
-        }
+  checkInfiniteScroll() {
+    const itemsToClone = Math.max(this.itemsPerView * 2, 6);
+    const totalItems = this.items.length;
+
+    if (this.currentIndex >= totalItems - itemsToClone) {
+      this.currentIndex = itemsToClone + (this.currentIndex - (totalItems - itemsToClone));
+      this.updateCarousel(false);
     }
 
-    goToPage(pageIndex) {
-        if (this.isTransitioning) return;
+    if (this.currentIndex < itemsToClone) {
+      this.currentIndex = totalItems - itemsToClone - (itemsToClone - this.currentIndex);
+      this.updateCarousel(false);
+    }
+  }
 
-        const itemsToClone = Math.max(this.itemsPerView * 2, 6);
-
-        this.currentIndex = itemsToClone + pageIndex;
-        this.updateCarousel();
+  goToPage(pageIndex) {
+    if (this.isMobile) {
+      this.currentIndex = this.clamp(pageIndex, 0, this.totalPages - 1);
+      this.scrollToMobileIndex(this.currentIndex);
+      this.setActiveIndicator(this.currentIndex);
+      this.updateMobileArrows();
+      return;
     }
 
-    addTouchSupport() {
-        let touchStartX = 0;
-        let touchEndX = 0;
+    if (this.isTransitioning) return;
+    const itemsToClone = Math.max(this.itemsPerView * 2, 6);
+    this.currentIndex = itemsToClone + pageIndex;
+    this.updateCarousel();
+  }
 
-        this.container.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-        }, { passive: true });
+  addTouchSupport() {
+    let touchStartX = 0;
+    let touchEndX = 0;
 
-        this.container.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            this.handleSwipe(touchStartX, touchEndX);
-        }, { passive: true });
+    this.container.addEventListener(
+      "touchstart",
+      (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      },
+      { passive: true }
+    );
+
+    this.container.addEventListener(
+      "touchend",
+      (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        this.handleSwipe(touchStartX, touchEndX);
+      },
+      { passive: true }
+    );
+  }
+
+  handleSwipe(startX, endX) {
+    const swipeThreshold = 50;
+    const diff = startX - endX;
+
+    if (Math.abs(diff) > swipeThreshold) {
+      if (diff > 0) this.next();
+      else this.prev();
     }
+  }
 
-    handleSwipe(startX, endX) {
-        const swipeThreshold = 50;
-        const diff = startX - endX;
-
-        if (Math.abs(diff) > swipeThreshold) {
-            if (diff > 0) {
-                this.next();
-            } else {
-                this.prev();
-            }
-        }
-    }
-
-    addKeyboardSupport() {
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') this.prev();
-            if (e.key === 'ArrowRight') this.next();
-        });
-    }
-
-    handleResize() {
-        const newItemsPerView = this.getItemsPerView();
-
-        if (newItemsPerView !== this.itemsPerView) {
-            this.itemsPerView = newItemsPerView;
-
-            this.track.querySelectorAll('.clone').forEach(clone => clone.remove());
-
-            this.setupInfiniteScroll();
-
-            this.items = Array.from(this.track.children);
-            this.totalPages = this.totalOriginalItems;
-
-            this.createIndicators();
-            this.updateCarousel(false);
-        }
-    }
+  addKeyboardSupport() {
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") this.prev();
+      if (e.key === "ArrowRight") this.next();
+    });
+  }
 }
+
 
 // ===== MOBILE MENU =====
 // ===== MOBILE MENU =====
