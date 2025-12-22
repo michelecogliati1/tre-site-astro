@@ -1,11 +1,386 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout>
-	<Welcome />
+  <Fragment slot="head">
+    <title>Ristorante TRE - Grill + Pizzeria</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </Fragment>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container hero-content">
+      <h1>Ristorante TRE<br />Grill + Pizzeria</h1>
+      <p>
+        Dal forno a legna alle specialità alla griglia una selezione<br />
+        unica di pizze e piatti della tradizione Italiana
+      </p>
+      <div class="hero-buttons">
+        <a href="#" class="btn btn-primary">Scopri i Menu</a>
+        <a href="#" class="btn btn-outline">Prenota Tavolo</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scopri i nostri Menu -->
+  <section class="menus-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Scopri i Nostri Menù</h2>
+        <p>
+          Dal forno a legna alle specialità alla griglia, offriamo una selezione
+          unica di pizze e piatti della tradizione Italiana preparati con
+          ingredienti freschi e di qualità.
+        </p>
+      </div>
+
+      <div class="carousel-wrapper">
+        <button
+          class="carousel-arrow carousel-arrow-left"
+          data-carousel="menu"
+          aria-label="Precedente"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M15 18L9 12L15 6"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+          </svg>
+        </button>
+
+        <div class="carousel-container" data-carousel="menu">
+          <div class="cards-grid carousel-track">
+            <div class="menu-card">
+              <img
+                src="https://placehold.co/400x600/333/fff?text=Menu+Pizza"
+                alt="Menu Pizza"
+              />
+              <div class="menu-card-overlay">
+                <h3>Menù Pizze</h3>
+                <p>Cotte nel forno a legna, ingredienti Freschi e di Stagione</p>
+                <a href="#" class="btn btn-primary">Menù Pizze</a>
+              </div>
+            </div>
+
+            <div class="menu-card">
+              <img
+                src="https://placehold.co/400x600/444/fff?text=Menu+Griglia"
+                alt="Menu alla Carta"
+              />
+              <div class="menu-card-overlay">
+                <h3>Menù alla Carta</h3>
+                <p>Piatti italiani, carni alla griglia e specialità dello chef</p>
+                <a href="#" class="btn btn-primary">Menù alla Carta</a>
+              </div>
+            </div>
+
+            <div class="menu-card">
+              <img
+                src="https://placehold.co/400x600/555/fff?text=Menu+Pranzo"
+                alt="Menu d'Asporto"
+              />
+              <div class="menu-card-overlay">
+                <h3>Menù d'Asporto</h3>
+                <p>Gusta i nostri piatti comodamente a casa tua</p>
+                <a href="#" class="btn btn-primary">Menù d'Asporto</a>
+              </div>
+            </div>
+
+            <div class="menu-card">
+              <img
+                src="https://placehold.co/400x600/666/fff?text=Carta+Vini"
+                alt="Menù Giorno"
+              />
+              <div class="menu-card-overlay">
+                <h3>Menù del Giorno</h3>
+                <p>Proposte Giornaliere con ingredienti di Stagione</p>
+                <a href="#" class="btn btn-primary">Menù del Giorno</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button
+          class="carousel-arrow carousel-arrow-right"
+          data-carousel="menu"
+          aria-label="Successivo"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M9 18L15 12L9 6"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <div class="carousel-indicators" data-carousel="menu"></div>
+    </div>
+  </section>
+
+  <!-- Section Divider -->
+  <div class="section-divider"></div>
+
+  <!-- Organizza il tuo Evento -->
+  <section class="events-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Organizza il tuo Evento su Misura</h2>
+        <p>
+          La location perfetta per organizzare compleanni, meeting aziendali,
+          battesimi, comunioni, cresime, lauree e anniversari. Servizio
+          personalizzato e cucina di alta qualità.
+        </p>
+      </div>
+
+      <div class="carousel-wrapper">
+        <button
+          class="carousel-arrow carousel-arrow-left"
+          data-carousel="events"
+          aria-label="Precedente"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M15 18L9 12L15 6"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+          </svg>
+        </button>
+
+        <div class="carousel-container" data-carousel="events">
+          <div class="cards-grid carousel-track">
+            <div class="event-card">
+              <div class="event-image">
+                <img
+                  src="https://placehold.co/400x300/F26522/fff?text=Compleanni"
+                  alt="Compleanni"
+                />
+              </div>
+              <div class="event-content">
+                <h3>Compleanni</h3>
+                <p>Festeggia in un'atmosfera unica e conviviale</p>
+                <a href="#" class="btn btn-primary">Compleanni</a>
+              </div>
+            </div>
+
+            <div class="event-card">
+              <div class="event-image">
+                <img
+                  src="https://placehold.co/400x300/F26522/fff?text=Cerimonie"
+                  alt="Cerimonie"
+                />
+              </div>
+              <div class="event-content">
+                <h3>Cerimonie</h3>
+                <p>Battesimi, Comunioni, e Cresime</p>
+                <a href="#" class="btn btn-primary">Cerimonie</a>
+              </div>
+            </div>
+
+            <div class="event-card">
+              <div class="event-image">
+                <img
+                  src="https://placehold.co/400x300/F26522/fff?text=Lauree"
+                  alt="Lauree"
+                />
+              </div>
+              <div class="event-content">
+                <h3>Lauree</h3>
+                <p>Rendi la tua serata con una festa su misura</p>
+                <a href="#" class="btn btn-primary">Lauree</a>
+              </div>
+            </div>
+
+            <div class="event-card">
+              <div class="event-image">
+                <img
+                  src="https://placehold.co/400x300/F26522/fff?text=Anniversari"
+                  alt="Anniversari"
+                />
+              </div>
+              <div class="event-content">
+                <h3>Anniversari</h3>
+                <p>Cena romantica o festa con amici per celebrare il vostro amore</p>
+                <a href="#" class="btn btn-primary">Anniversari</a>
+              </div>
+            </div>
+
+            <div class="event-card">
+              <div class="event-image">
+                <img
+                  src="https://placehold.co/400x300/F26522/fff?text=Cene+Aziendali"
+                  alt="Feste Private"
+                />
+              </div>
+              <div class="event-content">
+                <h3>Cene Aziendali</h3>
+                <p>Eventi professionali in un ambiente confortevole</p>
+                <a href="#" class="btn btn-primary">Cene Aziendali</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button
+          class="carousel-arrow carousel-arrow-right"
+          data-carousel="events"
+          aria-label="Successivo"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M9 18L15 12L9 6"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <div class="carousel-indicators" data-carousel="events"></div>
+    </div>
+  </section>
+
+  <!-- Section Divider -->
+  <div class="section-divider reverse"></div>
+
+  <!-- Viaggio Gastronomico -->
+  <section class="journey-section">
+    <div class="container journey-container">
+      <div class="journey-content">
+        <h2>Un Viaggio Gastronomico con le Nostre Carni e Pesce</h2>
+        <p>
+          Scopri la selezione dei nostri migliori tagli di carne e il pescato fresco
+          del giorno. Ogni piatto è un'opera d'arte culinaria, pensata per soddisfare
+          anche i palati più esigenti.
+        </p>
+        <a href="#" class="btn btn-primary">Scopri di più</a>
+      </div>
+
+      <div class="journey-image">
+        <img
+          src="https://placehold.co/800x500/333333/fff?text=Gastronomic+Journey"
+          alt="Viaggio Gastronomico"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Divider -->
+  <div class="section-divider"></div>
+
+  <!-- Gallery Section -->
+  <section class="gallery-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>I Nostri Spazi</h2>
+        <p>Un ambiente elegante e raffinato per ogni occasione.</p>
+      </div>
+    </div>
+
+    <div class="carousel-wrapper gallery-carousel-wrapper">
+      <button
+        class="carousel-arrow carousel-arrow-left"
+        data-carousel="gallery"
+        aria-label="Precedente"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M15 18L9 12L15 6"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+        </svg>
+      </button>
+
+      <div class="carousel-container" data-carousel="gallery">
+        <div class="gallery-grid carousel-track">
+          <div class="gallery-item">
+            <img
+              src="https://placehold.co/600x400/333/fff?text=Sala+Interna"
+              alt="Sala Interna"
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="https://placehold.co/600x400/444/fff?text=Dehor"
+              alt="Dehor"
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="https://placehold.co/600x400/555/fff?text=Dettagli"
+              alt="Dettagli"
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="https://placehold.co/600x400/666/fff?text=Cucina"
+              alt="Cucina"
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="https://placehold.co/600x400/777/fff?text=Bar"
+              alt="Bar"
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="https://placehold.co/600x400/888/fff?text=Esterno"
+              alt="Esterno"
+            />
+          </div>
+        </div>
+      </div>
+
+      <button
+        class="carousel-arrow carousel-arrow-right"
+        data-carousel="gallery"
+        aria-label="Successivo"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M9 18L15 12L9 6"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+        </svg>
+      </button>
+    </div>
+
+    <div class="carousel-indicators" data-carousel="gallery"></div>
+  </section>
+
+  <!-- Section Divider -->
+  <div class="section-divider reverse"></div>
+
+  <!-- Prenota un Tavolo CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <h2>Prenota il tuo Tavolo</h2>
+      <p>
+        Vieni a trovarci e lasciati coccolare dai nostri sapori. Prenota ora il tuo
+        tavolo per assicurarti un posto.
+      </p>
+      <a href="#" class="btn btn-primary">Prenota Ora</a>
+    </div>
+  </section>
+
+  <!-- Section Divider -->
+  <div class="section-divider"></div>
 </Layout>
