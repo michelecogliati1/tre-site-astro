@@ -1,13 +1,53 @@
 ﻿---
 import Layout from "../../layouts/Layout.astro";
-const title = "preventivo-compleanno | Ristorante TRE";
-const h1 = "preventivo-compleanno";
+
+// SEO Data
+const seoData = {
+  title: "Grazie per la Richiesta - Preventivo Compleanno | TRE Grill + Pizzeria",
+  description: "Abbiamo ricevuto la tua richiesta di preventivo per il compleanno. Ti contatteremo a breve con una proposta personalizzata.",
+  canonical: "https://www.ristorantepizzeriatre.it/preventivo-compleanno/",
+  ogImage: "https://www.ristorantepizzeriatre.it/img/preventivo-compleanno/grazie-per-la-richiesta-ristorante-pizzeria-tre-merate.webp",
+  preloadImage: "/img/preventivo-compleanno/grazie-per-la-richiesta-ristorante-pizzeria-tre-merate.webp",
+  robots: "noindex, nofollow"
+};
 ---
 
-<Layout title={title} description="Pagina in allestimento.">
-  <section class="container" style="padding: 140px 0 80px; text-align:center;">
-    <h1>{h1}</h1>
-    <p>Pagina in allestimento.</p>
-    <p><a href="/" class="btn btn-primary">Torna alla Home</a></p>
+<Layout 
+  title={seoData.title}
+  description={seoData.description}
+  canonical={seoData.canonical}
+  ogImage={seoData.ogImage}
+  preloadImage={seoData.preloadImage}
+>
+  <!-- Hero Section -->
+  <section class="hero hero-thank-you">
+    <div class="container hero-content">
+      <h1>Grazie per la Richiesta di Preventivo</h1>
+      <p>
+        Abbiamo ricevuto la tua richiesta. Ti contatteremo a breve con il preventivo personalizzato per il tuo compleanno
+      </p>
+      <a href="/" class="btn btn-primary">Torna alla Homepage</a>
+    </div>
   </section>
 </Layout>
+
+<style>
+  /* Hero Thank You */
+  .hero-thank-you {
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+      url('/img/preventivo-compleanno/grazie-per-la-richiesta-ristorante-pizzeria-tre-merate.webp');
+    min-height: 60vh;
+  }
+
+  .hero-thank-you .hero-content {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .hero-thank-you {
+      min-height: 65vh;
+    }
+  }
+</style>

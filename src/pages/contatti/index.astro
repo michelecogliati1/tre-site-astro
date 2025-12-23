@@ -1370,7 +1370,21 @@ const schemaOrg = {
     const urlParams = new URLSearchParams(window.location.search);
     const eventoParam = urlParams.get('evento');
     if (eventoParam && eventoSelect) {
-      eventoSelect.value = eventoParam;
+      // Mappa i parametri URL ai valori del select
+      const eventoMap = {
+        'compleanno': 'compleanno',
+        'battesimo': 'battesimo',
+        'comunione': 'comunione',
+        'cresima': 'cresima',
+        'cerimonia': 'battesimo', // Default a battesimo se generico
+        'laurea': 'laurea',
+        'anniversario': 'anniversario',
+        'meeting': 'meeting',
+        'altro': 'altro'
+      };
+      
+      const selectValue = eventoMap[eventoParam] || eventoParam;
+      eventoSelect.value = selectValue;
       // Aggiorna l'anteprima dopo il pre-fill
       updateOggettoPreview();
     }
@@ -1415,7 +1429,7 @@ const schemaOrg = {
       });
     }
 
-    // Form submission - genera email con mailto:
+    // Form submission - genera email con mailto: e redirect a thank you page
     const form = document.getElementById('preventivo-form');
     if (form) {
       form.addEventListener('submit', (e) => {
@@ -1481,7 +1495,21 @@ Richiesta inviata dal sito web ristorantepizzeriatre.it
 `;
 
         // Indirizzi email destinatari
-        const destinatari = 'info@ristorantepizzeriatre.it';
+        const destinatari = 'info@ristorantepizzeriatre.it;residencepassone@gmail.com';
+        
+        // Determina la thank you page corretta in base all'evento
+        const thankYouPages = {
+          'compleanno': '/preventivo-compleanno/',
+          'battesimo': '/preventivo-battesimo/',
+          'comunione': '/preventivo-comunione/',
+          'cresima': '/preventivo-cresima/',
+          'laurea': '/preventivo-laurea/',
+          'anniversario': '/preventivo-anniversario/',
+          'meeting': '/preventivo-meeting/',
+          'altro': '/contatti/' // Fallback
+        };
+        
+        const thankYouPage = thankYouPages[eventoValue] || '/contatti/';
         
         // Crea il link mailto con oggetto e corpo
         const mailtoLink = `mailto:${destinatari}?subject=${encodeURIComponent(oggetto)}&body=${encodeURIComponent(corpoEmail)}`;
@@ -1489,10 +1517,20 @@ Richiesta inviata dal sito web ristorantepizzeriatre.it
         // Apri il client email
         window.location.href = mailtoLink;
         
-        // Mostra messaggio di conferma dopo un breve delay
+        // Redirect alla thank you page dopo un breve delay
         setTimeout(() => {
-          alert('Si aprirà il tuo client email con la richiesta precompilata.\n\nSe il client email non si apre automaticamente, contattaci direttamente a:\ninfo@ristorantepizzeriatre.it\n\noppure chiamaci al:\n039 990 9913');
-        }, 500);
+          const confirmed = confirm(
+            'Si aprirà il tuo client email con la richiesta precompilata.\n\n' +
+            'Clicca OK dopo aver inviato l\'email per vedere la pagina di conferma.\n\n' +
+            'Se il client email non si apre automaticamente, contattaci a:\n' +
+            'info@ristorantepizzeriatre.it\n' +
+            'oppure chiamaci al: 039 990 9913'
+          );
+          
+          if (confirmed) {
+            window.location.href = thankYouPage;
+          }
+        }, 1000);
       });
     }
   });
