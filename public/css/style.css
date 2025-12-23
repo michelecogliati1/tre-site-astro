@@ -1297,12 +1297,24 @@ section { padding: 4rem 0; }
   }
 }
 
-/* Carousel Indicators */
+/* ============================================
+   MODIFICA DA APPLICARE A style.css
+   Sostituisci la sezione "Carousel Indicators" 
+   (circa righe 1300-1325) con questo codice:
+   ============================================ */
+
+/* Carousel Indicators - Visibili solo su mobile */
 .carousel-indicators {
-  display: flex;
+  display: none; /* Nascosto di default (desktop) */
   justify-content: center;
   gap: 10px;
   margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+  .carousel-indicators {
+    display: flex; /* Visibile solo su mobile */
+  }
 }
 
 .carousel-indicator {

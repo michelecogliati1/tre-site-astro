@@ -346,10 +346,14 @@ function initStickyHeader() {
 
 // ===== INITIALIZE ON PAGE LOAD =====
 document.addEventListener('DOMContentLoaded', () => {
-  // Inizializza caroselli
+  // Inizializza caroselli - Homepage
   new Carousel('menu');
   new Carousel('events');
   new Carousel('gallery');
+  
+  // Inizializza caroselli - Cene a Tema
+  new Carousel('cene-passate');
+  new Carousel('partners');
 
   // Inizializza menu mobile
   initMobileMenu();
