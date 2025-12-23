@@ -1,13 +1,1163 @@
 ﻿---
 import Layout from "../../layouts/Layout.astro";
-const title = "compleanni | Ristorante TRE";
-const h1 = "compleanni";
+
+// SEO Data
+const seoData = {
+  title: "Festeggia il Compleanno con Menù su Misura - TRE Grill + Pizzeria",
+  description: "Scegli tra TRE menù su misura: Gran Festa Gourmet, Serata Pizza Party o Menù Rinfresco. Richiedi un preventivo e personalizza la tua festa!",
+  canonical: "https://www.ristorantepizzeriatre.it/compleanni/",
+  ogImage: "https://www.ristorantepizzeriatre.it/img/compleanni/compleanni-menu-ristorante-pizzeria-tre-merate-hero.webp",
+  preloadImage: "/img/compleanni/compleanni-menu-ristorante-pizzeria-tre-merate-hero.webp",
+};
+
+// Schema.org per Event + BreadcrumbList
+const schemaOrg = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Service",
+      "@id": "https://www.ristorantepizzeriatre.it/compleanni/#service",
+      "name": "Feste di Compleanno - Ristorante Pizzeria TRE",
+      "description": "Organizza la tua festa di compleanno al Ristorante Pizzeria TRE a Merate. Scegli tra menù Gourmet, Pizza Party o Buffet Dinamico con preventivi personalizzati.",
+      "url": "https://www.ristorantepizzeriatre.it/compleanni/",
+      "serviceType": "Organizzazione Feste di Compleanno",
+      "provider": {
+        "@id": "https://www.ristorantepizzeriatre.it/#restaurant"
+      },
+      "areaServed": {
+        "@type": "GeoCircle",
+        "geoMidpoint": {
+          "@type": "GeoCoordinates",
+          "latitude": 45.6983,
+          "longitude": 9.4183
+        },
+        "geoRadius": "20000"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Formule Compleanno",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Gran Festa Gourmet",
+              "description": "Menù completo con antipasto, primo, secondo, torta, caffè e bevande incluse"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Pizza Party - Menù Pizza",
+              "description": "Pizza a scelta, patatine fritte, torta, caffè e bevande incluse"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Pizza Party - Giro Pizza",
+              "description": "Pizze a spicchi (6/7 tipi), torta e caffè inclusi"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Buffet Dinamico",
+              "description": "Buffet con aperitivi, piatti di cucina, primo servito, torta, caffè e bevande incluse. Minimo 20 ospiti."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.ristorantepizzeriatre.it/compleanni/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.ristorantepizzeriatre.it/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Compleanni",
+          "item": "https://www.ristorantepizzeriatre.it/compleanni/"
+        }
+      ]
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.ristorantepizzeriatre.it/compleanni/#webpage",
+      "url": "https://www.ristorantepizzeriatre.it/compleanni/",
+      "name": "Festeggia il Compleanno con Menù su Misura | Ristorante Pizzeria TRE Merate",
+      "isPartOf": {
+        "@id": "https://www.ristorantepizzeriatre.it/#website"
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://www.ristorantepizzeriatre.it/img/compleanni/compleanni-menu-ristorante-pizzeria-tre-merate-hero.webp"
+      },
+      "breadcrumb": {
+        "@id": "https://www.ristorantepizzeriatre.it/compleanni/#breadcrumb"
+      },
+      "inLanguage": "it-IT"
+    }
+  ]
+};
 ---
 
-<Layout title={title} description="Pagina in allestimento.">
-  <section class="container" style="padding: 140px 0 80px; text-align:center;">
-    <h1>{h1}</h1>
-    <p>Pagina in allestimento.</p>
-    <p><a href="/" class="btn btn-primary">Torna alla Home</a></p>
+<Layout 
+  title={seoData.title}
+  description={seoData.description}
+  canonical={seoData.canonical}
+  ogImage={seoData.ogImage}
+  preloadImage={seoData.preloadImage}
+>
+  <!-- Schema.org JSON-LD -->
+  <Fragment slot="schema">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
+  </Fragment>
+
+  <!-- Hero Section -->
+  <section class="hero hero-compleanni">
+    <div class="container hero-content">
+      <h1>Festeggia il Compleanno<br />con le Nostre Formule</h1>
+      <p>
+        Scegli il menù ideale per il tuo compleanno e rendi<br />
+        il tuo evento indimenticabile.
+      </p>
+      <div class="hero-buttons">
+        <a href="#formule" class="btn btn-primary">Scopri le Formule</a>
+        <a href="/contatti/?evento=compleanno#preventivo" class="btn btn-outline">Richiedi Preventivo</a>
+      </div>
+    </div>
   </section>
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li aria-current="page">Compleanni</li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- Menu Secondario Sticky -->
+  <nav class="submenu-sticky" id="submenu-sticky">
+    <div class="container">
+      <ul class="submenu-list">
+        <li><a href="#formule" class="submenu-link active">Le Formule</a></li>
+        <li><a href="#gourmet" class="submenu-link">Gourmet</a></li>
+        <li><a href="#pizza-party" class="submenu-link">Pizza Party</a></li>
+        <li><a href="#buffet" class="submenu-link">Buffet</a></li>
+        <li><a href="#personalizza" class="submenu-link">Personalizza</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- 3 Soluzioni per un Compleanno su Misura -->
+  <section class="formule-section" id="formule">
+    <div class="container">
+      <div class="section-header">
+        <h2>3 Soluzioni per un Compleanno su Misura</h2>
+        <p>
+          Gourmet, pizza o buffet? Tre formule pensate per rendere unico il tuo giorno speciale.
+          Scegli quella che fa per te!
+        </p>
+      </div>
+
+      <!-- Formula Filter Tabs -->
+      <div class="formula-tabs">
+        <button class="formula-tab active" data-filter="all">Tutte</button>
+        <button class="formula-tab" data-filter="gourmet">Gourmet</button>
+        <button class="formula-tab" data-filter="pizza">Pizza</button>
+        <button class="formula-tab" data-filter="rinfresco">Rinfresco</button>
+      </div>
+
+      <!-- Formula Cards Preview -->
+      <div class="formula-preview-grid">
+        <a href="#gourmet" class="formula-preview-card" data-category="gourmet">
+          <div class="formula-preview-image">
+            <img 
+              src="/img/compleanni/menu-compleanni-gourmet-ristorante-pizzeria-tre-merate.webp" 
+              alt="Gran Festa Gourmet - Compleanno al Ristorante TRE Merate"
+              loading="lazy"
+              decoding="async"
+              width="400"
+              height="300"
+            />
+          </div>
+          <div class="formula-preview-content">
+            <span class="formula-preview-badge">Gourmet</span>
+            <h3>Gran Festa Gourmet</h3>
+            <p>Menù completo per una cena elegante e ricca</p>
+          </div>
+        </a>
+
+        <a href="#pizza-party" class="formula-preview-card" data-category="pizza">
+          <div class="formula-preview-image">
+            <img 
+              src="/img/compleanni/menu-pizza-compleanni-ristorante-pizzeria-tre-merate.webp" 
+              alt="Pizza Party - Compleanno al Ristorante TRE Merate"
+              loading="lazy"
+              decoding="async"
+              width="400"
+              height="300"
+            />
+          </div>
+          <div class="formula-preview-content">
+            <span class="formula-preview-badge">Pizza</span>
+            <h3>Pizza Party</h3>
+            <p>Festa conviviale a base di pizza</p>
+          </div>
+        </a>
+
+        <a href="#buffet" class="formula-preview-card" data-category="rinfresco">
+          <div class="formula-preview-image">
+            <img 
+              src="/img/compleanni/menu-buffet-compleanni-ristorante-pizzeria-tre-merate.webp" 
+              alt="Buffet Dinamico - Compleanno al Ristorante TRE Merate"
+              loading="lazy"
+              decoding="async"
+              width="400"
+              height="300"
+            />
+          </div>
+          <div class="formula-preview-content">
+            <span class="formula-preview-badge">Rinfresco</span>
+            <h3>Buffet Dinamico</h3>
+            <p>Buffet con aperitivi e piatti di cucina</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Gran Festa Gourmet -->
+  <section class="formula-detail-section" id="gourmet">
+    <div class="container">
+      <div class="formula-detail-grid">
+        <div class="formula-detail-content">
+          <span class="formula-detail-badge">Gourmet</span>
+          <h2>Gran Festa Gourmet</h2>
+          <p class="formula-detail-intro">
+            Un menù completo per chi desidera una cena elegante e ricca. Ecco un esempio:
+          </p>
+          
+          <div class="menu-example">
+            <div class="menu-example-item">
+              <span class="menu-example-label">Antipasto</span>
+              <p>Affettati misti con sottaceti e focaccia al rosmarino</p>
+            </div>
+            <div class="menu-example-item">
+              <span class="menu-example-label">Primo</span>
+              <p>Risotto Acquerello con crema di zola, pere e noci tostate</p>
+            </div>
+            <div class="menu-example-item">
+              <span class="menu-example-label">Secondo</span>
+              <p>Tagliata di manzo con patate al forno</p>
+            </div>
+            <div class="menu-example-item">
+              <span class="menu-example-label">Torta</span>
+              <p>Torta di compleanno personalizzata</p>
+            </div>
+            <div class="menu-example-included">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>Caffè e Bevande incluse</span>
+            </div>
+          </div>
+
+          <a href="/contatti/?evento=compleanno#preventivo" class="btn btn-primary">Richiedi Preventivo</a>
+        </div>
+        <div class="formula-detail-image">
+          <img 
+            src="/img/compleanni/menu-compleanni-gourmet-ristorante-pizzeria-tre-merate.webp" 
+            alt="Gran Festa Gourmet - Menù compleanno elegante al Ristorante TRE Merate"
+            loading="lazy"
+            decoding="async"
+            width="600"
+            height="450"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Pizza Party -->
+  <section class="formula-detail-section formula-detail-section-alt" id="pizza-party">
+    <div class="container">
+      <div class="section-header">
+        <h2>Pizza Party</h2>
+        <p>
+          La soluzione perfetta per una festa conviviale a base di pizza! Scegli tra il Menù Pizza,
+          con una pizza a scelta, o il Giro Pizza, per assaggiare più gusti in compagnia.
+        </p>
+      </div>
+
+      <div class="pizza-party-grid">
+        <!-- Giro Pizza -->
+        <div class="pizza-party-card">
+          <div class="pizza-party-image">
+            <img 
+              src="/img/compleanni/giropizza-compleanni-ristorante-pizzeria-tre-merate.webp" 
+              alt="Giro Pizza - Compleanno al Ristorante TRE Merate"
+              loading="lazy"
+              decoding="async"
+              width="400"
+              height="300"
+            />
+          </div>
+          <div class="pizza-party-content">
+            <h3>Giro Pizza</h3>
+            <div class="menu-example">
+              <div class="menu-example-item">
+                <p>Pizze a spicchi (6/7 tipi di pizza) in base al numero totale degli ospiti</p>
+              </div>
+              <div class="menu-example-item">
+                <span class="menu-example-label">Torta e Caffè</span>
+              </div>
+              <div class="menu-example-note">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                  <path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <span>Bevande escluse</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Menù Pizza -->
+        <div class="pizza-party-card">
+          <div class="pizza-party-image">
+            <img 
+              src="/img/compleanni/menu-pizza-compleanni-ristorante-pizzeria-tre-merate.webp" 
+              alt="Menù Pizza - Compleanno al Ristorante TRE Merate"
+              loading="lazy"
+              decoding="async"
+              width="400"
+              height="300"
+            />
+          </div>
+          <div class="pizza-party-content">
+            <h3>Menù Pizza</h3>
+            <div class="menu-example">
+              <div class="menu-example-item">
+                <p>Pizza a scelta e patatine fritte</p>
+              </div>
+              <div class="menu-example-item">
+                <span class="menu-example-label">Torta</span>
+              </div>
+              <div class="menu-example-included">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Caffè e Bevande incluse</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA Richiedi Preventivo per Pizza Party -->
+      <div class="pizza-party-cta">
+        <a href="/contatti/?evento=compleanno#preventivo" class="btn btn-primary">Richiedi Preventivo</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Buffet Dinamico -->
+  <section class="formula-detail-section" id="buffet">
+    <div class="container">
+      <div class="formula-detail-grid formula-detail-grid-reverse">
+        <div class="formula-detail-image">
+          <img 
+            src="/img/compleanni/menu-buffet-compleanni-ristorante-pizzeria-tre-merate.webp" 
+            alt="Buffet Dinamico - Compleanno al Ristorante TRE Merate"
+            loading="lazy"
+            decoding="async"
+            width="600"
+            height="450"
+          />
+        </div>
+        <div class="formula-detail-content">
+          <span class="formula-detail-badge">Rinfresco</span>
+          <h2>Buffet Dinamico</h2>
+          <p class="formula-detail-note">
+            Disponibile dal lunedì al venerdì e domenica sera, per un numero minimo di 20 ospiti
+          </p>
+          <p class="formula-detail-intro">
+            Buffet con aperitivi, piatti di cucina e dessert. Ecco un esempio:
+          </p>
+          
+          <div class="menu-example">
+            <div class="menu-example-item">
+              <span class="menu-example-label">Rinfresco</span>
+              <p>Stuzzicherie dello Chef, mondeghini, canapé, verdure in pastella, olive ascolane, crostini con burro e acciughe, piccola tartare di fassona, focaccia e pizze</p>
+            </div>
+            <div class="menu-example-item">
+              <span class="menu-example-label">Primo servito</span>
+              <p>Risotto al rosmarino e formaggini di Montevecchia</p>
+            </div>
+            <div class="menu-example-item">
+              <span class="menu-example-label">Torta</span>
+              <p>Torta di compleanno personalizzata</p>
+            </div>
+            <div class="menu-example-included">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>Caffè e Bevande incluse</span>
+            </div>
+          </div>
+
+          <a href="/contatti/?evento=compleanno#preventivo" class="btn btn-primary">Richiedi Preventivo</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Personalizza la Tua Festa -->
+  <section class="feature-section" id="personalizza">
+    <div class="container">
+      <div class="feature-grid">
+        <div class="feature-content">
+          <h2>Personalizza la Tua Festa</h2>
+          <p class="feature-intro">
+            Scegli la formula, personalizza il menù e lascia che il nostro team si occupi di tutto per un compleanno perfetto.
+          </p>
+          <ul class="feature-steps-list">
+            <li>
+              <span class="step-circle">1</span>
+              <div class="step-content">
+                <strong>Richiedi un Preventivo</strong>
+                <p>Clicca su richiedi preventivo e invia la richiesta</p>
+              </div>
+            </li>
+            <li>
+              <span class="step-circle">2</span>
+              <div class="step-content">
+                <strong>Scegli la Formula</strong>
+                <p>Scegli tra menù cucina, pizza o rinfresco</p>
+              </div>
+            </li>
+            <li>
+              <span class="step-circle">3</span>
+              <div class="step-content">
+                <strong>Personalizza il Menù</strong>
+                <p>Modifica i piatti secondo i tuoi gusti</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="feature-image">
+          <img
+            src="/img/compleanni/personalizza-compleanno-ristorante-pizzeria-tre-merate.webp"
+            alt="Personalizza la tua festa di compleanno - Ristorante TRE Merate"
+            loading="lazy"
+            decoding="async"
+            width="600"
+            height="450"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Richiedi un Preventivo Personalizzato - STILE HERO FULL WIDTH -->
+  <section class="cta-preventivo-hero">
+    <div class="container cta-preventivo-hero-content">
+      <h2>Richiedi un Preventivo Personalizzato</h2>
+      <p>
+        Compila il modulo per ricevere un preventivo su misura per la tua festa di compleanno
+      </p>
+      <a href="/contatti/?evento=compleanno#preventivo" class="btn btn-primary">Richiedi Preventivo</a>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Sticky CTA Bottom -->
+  <div class="sticky-cta-bottom" id="sticky-cta">
+    <div class="sticky-cta-container">
+      <div class="sticky-cta-logo">
+        <img src="/img/brand/tre-logo.svg" alt="TRE" width="50" height="50" />
+      </div>
+      <div class="sticky-cta-content">
+        <span class="sticky-cta-title">Compleanni su Misura</span>
+        <span class="sticky-cta-subtitle">Richiedi un preventivo personalizzato</span>
+      </div>
+      <a href="/contatti/?evento=compleanno#preventivo" class="btn btn-primary sticky-cta-btn">Richiedi Preventivo</a>
+    </div>
+  </div>
 </Layout>
+
+<style>
+  /* Hero Compleanni */
+  .hero-compleanni {
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.62)),
+      url('/img/compleanni/compleanni-menu-ristorante-pizzeria-tre-merate-hero.webp');
+  }
+
+  /* Formule Section - FIX scroll-margin maggiore */
+  .formule-section {
+    scroll-margin-top: 220px;
+  }
+
+  @media (min-width: 992px) {
+    .formule-section {
+      scroll-margin-top: 240px;
+    }
+  }
+
+  /* Formula Tabs */
+  .formula-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .formula-tab {
+    padding: 0.75rem 1.5rem;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-dark);
+    background-color: var(--bg-light);
+    border: 2px solid transparent;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font-main);
+    letter-spacing: 0.05em;
+  }
+
+  .formula-tab:hover {
+    border-color: var(--primary-light);
+  }
+
+  .formula-tab.active {
+    background-color: var(--primary-color);
+    color: var(--text-white);
+    border-color: var(--primary-color);
+  }
+
+  @media (max-width: 768px) {
+    .formula-tab {
+      padding: 0.6rem 1rem;
+      font-size: 16px;
+    }
+  }
+
+  /* Formula Preview Grid */
+  .formula-preview-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .formula-preview-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .formula-preview-card {
+    background-color: var(--bg-white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    display: block;
+  }
+
+  .formula-preview-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+  }
+
+  .formula-preview-card.hidden {
+    display: none;
+  }
+
+  .formula-preview-image {
+    height: 220px;
+    overflow: hidden;
+  }
+
+  .formula-preview-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .formula-preview-card:hover .formula-preview-image img {
+    transform: scale(1.08);
+  }
+
+  .formula-preview-content {
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .formula-preview-badge {
+    display: inline-block;
+    padding: 0.35rem 1rem;
+    background-color: var(--primary-pale);
+    color: var(--primary-dark);
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.75rem;
+  }
+
+  .formula-preview-content h3 {
+    font-size: 24px;
+    line-height: 30px;
+    margin-bottom: 0.5rem;
+    color: var(--text-dark);
+  }
+
+  .formula-preview-content p {
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--text-dark);
+    opacity: 0.75;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .formula-preview-image {
+      height: 200px;
+    }
+
+    .formula-preview-content h3 {
+      font-size: 22px;
+    }
+  }
+
+  /* Formula Detail Section */
+  .formula-detail-section {
+    padding: 4rem 0;
+    background-color: var(--bg-white);
+    scroll-margin-top: 220px;
+  }
+
+  .formula-detail-section-alt {
+    background-color: var(--bg-light);
+  }
+
+  @media (min-width: 768px) {
+    .formula-detail-section {
+      padding: 5rem 0;
+    }
+  }
+
+  @media (min-width: 992px) {
+    .formula-detail-section {
+      scroll-margin-top: 240px;
+    }
+  }
+
+  .formula-detail-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  @media (min-width: 992px) {
+    .formula-detail-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+  }
+
+  .formula-detail-grid-reverse {
+    direction: rtl;
+  }
+
+  .formula-detail-grid-reverse > * {
+    direction: ltr;
+  }
+
+  @media (max-width: 991px) {
+    .formula-detail-grid-reverse {
+      direction: ltr;
+    }
+
+    .formula-detail-grid-reverse .formula-detail-image {
+      order: 2;
+    }
+  }
+
+  .formula-detail-badge {
+    display: inline-block;
+    padding: 0.5rem 1.25rem;
+    background-color: var(--primary-color);
+    color: var(--text-white);
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+  }
+
+  .formula-detail-content h2 {
+    font-size: 40px;
+    line-height: 48px;
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+  }
+
+  .formula-detail-intro {
+    font-size: 20px;
+    line-height: 30px;
+    color: var(--text-dark);
+    opacity: 0.85;
+    margin-bottom: 1.5rem;
+  }
+
+  .formula-detail-note {
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 1rem;
+    padding: 0.75rem 1rem;
+    background-color: var(--bg-light-orange);
+    border-radius: 6px;
+    border-left: 3px solid var(--primary-color);
+  }
+
+  .formula-detail-image {
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .formula-detail-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+
+  .formula-detail-image:hover img {
+    transform: scale(1.03);
+  }
+
+  @media (max-width: 768px) {
+    .formula-detail-content h2 {
+      font-size: 32px;
+      line-height: 40px;
+    }
+
+    .formula-detail-intro {
+      font-size: 18px;
+      line-height: 28px;
+    }
+  }
+
+  /* Menu Example */
+  .menu-example {
+    margin-bottom: 2rem;
+  }
+
+  .menu-example-item {
+    padding: 1rem 0;
+    border-bottom: 1px solid #eee;
+  }
+
+  .menu-example-item:last-of-type {
+    border-bottom: none;
+  }
+
+  .menu-example-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.35rem;
+  }
+
+  .menu-example-item p {
+    font-size: 18px;
+    line-height: 26px;
+    color: var(--text-dark);
+    margin: 0;
+  }
+
+  .menu-example-included {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    background-color: var(--bg-light-orange);
+    border-radius: 8px;
+    margin-top: 1rem;
+    color: var(--primary-dark);
+    font-weight: 600;
+    font-size: 16px;
+  }
+
+  .menu-example-included svg {
+    flex-shrink: 0;
+    color: var(--primary-color);
+  }
+
+  .menu-example-note {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background-color: var(--bg-light);
+    border-radius: 6px;
+    margin-top: 1rem;
+    color: var(--text-dark);
+    opacity: 0.8;
+    font-size: 14px;
+  }
+
+  .menu-example-note svg {
+    flex-shrink: 0;
+    opacity: 0.6;
+  }
+
+  @media (max-width: 768px) {
+    .menu-example-item p {
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+
+  /* Pizza Party Grid */
+  .pizza-party-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .pizza-party-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .pizza-party-card {
+    background-color: var(--bg-white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+  }
+
+  .pizza-party-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+  }
+
+  .pizza-party-image {
+    height: 250px;
+    overflow: hidden;
+  }
+
+  .pizza-party-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .pizza-party-card:hover .pizza-party-image img {
+    transform: scale(1.05);
+  }
+
+  .pizza-party-content {
+    padding: 1.5rem;
+  }
+
+  .pizza-party-content h3 {
+    font-size: 28px;
+    line-height: 34px;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+  }
+
+  @media (max-width: 768px) {
+    .pizza-party-image {
+      height: 200px;
+    }
+
+    .pizza-party-content h3 {
+      font-size: 24px;
+      line-height: 30px;
+    }
+  }
+
+  /* Pizza Party CTA */
+  .pizza-party-cta {
+    text-align: center;
+    margin-top: 3rem;
+  }
+
+  /* Feature Steps List */
+  .feature-steps-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .feature-steps-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
+
+  .step-circle {
+    width: 48px;
+    height: 48px;
+    background-color: var(--primary-color);
+    color: var(--text-white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .step-content {
+    flex: 1;
+  }
+
+  .step-content strong {
+    display: block;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 0.25rem;
+  }
+
+  .step-content p {
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--text-dark);
+    opacity: 0.8;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .step-circle {
+      width: 42px;
+      height: 42px;
+      font-size: 18px;
+    }
+
+    .step-content strong {
+      font-size: 18px;
+    }
+  }
+
+  /* CTA Preventivo Hero - STILE FULL WIDTH */
+  .cta-preventivo-hero {
+    color: var(--text-white);
+    text-align: center;
+
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)),
+      url('/img/compleanni/richiedi-preventivo-compleanno-ristorante-pizzeria-tre-merate.webp');
+    background-size: cover;
+    background-position: center;
+
+    min-height: clamp(420px, 50vh, 600px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 5rem 0;
+  }
+
+  @media (max-width: 768px) {
+    .cta-preventivo-hero {
+      min-height: clamp(380px, 45vh, 520px);
+      padding: 4rem 0;
+    }
+  }
+
+  .cta-preventivo-hero-content {
+    max-width: 800px;
+  }
+
+  .cta-preventivo-hero h2 {
+    margin-bottom: 1rem;
+    color: var(--text-white);
+  }
+
+  .cta-preventivo-hero p {
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    color: var(--text-gray);
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const header = document.getElementById('main-header');
+    const submenu = document.getElementById('submenu-sticky');
+    const submenuList = document.querySelector('.submenu-list');
+    const submenuLinks = document.querySelectorAll('.submenu-link');
+    const sections = document.querySelectorAll('.formula-detail-section[id], .feature-section[id], .formule-section[id]');
+    
+    // Sticky CTA elements
+    const stickyCta = document.getElementById('sticky-cta');
+    const heroSection = document.querySelector('.hero');
+    const ctaPreventivoSection = document.querySelector('.cta-preventivo-hero');
+
+    // Formula Filter
+    const filterTabs = document.querySelectorAll('.formula-tab');
+    const formulaCards = document.querySelectorAll('.formula-preview-card');
+
+    // Calcola offset totale - AUMENTATO per evitare che l'h2 sia coperto
+    const getOffset = () => {
+      const headerHeight = header ? header.offsetHeight : 0;
+      const submenuHeight = submenu ? submenu.offsetHeight : 0;
+      return headerHeight + submenuHeight + 60; // Aumentato il margine
+    };
+
+    // Scrolla il submenu orizzontalmente per mostrare il link attivo
+    const scrollSubmenuToActiveLink = (activeLink) => {
+      if (!submenuList || !activeLink) return;
+      if (window.innerWidth > 768) return;
+
+      const scrollLeft = activeLink.offsetLeft - 16;
+      submenuList.scrollTo({
+        left: scrollLeft,
+        behavior: 'smooth'
+      });
+    };
+
+    // Gestisce la visibilità della sticky CTA
+    const handleStickyCta = () => {
+      if (!stickyCta || !heroSection || !ctaPreventivoSection) return;
+
+      const heroBottom = heroSection.getBoundingClientRect().bottom;
+      const ctaTop = ctaPreventivoSection.getBoundingClientRect().top;
+      const windowHeight = window.innerHeight;
+
+      const shouldShow = heroBottom < 0 && ctaTop > windowHeight - 100;
+
+      if (shouldShow) {
+        stickyCta.classList.add('visible');
+      } else {
+        stickyCta.classList.remove('visible');
+      }
+    };
+
+    // Highlight link attivo in base allo scroll
+    const highlightActiveLink = () => {
+      const scrollPos = window.scrollY + getOffset() + 50;
+
+      sections.forEach((section) => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        const sectionId = section.getAttribute('id');
+
+        if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+          submenuLinks.forEach((link) => {
+            const wasActive = link.classList.contains('active');
+            link.classList.remove('active');
+            
+            if (link.getAttribute('href') === `#${sectionId}`) {
+              link.classList.add('active');
+              if (!wasActive) {
+                scrollSubmenuToActiveLink(link);
+              }
+            }
+          });
+        }
+      });
+    };
+
+    // Scroll handler combinato
+    const onScroll = () => {
+      highlightActiveLink();
+      handleStickyCta();
+    };
+
+    window.addEventListener('scroll', onScroll);
+    handleStickyCta();
+
+    // Smooth scroll per i link del submenu e altri anchor
+    document.querySelectorAll('a[href^="#"]').forEach((link) => {
+      link.addEventListener('click', (e) => {
+        const targetId = link.getAttribute('href');
+        if (targetId === '#' || targetId === '#!') return;
+        
+        e.preventDefault();
+        const targetSection = document.querySelector(targetId);
+        if (targetSection) {
+          const targetPosition = targetSection.offsetTop - getOffset() + 20; // +20 per dare più aria
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+          
+          if (link.classList.contains('submenu-link')) {
+            scrollSubmenuToActiveLink(link);
+          }
+        }
+      });
+    });
+
+    // Filter functionality
+    filterTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Update active tab
+        filterTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        const filter = tab.dataset.filter;
+
+        // Filter cards
+        formulaCards.forEach(card => {
+          if (filter === 'all' || card.dataset.category === filter) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+      });
+    });
+  });
+</script>
