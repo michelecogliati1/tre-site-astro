@@ -2,11 +2,31 @@
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 
+// Props SEO con valori di default
 const {
-  title = "Ristorante TRE - Grill + Pizzeria",
-  description = "",
-  robots = "noindex, nofollow",
+  title = "Ristorante TRE - Grill + Pizzeria a Merate",
+  description = "Ristorante Pizzeria TRE a Merate (LC). Pizze cotte nel forno a legna, carni alla griglia e cucina tradizionale italiana. Prenota il tuo tavolo.",
+  robots = "index, follow",
+  canonical,
+  // Open Graph
+  ogTitle,
+  ogDescription,
+  ogImage = "https://www.ristorantepizzeriatre.it/img/brand/og-image-default.webp",
+  ogType = "website",
+  // Preload immagine LCP (opzionale per pagina)
+  preloadImage,
+  preloadImageType = "image/webp",
 } = Astro.props;
+
+// URL base del sito
+const siteUrl = "https://www.ristorantepizzeriatre.it";
+
+// Genera canonical URL se non fornito
+const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
+
+// Usa title/description per OG se non specificati separatamente
+const finalOgTitle = ogTitle || title;
+const finalOgDescription = ogDescription || description;
 ---
 
 <!doctype html>
@@ -15,28 +35,82 @@ const {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+    <!-- Primary Meta Tags -->
     <title>{title}</title>
-    {description && <meta name="description" content={description} />}
+    <meta name="description" content={description} />
     <meta name="robots" content={robots} />
+    <link rel="canonical" href={canonicalUrl} />
 
-    <!-- Font (sempre su tutte le pagine) -->
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/img/brand/favicon.svg" />
+    <link rel="apple-touch-icon" href="/img/brand/apple-touch-icon.png" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={finalOgTitle} />
+    <meta property="og:description" content={finalOgDescription} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content="it_IT" />
+    <meta property="og:site_name" content="Ristorante Pizzeria TRE" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalUrl} />
+    <meta name="twitter:title" content={finalOgTitle} />
+    <meta name="twitter:description" content={finalOgDescription} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Geo Tags per Local SEO -->
+    <meta name="geo.region" content="IT-LC" />
+    <meta name="geo.placename" content="Merate" />
+    <meta name="geo.position" content="45.6983;9.4183" />
+    <meta name="ICBM" content="45.6983, 9.4183" />
+
+    <!-- Preconnect per risorse esterne (prima del CSS per priorità) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
+
+    <!-- Preload Font per evitare render-blocking -->
+    <link 
+      rel="preload" 
+      as="style" 
+      href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'"
     />
+    <noscript>
+      <link 
+        href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap" 
+        rel="stylesheet" 
+      />
+    </noscript>
+
+    <!-- Preload immagine LCP se specificata -->
+    {preloadImage && (
+      <link
+        rel="preload"
+        as="image"
+        href={preloadImage}
+        type={preloadImageType}
+        fetchpriority="high"
+      />
+    )}
 
     <!-- CSS globale -->
     <link rel="stylesheet" href="/css/style.css" />
 
-    <!-- Extra tag per singola pagina (se servono) -->
+    <!-- Dati strutturati Schema.org (slot per pagina) -->
+    <slot name="schema" />
+
+    <!-- Extra tag per singola pagina (preload, ecc.) -->
     <slot name="head" />
   </head>
 
   <body>
     <Header />
-    <slot />
+    <main>
+      <slot />
+    </main>
     <Footer />
 
     <script src="/js/main.js" is:inline></script>

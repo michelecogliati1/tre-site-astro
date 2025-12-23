@@ -1,102 +1,117 @@
+---
+// Ottieni il pathname corrente per evidenziare la voce di menu attiva
+const currentPath = Astro.url.pathname;
+
+// Funzione per determinare se una voce è attiva
+const isActive = (path: string) => currentPath === path;
+
+// Funzione per determinare se un menu dropdown contiene la pagina attiva
+const isMenuActive = (paths: string[]) => paths.some(path => currentPath.startsWith(path));
+
+// Percorsi delle sezioni
+const menuPaths = ['/menu-pizze/', '/menu-alla-carta/', '/menu-asporto/', '/menu-del-giorno/'];
+const eventiPaths = ['/compleanni/', '/battesimi-comunioni-cresime/', '/lauree/', '/anniversari/', '/meeting-cene-aziendali/'];
+---
+
 <!-- Header -->
-    <header id="main-header">
-        <div class="container header-container">
+<header id="main-header">
+    <div class="container header-container">
+        <div class="logo">
+            <a href="/">
+                <img src="/img/brand/tre-logo.svg" alt="Ristorante TRE Grill + Pizzeria" width="150" height="80">
+            </a>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <nav class="desktop-nav">
+            <ul class="nav-menu-desktop">
+                <li><a href="/" class={`nav-link ${isActive('/') ? 'active' : ''}`}>HOME</a></li>
+                <li class="has-dropdown">
+                    <a href="#" class={`nav-link nav-link-with-dropdown ${isMenuActive(menuPaths) ? 'active' : ''}`}>MENÙ</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/menu-pizze/">Menù Pizze</a></li>
+                        <li><a href="/menu-alla-carta/">Menù alla Carta</a></li>
+                        <li><a href="/menu-asporto/">Menù d'Asporto</a></li>
+                        <li><a href="/menu-del-giorno/">Menù del Giorno</a></li>
+                    </ul>
+                </li>
+                <li><a href="/cene-a-tema/" class={`nav-link ${isActive('/cene-a-tema/') ? 'active' : ''}`}>CENE A TEMA</a></li>
+                <li class="has-dropdown">
+                    <a href="#" class={`nav-link nav-link-with-dropdown ${isMenuActive(eventiPaths) ? 'active' : ''}`}>EVENTI</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/compleanni/">Compleanni</a></li>
+                        <li><a href="/battesimi-comunioni-cresime/">Battesimi, Comunioni e Cresime</a></li>
+                        <li><a href="/lauree/">Lauree</a></li>
+                        <li><a href="/anniversari/">Anniversari</a></li>
+                        <li><a href="/meeting-cene-aziendali/">Meeting e Cene Aziendali</a></li>
+                        <li><a href="/cene-a-tema/">Cene a tema</a></li>
+                    </ul>
+                </li>
+                <li><a href="/contatti/" class={`nav-link ${isActive('/contatti/') ? 'active' : ''}`}>CONTATTI</a></li>
+            </ul>
+        </nav>
+
+        <a href="/contatti/" class="btn btn-primary btn-prenota-desktop">Prenota ora</a>
+
+        <!-- Mobile Menu Button -->
+        <button class="mobile-menu-btn" aria-label="Menu">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay">
+        <div class="mobile-menu-header">
             <div class="logo">
-                <a href="/">
-                    <img src="/img/brand/tre-logo.svg" alt="Ristorante TRE Grill + Pizzeria" width="150" height="80">
-                </a>
+                <img src="/img/brand/tre-logo.svg" alt="Ristorante TRE Grill + Pizzeria" width="150" height="80">
             </div>
-
-            <!-- Desktop Navigation -->
-            <nav class="desktop-nav">
-                <ul class="nav-menu-desktop">
-                    <li><a href="/" class="nav-link active">HOME</a></li>
-                    <li class="has-dropdown">
-                        <a href="#" class="nav-link nav-link-with-dropdown">MENÙ</a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/menu-pizze/">Menù Pizze</a></li>
-                            <li><a href="/menu-alla-carta/">Menù alla Carta</a></li>
-                            <li><a href="/menu-asporto/">Menù d'Asporto</a></li>
-                            <li><a href="/menu-del-giorno/">Menù del Giorno</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="/cene-a-tema/" class="nav-link">CENE A TEMA</a></li>
-                    <li class="has-dropdown">
-                        <a href="#" class="nav-link nav-link-with-dropdown">EVENTI</a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/compleanni/">Compleanni</a></li>
-                            <li><a href="/battesimi-comunioni-cresime/">Battesimi, Comunioni e Cresime</a></li>
-                            <li><a href="/lauree/">Lauree</a></li>
-                            <li><a href="/anniversari/">Anniversari</a></li>
-                            <li><a href="/meeting-cene-aziendali/">Meeting e Cene Aziendali</a></li>
-                            <li><a href="/cene-a-tema/">Cene a tema</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="/contatti/" class="nav-link">CONTATTI</a></li>
-                </ul>
-            </nav>
-
-            <a href="/contatti/" class="btn btn-primary btn-prenota-desktop">Prenota ora</a>
-
-            <!-- Mobile Menu Button -->
-            <button class="mobile-menu-btn" aria-label="Menu">
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
+            <button class="mobile-menu-close" aria-label="Chiudi menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
             </button>
         </div>
 
-        <!-- Mobile Menu Overlay -->
-        <div class="mobile-menu-overlay">
-            <div class="mobile-menu-header">
-                <div class="logo">
-                    <img src="/img/brand/tre-logo.svg" alt="Ristorante TRE Grill + Pizzeria" width="150" height="80">
-                </div>
-                <button class="mobile-menu-close" aria-label="Chiudi menu">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                    </svg>
-                </button>
-            </div>
+        <nav class="mobile-nav">
+            <ul class="mobile-menu-list">
+                <li><a href="/" class={`mobile-nav-link ${isActive('/') ? 'active' : ''}`}>HOME</a></li>
+                <li class="mobile-has-submenu">
+                    <button class={`mobile-nav-link mobile-submenu-toggle ${isMenuActive(menuPaths) ? 'active' : ''}`}>
+                        MENÙ
+                        <svg class="submenu-arrow" width="16" height="16" viewBox="0 0 16 16">
+                            <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" fill="none" />
+                        </svg>
+                    </button>
+                    <ul class="mobile-submenu">
+                        <li><a href="/menu-pizze/">Menù Pizze</a></li>
+                        <li><a href="/menu-alla-carta/">Menù alla Carta</a></li>
+                        <li><a href="/menu-asporto/">Menù d'Asporto</a></li>
+                        <li><a href="/menu-del-giorno/">Menù del Giorno</a></li>
+                    </ul>
+                </li>
+                <li><a href="/cene-a-tema/" class={`mobile-nav-link ${isActive('/cene-a-tema/') ? 'active' : ''}`}>CENE A TEMA</a></li>
+                <li class="mobile-has-submenu">
+                    <button class={`mobile-nav-link mobile-submenu-toggle ${isMenuActive(eventiPaths) ? 'active' : ''}`}>
+                        EVENTI
+                        <svg class="submenu-arrow" width="16" height="16" viewBox="0 0 16 16">
+                            <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" fill="none" />
+                        </svg>
+                    </button>
+                    <ul class="mobile-submenu">
+                        <li><a href="/compleanni/">Compleanni</a></li>
+                        <li><a href="/battesimi-comunioni-cresime/">Battesimi, Comunioni e Cresime</a></li>
+                        <li><a href="/lauree/">Lauree</a></li>
+                        <li><a href="/anniversari/">Anniversari</a></li>
+                        <li><a href="/meeting-cene-aziendali/">Meeting e Cene Aziendali</a></li>
+                        <li><a href="/cene-a-tema/">Cene a tema</a></li>
+                    </ul>
+                </li>
+                <li><a href="/contatti/" class={`mobile-nav-link ${isActive('/contatti/') ? 'active' : ''}`}>CONTATTI</a></li>
+            </ul>
 
-            <nav class="mobile-nav">
-                <ul class="mobile-menu-list">
-                    <li><a href="/" class="mobile-nav-link">HOME</a></li>
-                    <li class="mobile-has-submenu">
-                        <button class="mobile-nav-link mobile-submenu-toggle">
-                            MENÙ
-                            <svg class="submenu-arrow" width="16" height="16" viewBox="0 0 16 16">
-                                <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" fill="none" />
-                            </svg>
-                        </button>
-                        <ul class="mobile-submenu">
-                            <li><a href="/menu-pizze/">Menù Pizze</a></li>
-                            <li><a href="/menu-alla-carta/">Menù alla Carta</a></li>
-                            <li><a href="/menu-asporto/">Menù d'Asporto</a></li>
-                            <li><a href="/menu-del-giorno/">Menù del Giorno</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="/cene-a-tema/" class="mobile-nav-link">CENE A TEMA</a></li>
-                    <li class="mobile-has-submenu">
-                        <button class="mobile-nav-link mobile-submenu-toggle">
-                            EVENTI
-                            <svg class="submenu-arrow" width="16" height="16" viewBox="0 0 16 16">
-                                <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" fill="none" />
-                            </svg>
-                        </button>
-                        <ul class="mobile-submenu">
-                            <li><a href="/compleanni/">Compleanni</a></li>
-                            <li><a href="/battesimi-comunioni-cresime/">Battesimi, Comunioni e Cresime</a></li>
-                            <li><a href="/lauree/">Lauree</a></li>
-                            <li><a href="/anniversari/">Anniversari</a></li>
-                            <li><a href="/meeting-cene-aziendali/">Meeting e Cene Aziendali</a></li>
-                            <li><a href="/cene-a-tema/">Cene a tema</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="/contatti/" class="mobile-nav-link">CONTATTI</a></li>
-                </ul>
-
-                <a href="/contatti/" class="btn btn-primary btn-prenota-mobile">Prenota Ora</a>
-            </nav>
-        </div>
-    </header>
+            <a href="/contatti/" class="btn btn-primary btn-prenota-mobile">Prenota Ora</a>
+        </nav>
+    </div>
+</header>

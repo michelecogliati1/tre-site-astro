@@ -1,31 +1,141 @@
 ---
 import Layout from "../layouts/Layout.astro";
+
+// SEO Data
+const seoData = {
+  title: "Ristorante TRE Grill + Pizzeria - Merate - Lecco",
+  description: "Pizze cotte nel forno a legna, carni pregiate alla griglia e cucina tradizionale italiana. Organizza eventi, compleanni e cene aziendali.",
+  canonical: "https://www.ristorantepizzeriatre.it/",
+  ogImage: "https://www.ristorantepizzeriatre.it/img/homepage/ristorante-pizzeria-tre-merate-esterno-hero-homepage.webp",
+  preloadImage: "/img/homepage/ristorante-pizzeria-tre-merate-esterno-hero-homepage.webp",
+};
+
+// Schema.org LocalBusiness + Restaurant
+const schemaOrg = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": ["Restaurant", "LocalBusiness"],
+      "@id": "https://www.ristorantepizzeriatre.it/#restaurant",
+      "name": "Ristorante Pizzeria TRE",
+      "alternateName": "TRE Grill + Pizzeria",
+      "description": "Ristorante e pizzeria a Merate con forno a legna, carni alla griglia e cucina tradizionale italiana. Location ideale per eventi, compleanni, battesimi, comunioni e cene aziendali.",
+      "url": "https://www.ristorantepizzeriatre.it/",
+      "telephone": "+39 039 990 9913",
+      "email": "info@ristorantepizzeriatre.it",
+      "image": [
+        "https://www.ristorantepizzeriatre.it/img/homepage/ristorante-pizzeria-tre-merate-esterno-hero-homepage.webp",
+        "https://www.ristorantepizzeriatre.it/img/brand/tre-logo.svg"
+      ],
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.ristorantepizzeriatre.it/img/brand/tre-logo.svg"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Via Statale, 44",
+        "addressLocality": "Merate",
+        "addressRegion": "LC",
+        "postalCode": "23807",
+        "addressCountry": "IT"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 45.6983,
+        "longitude": 9.4183
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "12:00",
+          "closes": "14:30"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "19:00",
+          "closes": "23:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Saturday", "Sunday"],
+          "opens": "19:00",
+          "closes": "23:00"
+        }
+      ],
+      "priceRange": "€€",
+      "servesCuisine": ["Italiana", "Pizza", "Grill"],
+      "acceptsReservations": "True",
+      "hasMenu": [
+        {
+          "@type": "Menu",
+          "@id": "https://www.ristorantepizzeriatre.it/menu-pizze/",
+          "name": "Menù Pizze",
+          "url": "https://www.ristorantepizzeriatre.it/menu-pizze/"
+        },
+        {
+          "@type": "Menu",
+          "@id": "https://www.ristorantepizzeriatre.it/menu-alla-carta/",
+          "name": "Menù alla Carta",
+          "url": "https://www.ristorantepizzeriatre.it/menu-alla-carta/"
+        }
+      ],
+      "sameAs": [
+        "https://www.facebook.com/tregrill.merate/",
+        "https://www.instagram.com/tregrillpizzeria/"
+      ],
+      "paymentAccepted": "Cash, Credit Card, Debit Card",
+      "currenciesAccepted": "EUR",
+      "areaServed": {
+        "@type": "GeoCircle",
+        "geoMidpoint": {
+          "@type": "GeoCoordinates",
+          "latitude": 45.6983,
+          "longitude": 9.4183
+        },
+        "geoRadius": "20000"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.ristorantepizzeriatre.it/#website",
+      "url": "https://www.ristorantepizzeriatre.it/",
+      "name": "Ristorante Pizzeria TRE",
+      "description": "Sito ufficiale del Ristorante Pizzeria TRE a Merate",
+      "publisher": {
+        "@id": "https://www.ristorantepizzeriatre.it/#restaurant"
+      },
+      "inLanguage": "it-IT"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.ristorantepizzeriatre.it/#webpage",
+      "url": "https://www.ristorantepizzeriatre.it/",
+      "name": "Ristorante TRE Grill + Pizzeria - Merate (LC)",
+      "isPartOf": {
+        "@id": "https://www.ristorantepizzeriatre.it/#website"
+      },
+      "about": {
+        "@id": "https://www.ristorantepizzeriatre.it/#restaurant"
+      },
+      "description": "Homepage del Ristorante Pizzeria TRE a Merate. Scopri i menù, prenota eventi e vieni a gustare le nostre pizze cotte nel forno a legna.",
+      "inLanguage": "it-IT"
+    }
+  ]
+};
 ---
 
-<Layout>
-  <Fragment slot="head">
-    <title>Ristorante TRE Grill + Pizzeria - Merate - Lecco</title>
-    <meta
-      name="description"
-      content="Cucina tradizionale italiana, pizze nel forno a legna e carni alla griglia. Organizza eventi personalizzati o partecipa alle nostre cene a tema."
-    />
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://www.ristorantepizzeriatre.it/" />
-
-    <!-- Preload immagine HERO (LCP) -->
-    <link
-      rel="preload"
-      as="image"
-      href="/img/homepage/ristorante-pizzeria-tre-merate-esterno-hero-homepage.webp"
-      type="image/webp"
-    />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+<Layout 
+  title={seoData.title}
+  description={seoData.description}
+  canonical={seoData.canonical}
+  ogImage={seoData.ogImage}
+  preloadImage={seoData.preloadImage}
+>
+  <!-- Schema.org JSON-LD -->
+  <Fragment slot="schema">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
   </Fragment>
 
   <!-- Hero Section -->

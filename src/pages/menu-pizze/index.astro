@@ -1,24 +1,167 @@
 ﻿---
 import Layout from "../../layouts/Layout.astro";
+
+// SEO Data
+const seoData = {
+  title: "Menù Pizze Artigianali | a Legna - Pizzeria TRE Merate",
+  description: "Scopri il menù pizze del Ristorante TRE a Merate. Pizze artigianali in forno a legna con impasti a lunga lievitazione e ingredienti freschi.",
+  canonical: "https://www.ristorantepizzeriatre.it/menu-pizze/",
+  ogImage: "https://www.ristorantepizzeriatre.it/img/menu-pizze/menu-pizze-ristorante-pizzeria-tre-merate-hero.webp",
+  preloadImage: "/img/menu-pizze/menu-pizze-ristorante-pizzeria-tre-merate-hero.webp",
+};
+
+// Schema.org per Menu + BreadcrumbList
+const schemaOrg = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Menu",
+      "@id": "https://www.ristorantepizzeriatre.it/menu-pizze/#menu",
+      "name": "Menù Pizze - Ristorante Pizzeria TRE",
+      "description": "Menù delle pizze cotte nel forno a legna con impasti a lunga lievitazione, disponibili presso il Ristorante Pizzeria TRE a Merate.",
+      "url": "https://www.ristorantepizzeriatre.it/menu-pizze/",
+      "mainEntityOfPage": "https://www.ristorantepizzeriatre.it/menu-pizze/",
+      "inLanguage": "it-IT",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "EUR"
+      },
+      "hasMenuSection": [
+        {
+          "@type": "MenuSection",
+          "name": "Pizze Tradizionali",
+          "description": "Pizze classiche preparate con impasto a lunga lievitazione e ingredienti freschi",
+          "hasMenuItem": [
+            {
+              "@type": "MenuItem",
+              "name": "Margherita",
+              "description": "mozzarella e pomodoro",
+              "offers": {
+                "@type": "Offer",
+                "price": "7.00",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Prosciutto Cotto",
+              "description": "mozzarella, pomodoro e prosciutto cotto",
+              "offers": {
+                "@type": "Offer",
+                "price": "9.50",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Bufalina",
+              "description": "mozzarella, pomodoro, mozzarella di bufala e pomodorini",
+              "offers": {
+                "@type": "Offer",
+                "price": "9.50",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "4 Formaggi",
+              "description": "mozzarella, zola, scamorza affumicata di Battipaglia, taleggio",
+              "offers": {
+                "@type": "Offer",
+                "price": "9.50",
+                "priceCurrency": "EUR"
+              }
+            }
+          ]
+        },
+        {
+          "@type": "MenuSection",
+          "name": "Pizze Speciali",
+          "description": "Pizze con ingredienti selezionati e combinazioni ricercate",
+          "hasMenuItem": [
+            {
+              "@type": "MenuItem",
+              "name": "Anchoas",
+              "description": "Pomodoro, mozz. di bufala DOP, origano, pomodori semi secchi, olive leccino, acciughe Cantabrico",
+              "offers": {
+                "@type": "Offer",
+                "price": "16.00",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Patanegra",
+              "description": "Mozzarella, pomodoro, paleta de cebo iberica",
+              "offers": {
+                "@type": "Offer",
+                "price": "15.00",
+                "priceCurrency": "EUR"
+              }
+            }
+          ]
+        },
+        {
+          "@type": "MenuSection",
+          "name": "I Filoncini",
+          "description": "Calzoni croccanti all'esterno e soffici all'interno"
+        },
+        {
+          "@type": "MenuSection",
+          "name": "Pizze Vegetariane e Vegane",
+          "description": "Pizze preparate con ingredienti genuini e naturali"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.ristorantepizzeriatre.it/menu-pizze/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.ristorantepizzeriatre.it/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Menù Pizze",
+          "item": "https://www.ristorantepizzeriatre.it/menu-pizze/"
+        }
+      ]
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.ristorantepizzeriatre.it/menu-pizze/#webpage",
+      "url": "https://www.ristorantepizzeriatre.it/menu-pizze/",
+      "name": "Menù Pizze | Ristorante Pizzeria TRE Merate",
+      "isPartOf": {
+        "@id": "https://www.ristorantepizzeriatre.it/#website"
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://www.ristorantepizzeriatre.it/img/menu-pizze/menu-pizze-ristorante-pizzeria-tre-merate-hero.webp"
+      },
+      "breadcrumb": {
+        "@id": "https://www.ristorantepizzeriatre.it/menu-pizze/#breadcrumb"
+      },
+      "inLanguage": "it-IT"
+    }
+  ]
+};
 ---
 
-<Layout>
-  <Fragment slot="head">
-    <title>Menù Pizze - Forno a Legna e Impasti Artigianali - Pizzeria TRE</title>
-    <meta
-      name="description"
-      content="Scopri le nostre pizze. Cotte nel forno a legna. Impasti a lunga lievitazione e ingredienti freschi. Ordina online o prenota il tuo tavolo."
-    />
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://www.ristorantepizzeriatre.it/menu-pizze/" />
-
-    <!-- Preload immagine HERO (LCP) -->
-    <link
-      rel="preload"
-      as="image"
-      href="/img/menu-pizze/menu-pizze-ristorante-pizzeria-tre-merate-hero.webp"
-      type="image/webp"
-    />
+<Layout 
+  title={seoData.title}
+  description={seoData.description}
+  canonical={seoData.canonical}
+  ogImage={seoData.ogImage}
+  preloadImage={seoData.preloadImage}
+>
+  <!-- Schema.org JSON-LD -->
+  <Fragment slot="schema">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
   </Fragment>
 
   <!-- Hero Section -->

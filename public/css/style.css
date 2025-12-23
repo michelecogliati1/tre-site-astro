@@ -820,7 +820,7 @@ section { padding: 4rem 0; }
   }
 }
 
-/* Se ti è rimasto il layout “a due colonne” vecchio, lo neutralizziamo */
+/* Se ti ÃƒÆ’Ã‚Â¨ rimasto il layout ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œa due colonneÃƒÂ¢Ã¢â€šÂ¬Ã‚Â vecchio, lo neutralizziamo */
 .journey-container {
   display: block;
   text-align: center;
@@ -842,7 +842,7 @@ section { padding: 4rem 0; }
   color: var(--text-gray);
 }
 
-/* Nascondi immagine inline se ancora presente (ora è background) */
+/* Nascondi immagine inline se ancora presente (ora ÃƒÆ’Ã‚Â¨ background) */
 .journey-image { display: none; }
 
 /* ===== GALLERY SECTION ===== */
@@ -859,7 +859,7 @@ section { padding: 4rem 0; }
   .gallery-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
-/* Verticale ma più “compatta” */
+/* Verticale ma piÃƒÆ’Ã‚Â¹ ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œcompattaÃƒÂ¢Ã¢â€šÂ¬Ã‚Â */
 .gallery-item {
   height: auto;
   aspect-ratio: 4 / 5;
@@ -1177,22 +1177,33 @@ section { padding: 4rem 0; }
 }
 
 .carousel-container {
-  overflow: hidden;
   width: 100%;
-
-  /* anti-clipping (pulito) */
   padding: 12px 0;
   margin: 0;
+  
+  /* Scroll nativo su tutti i breakpoint */
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.carousel-container::-webkit-scrollbar {
+  display: none;
 }
 
 .carousel-track {
   display: flex;
-  transition: transform 0.5s ease-in-out;
   gap: 2rem;
   align-items: stretch;
 }
 
-.carousel-track.no-transition { transition: none; }
+/* Scroll-snap per le card */
+.carousel-track > * {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
 
 /* Carousel Arrows */
 .carousel-arrow {
@@ -1219,6 +1230,21 @@ section { padding: 4rem 0; }
   transform: translateY(-50%) scale(1.1);
 }
 
+/* Frecce disabilitate (inizio/fine scroll) */
+.carousel-arrow[aria-disabled="true"] {
+  opacity: 0.35;
+  pointer-events: none;
+  cursor: default;
+}
+
+/* Desktop: frecce disabilitate mantengono transform verticale */
+@media (min-width: 769px) {
+  .carousel-arrow[aria-disabled="true"]:hover {
+    transform: translateY(-50%);
+    background-color: var(--primary-color);
+  }
+}
+
 .carousel-arrow-left { left: 0; }
 .carousel-arrow-right { right: 0; }
 
@@ -1230,11 +1256,11 @@ section { padding: 4rem 0; }
     bottom: 10px;
     width: 45px;
     height: 45px;
-    transform: none; /* base */
   }
 
   .carousel-arrow-left {
     left: 50%;
+    right: auto;
     transform: translateX(-60px);
   }
 
@@ -1244,12 +1270,30 @@ section { padding: 4rem 0; }
     transform: translateX(15px);
   }
 
-  .carousel-arrow:hover {
+  /* Hover - mantiene la posizione base con scale */
+  .carousel-arrow-left:hover {
     transform: translateX(-60px) scale(1.1);
   }
 
   .carousel-arrow-right:hover {
     transform: translateX(15px) scale(1.1);
+  }
+
+  /* Frecce disabilitate su mobile - mantengono la posizione */
+  .carousel-arrow-left[aria-disabled="true"] {
+    transform: translateX(-60px);
+  }
+
+  .carousel-arrow-right[aria-disabled="true"] {
+    transform: translateX(15px);
+  }
+
+  .carousel-arrow-left[aria-disabled="true"]:hover {
+    transform: translateX(-60px);
+  }
+
+  .carousel-arrow-right[aria-disabled="true"]:hover {
+    transform: translateX(15px);
   }
 }
 
@@ -1309,25 +1353,17 @@ section { padding: 4rem 0; }
   }
 
   .carousel-container {
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-
-    /* snap/scroll "centrato" + padding coerente */
+    /* Mobile: scroll-padding per centratura */
     scroll-padding: 0 var(--padding-mobile);
   }
 
-  .carousel-container::-webkit-scrollbar { display: none; }
-
-  /* gutter laterale + gap un po' più stretto */
+  /* gutter laterale + gap piÃ¹ stretto */
   .carousel-track {
     padding: 0 var(--padding-mobile);
     gap: 1.25rem;
   }
 
-  /* card più stretta del viewport per far vedere aria ai lati */
+  /* card piÃ¹ stretta del viewport per far vedere aria ai lati */
   .carousel-track .menu-card,
   .carousel-track .event-card,
   .carousel-track .gallery-item {
@@ -1379,7 +1415,7 @@ section { padding: 4rem 0; }
   }
 }
 
-/* +++ FIX: Gallery più “piccola” e non sborda (4 card desktop) +++ */
+/* +++ FIX: Gallery piÃƒÆ’Ã‚Â¹ ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œpiccolaÃƒÂ¢Ã¢â€šÂ¬Ã‚Â e non sborda (4 card desktop) +++ */
 .carousel-track.gallery-grid .gallery-item {
   flex: 0 0 calc((100% - 6rem) / 4);
 }
@@ -1400,19 +1436,6 @@ section { padding: 4rem 0; }
   .carousel-track.gallery-grid .gallery-item {
     flex: 0 0 calc(100% - (2 * var(--padding-mobile)));
   }
-}
-
-/* Animations */
-@keyframes slideIn {
-  from { opacity: 0; transform: translateX(30px); }
-  to   { opacity: 1; transform: translateX(0); }
-}
-
-.carousel-track > * { animation: slideIn 0.5s ease-out; }
-
-
-@media (max-width: 768px) {
-  .carousel-track { transform: none !important; }
 }
 
 /* ===== MENU PIZZE PAGE STYLES ===== */
@@ -1835,9 +1858,8 @@ section { padding: 4rem 0; }
 }
 
 .feature-image {
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  border-radius: 0;
+  overflow: visible;
 }
 
 .feature-image img {
