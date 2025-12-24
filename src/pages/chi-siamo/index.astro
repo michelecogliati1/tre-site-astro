@@ -1,13 +1,266 @@
 ﻿---
 import Layout from "../../layouts/Layout.astro";
-const title = "chi-siamo | Ristorante TRE";
-const h1 = "chi-siamo";
+
+// SEO Data
+const seoData = {
+  title: "Tradizione e Passione dal 1953 - Ristorante TRE Grill + Pizzeria",
+  description: "Scopri la storia del Ristorante Pizzeria Tre, erede del Ristorante Passone. Da oltre 70 anni, offriamo cucina italiana autentica e ospitalità.",
+  canonical: "https://www.ristorantepizzeriatre.it/chi-siamo/",
+  ogImage: "https://www.ristorantepizzeriatre.it/img/chi-siamo/chi-siamo-ristorante-pizzeria-tre-merate-hero.webp",
+  preloadImage: "/img/chi-siamo/chi-siamo-ristorante-pizzeria-tre-merate-hero.webp",
+};
+
+// Schema.org per AboutPage + Restaurant + BreadcrumbList
+const schemaOrg = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "AboutPage",
+      "@id": "https://www.ristorantepizzeriatre.it/chi-siamo/#aboutpage",
+      "url": "https://www.ristorantepizzeriatre.it/chi-siamo/",
+      "name": "Chi Siamo - La Nostra Storia | Ristorante Pizzeria TRE Merate",
+      "description": "Scopri la storia del Ristorante Pizzeria Tre, erede del Ristorante Passone. Da oltre 70 anni, offriamo cucina italiana autentica e ospitalità a Merate.",
+      "isPartOf": {
+        "@id": "https://www.ristorantepizzeriatre.it/#website"
+      },
+      "about": {
+        "@id": "https://www.ristorantepizzeriatre.it/#restaurant"
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://www.ristorantepizzeriatre.it/img/chi-siamo/chi-siamo-ristorante-pizzeria-tre-merate-hero.webp"
+      },
+      "breadcrumb": {
+        "@id": "https://www.ristorantepizzeriatre.it/chi-siamo/#breadcrumb"
+      },
+      "inLanguage": "it-IT"
+    },
+    {
+      "@type": "Restaurant",
+      "@id": "https://www.ristorantepizzeriatre.it/#restaurant",
+      "name": "Ristorante Pizzeria TRE",
+      "alternateName": "TRE Grill + Pizzeria",
+      "description": "Ristorante e pizzeria a Merate con oltre 70 anni di tradizione. Erede del Ristorante Passone dal 1953, offriamo cucina italiana autentica, pizza cotta nel forno a legna e carni alla griglia.",
+      "url": "https://www.ristorantepizzeriatre.it/",
+      "telephone": "+39 039 990 9913",
+      "email": "info@ristorantepizzeriatre.it",
+      "foundingDate": "2003",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Via Statale, 44",
+        "addressLocality": "Merate",
+        "addressRegion": "LC",
+        "postalCode": "23807",
+        "addressCountry": "IT"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 45.6983,
+        "longitude": 9.4183
+      },
+      "servesCuisine": ["Italiana", "Pizza", "Grill"],
+      "priceRange": "€€",
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "12:00",
+          "closes": "14:30"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "19:00",
+          "closes": "23:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Saturday", "Sunday"],
+          "opens": "19:00",
+          "closes": "23:00"
+        }
+      ],
+      "image": [
+        "https://www.ristorantepizzeriatre.it/img/chi-siamo/chi-siamo-ristorante-pizzeria-tre-merate-hero.webp",
+        "https://www.ristorantepizzeriatre.it/img/chi-siamo/team-chi-siamo-ristorante-pizzeria-tre-merate-hero.webp"
+      ],
+      "sameAs": [
+        "https://www.facebook.com/tregrill.merate/",
+        "https://www.instagram.com/tregrillpizzeria/"
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.ristorantepizzeriatre.it/chi-siamo/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.ristorantepizzeriatre.it/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Chi Siamo",
+          "item": "https://www.ristorantepizzeriatre.it/chi-siamo/"
+        }
+      ]
+    }
+  ]
+};
 ---
 
-<Layout title={title} description="Pagina in allestimento.">
-  <section class="container" style="padding: 140px 0 80px; text-align:center;">
-    <h1>{h1}</h1>
-    <p>Pagina in allestimento.</p>
-    <p><a href="/" class="btn btn-primary">Torna alla Home</a></p>
+<Layout 
+  title={seoData.title}
+  description={seoData.description}
+  canonical={seoData.canonical}
+  ogImage={seoData.ogImage}
+  preloadImage={seoData.preloadImage}
+>
+  <!-- Schema.org JSON-LD -->
+  <Fragment slot="schema">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
+  </Fragment>
+
+  <!-- Hero Section -->
+  <section class="hero hero-chi-siamo">
+    <div class="container hero-content">
+      <h1>La Nostra Storia: Tradizione<br />e Passione dal 1953</h1>
+      <p>
+        Ospitalità, passione per la cucina e piatti<br />
+        autentici da oltre 70 anni
+      </p>
+      <div class="hero-buttons">
+        <a href="/#prenota" class="btn btn-primary">Prenota Ora</a>
+        <a href="/#scopri-menu" class="btn btn-outline">Scopri il Menù</a>
+      </div>
+    </div>
   </section>
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li aria-current="page">Chi Siamo</li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- Sezione Intro: Ospitalità, Tradizione e Innovazione -->
+  <section class="chi-siamo-intro">
+    <div class="container">
+      <div class="section-header">
+        <h2>Ospitalità, Tradizione e Innovazione</h2>
+        <p>
+          Combinando tradizione e innovazione, ci impegniamo a far sentire ogni ospite come a 
+          casa, offrendo piatti di qualità e un servizio sempre attento.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Sezione Storia: Dalle Radici del Passone -->
+  <section class="feature-section">
+    <div class="container">
+      <div class="feature-grid">
+        <div class="feature-content">
+          <h2>Dalle Radici del Passone<br />al Ristorante Pizzeria Tre</h2>
+          <p class="feature-intro">
+            Dal 1953 con il Ristorante Passone, portiamo avanti la nostra passione per la cucina italiana. 
+            Dopo 50 anni di esperienza, nasce il Ristorante Pizzeria Tre nel 2003, unendo tradizione e 
+            modernità per offrire un'esperienza culinaria accogliente e informale.
+          </p>
+        </div>
+        <div class="feature-image">
+          <img 
+            src="/img/chi-siamo/radici-ristorante-passone-ristorante-pizzeria-tre-chi-siamo.webp" 
+            alt="Le radici storiche del Ristorante Passone - Storia del Ristorante Pizzeria TRE a Merate"
+            loading="lazy"
+            decoding="async"
+            width="600"
+            height="400"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Sezione Ingredienti Freschi -->
+  <section class="feature-section feature-section-reverse">
+    <div class="container">
+      <div class="feature-grid feature-grid-reverse">
+        <div class="feature-image">
+          <img 
+            src="/img/chi-siamo/ingredienti-freschi-piatti-autentici-ristorante-pizzeria-tre-merate-chi-siamo.webp" 
+            alt="Ingredienti freschi e piatti autentici preparati dagli chef del Ristorante Pizzeria TRE"
+            loading="lazy"
+            decoding="async"
+            width="600"
+            height="400"
+          />
+        </div>
+        <div class="feature-content">
+          <h2>Ingredienti Freschi<br />e Piatti Autentici</h2>
+          <p class="feature-intro">
+            Ogni piatto, dalle pizze alle specialità dei nostri chef, è preparato con 
+            ingredienti freschi, spesso locali.
+          </p>
+          <p class="feature-intro">
+            Selezioniamo solo il meglio per offrire sapori autentici, sempre.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Sezione Il Nostro Team - Stile CTA Full Width -->
+  <section class="cta-section cta-section-team">
+    <div class="container">
+      <h2>Il Nostro Team</h2>
+      <p>
+        Il nostro team lavora con passione e dedizione per garantirti 
+        un'esperienza indimenticabile, sia in sala che in cucina.
+      </p>
+      <a href="/" class="btn btn-primary">I Nostri Servizi</a>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
 </Layout>
+
+<style>
+  /* Hero Chi Siamo - SOLO override del background-image */
+  .hero-chi-siamo {
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.62)),
+      url('/img/chi-siamo/chi-siamo-ristorante-pizzeria-tre-merate-hero.webp');
+  }
+
+  /* Sezione Intro */
+  .chi-siamo-intro {
+    padding: 4rem 0;
+    background-color: var(--bg-white);
+  }
+
+  @media (min-width: 768px) {
+    .chi-siamo-intro {
+      padding: 5rem 0;
+    }
+  }
+
+  /* CTA Team - SOLO override del background-image */
+  .cta-section-team {
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)),
+      url('/img/chi-siamo/team-chi-siamo-ristorante-pizzeria-tre-merate-hero.webp');
+  }
+</style>

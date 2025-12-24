@@ -1,13 +1,885 @@
 ﻿---
 import Layout from "../../layouts/Layout.astro";
-const title = "meeting-cene-aziendali | Ristorante TRE";
-const h1 = "meeting-cene-aziendali";
+
+// SEO Data
+const seoData = {
+  title: "Organizza Meeting e Cene Aziendali - TRE Grill + Pizzeria",
+  description: "Personalizza il tuo meeting con le nostre formule: Cena Gourmet, Pizza Party o Rinfresco Aziendale. Richiedi ora un preventivo online!",
+  canonical: "https://www.ristorantepizzeriatre.it/meeting-cene-aziendali/",
+  ogImage: "https://www.ristorantepizzeriatre.it/img/meeting/menu-meeting-cene-aziendali-ristorante-pizzeria-tre-hero.webp",
+  preloadImage: "/img/meeting/menu-meeting-cene-aziendali-ristorante-pizzeria-tre-hero.webp",
+};
+
+// Schema.org per Service + BreadcrumbList + FAQPage
+const schemaOrg = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Service",
+      "@id": "https://www.ristorantepizzeriatre.it/meeting-cene-aziendali/#service",
+      "name": "Meeting e Cene Aziendali - Ristorante Pizzeria TRE",
+      "description": "Organizza meeting e cene aziendali al Ristorante Pizzeria TRE a Merate. Formule personalizzate con menù gourmet, attrezzature tecnologiche e servizio dedicato per il business.",
+      "url": "https://www.ristorantepizzeriatre.it/meeting-cene-aziendali/",
+      "serviceType": "Organizzazione Meeting e Cene Aziendali",
+      "provider": {
+        "@id": "https://www.ristorantepizzeriatre.it/#restaurant"
+      },
+      "areaServed": {
+        "@type": "GeoCircle",
+        "geoMidpoint": {
+          "@type": "GeoCoordinates",
+          "latitude": 45.6983,
+          "longitude": 9.4183
+        },
+        "geoRadius": "30000"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Formule Meeting Aziendali",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Cena Business Gourmet",
+              "description": "Menù completo con antipasto, primo, secondo, dessert, caffè e bevande incluse. Ideale per cene aziendali eleganti."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Strumenti Tecnologici",
+              "description": "Proiettori, schermi video, connessione Wi-Fi e attrezzature tecniche per presentazioni aziendali."
+            }
+          }
+        ]
+      },
+      "amenityFeature": [
+        {
+          "@type": "LocationFeatureSpecification",
+          "name": "Wi-Fi Gratuito",
+          "value": true
+        },
+        {
+          "@type": "LocationFeatureSpecification",
+          "name": "Proiettore",
+          "value": true
+        },
+        {
+          "@type": "LocationFeatureSpecification",
+          "name": "Schermo per Presentazioni",
+          "value": true
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.ristorantepizzeriatre.it/meeting-cene-aziendali/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.ristorantepizzeriatre.it/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Meeting e Cene Aziendali",
+          "item": "https://www.ristorantepizzeriatre.it/meeting-cene-aziendali/"
+        }
+      ]
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.ristorantepizzeriatre.it/meeting-cene-aziendali/#webpage",
+      "url": "https://www.ristorantepizzeriatre.it/meeting-cene-aziendali/",
+      "name": "Organizza Meeting e Cene Aziendali | Ristorante Pizzeria TRE Merate",
+      "isPartOf": {
+        "@id": "https://www.ristorantepizzeriatre.it/#website"
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://www.ristorantepizzeriatre.it/img/meeting/menu-meeting-cene-aziendali-ristorante-pizzeria-tre-hero.webp"
+      },
+      "breadcrumb": {
+        "@id": "https://www.ristorantepizzeriatre.it/meeting-cene-aziendali/#breadcrumb"
+      },
+      "inLanguage": "it-IT"
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://www.ristorantepizzeriatre.it/meeting-cene-aziendali/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Quali attrezzature tecnologiche sono disponibili per i meeting?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Offriamo proiettori e schermi video per presentazioni, connessione Wi-Fi sempre disponibile, prese elettriche, adattatori e supporto tecnico in loco."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "È possibile personalizzare il menù per la cena aziendale?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sì, tutti i nostri menù sono completamente personalizzabili in base alle esigenze dell'azienda e alle preferenze alimentari dei partecipanti."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Quante persone può ospitare il locale per un meeting aziendale?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Il nostro locale può ospitare gruppi di varie dimensioni. Contattaci per un preventivo personalizzato in base al numero di partecipanti."
+          }
+        }
+      ]
+    }
+  ]
+};
 ---
 
-<Layout title={title} description="Pagina in allestimento.">
-  <section class="container" style="padding: 140px 0 80px; text-align:center;">
-    <h1>{h1}</h1>
-    <p>Pagina in allestimento.</p>
-    <p><a href="/" class="btn btn-primary">Torna alla Home</a></p>
+<Layout 
+  title={seoData.title}
+  description={seoData.description}
+  canonical={seoData.canonical}
+  ogImage={seoData.ogImage}
+  preloadImage={seoData.preloadImage}
+>
+  <!-- Schema.org JSON-LD -->
+  <Fragment slot="schema">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
+  </Fragment>
+
+  <!-- Hero Section -->
+  <section class="hero hero-meeting">
+    <div class="container hero-content">
+      <h1>Organizza il tuo Meeting<br />o Cena Aziendale</h1>
+      <p>
+        Rendi i tuoi meeting e cene aziendali momenti speciali, con menù personalizzati e<br />
+        soluzioni pensate per il business. Scopri le nostre proposte dedicate alle aziende.
+      </p>
+      <div class="hero-buttons">
+        <a href="#formule" class="btn btn-primary">Scopri la Formula</a>
+        <a href="/contatti/?evento=meeting#preventivo" class="btn btn-outline">Richiedi Preventivo</a>
+      </div>
+    </div>
   </section>
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li aria-current="page">Meeting e Cene Aziendali</li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- Menu Secondario Sticky -->
+  <nav class="submenu-sticky" id="submenu-sticky">
+    <div class="container">
+      <ul class="submenu-list">
+        <li><a href="#gourmet" class="submenu-link active">Menù</a></li>
+        <li><a href="#servizi" class="submenu-link">Servizi</a></li>
+        <li><a href="#personalizza" class="submenu-link">Personalizza</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Cena Business Gourmet -->
+  <section class="formula-detail-section" id="formule">
+    <div class="container">
+      <div class="formula-detail-grid">
+        <div class="formula-detail-content">
+          <span class="formula-detail-badge">Business</span>
+          <h2>Cena Business Gourmet</h2>
+          <p class="formula-detail-intro">
+            Un menù completo per chi desidera una cena elegante e ricca. Ecco un esempio:
+          </p>
+          
+          <!-- Menu Example -->
+          <div class="menu-example">
+            <div class="menu-example-item">
+              <span class="menu-example-label">Antipasto</span>
+              <p>Tartare di fassona<br />e Salumi selezionati</p>
+            </div>
+            <div class="menu-example-divider">• • •</div>
+            <div class="menu-example-item">
+              <span class="menu-example-label">Primo</span>
+              <p>Gnocchi di patate fatti in casa<br />al ragù d'anatra e scamorza</p>
+            </div>
+            <div class="menu-example-divider">• • •</div>
+            <div class="menu-example-item">
+              <span class="menu-example-label">Secondo</span>
+              <p>Tagliata di manzo con patate al forno</p>
+            </div>
+            <div class="menu-example-divider">• • •</div>
+            <div class="menu-example-item">
+              <span class="menu-example-label">Dessert</span>
+              <p>Caffè e Bevande incluse</p>
+            </div>
+          </div>
+        </div>
+        <div class="formula-detail-image">
+          <img 
+            src="/img/meeting/menu-meeting-cene-aziendali-gourmet-ristorante-pizzeria-tre-merate.webp" 
+            alt="Menù Cena Business Gourmet - Meeting Aziendali Ristorante TRE Merate"
+            loading="lazy"
+            decoding="async"
+            width="600"
+            height="450"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner - Eventi Business su misura -->
+  <section class="cta-banner">
+    <div class="container">
+      <div class="cta-banner-content">
+        <div class="cta-banner-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 7h-9M14 17H5"/>
+            <circle cx="17" cy="17" r="3"/>
+            <circle cx="7" cy="7" r="3"/>
+          </svg>
+        </div>
+        <div class="cta-banner-text">
+          <h3>Eventi Business su misura alla TRE</h3>
+          <p>Contattaci per richiedere un preventivo personalizzato.</p>
+        </div>
+        <a href="/contatti/?evento=meeting#preventivo" class="btn btn-primary">Richiedi Preventivo</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Strumenti Tecnologici per i Tuoi Meeting -->
+  <section class="feature-section" id="servizi">
+    <div class="container">
+      <div class="section-header">
+        <h2>Strumenti Tecnologici per i Tuoi Meeting</h2>
+        <p>
+          Per garantire la massima efficienza durante il tuo meeting o cena aziendale, offriamo una<br />
+          gamma di servizi professionali su richiesta, tra cui:
+        </p>
+      </div>
+
+      <!-- Grid Servizi -->
+      <div class="services-grid">
+        <!-- Proiettori e Schermi -->
+        <div class="service-card">
+          <div class="service-card-image">
+            <img 
+              src="/img/meeting/prioiettori-schermi-video-meeting-cene-aziendali-ristorante-pizzeria-tre-merate.webp" 
+              alt="Proiettori e Schermi per Video - Meeting Aziendali TRE Merate"
+              loading="lazy"
+              decoding="async"
+              width="400"
+              height="280"
+            />
+          </div>
+          <div class="service-card-content">
+            <h3>Proiettori<br />e Schermi<br />per Video</h3>
+            <p>Ideali per proiezioni di contenuti multimediali durante le presentazioni.</p>
+          </div>
+        </div>
+
+        <!-- Connessione Wi-Fi -->
+        <div class="service-card">
+          <div class="service-card-image">
+            <img 
+              src="/img/meeting/connessione-wi-fi-meeting-cene-aziendali-ristorante-pizzeria-tre-merate.webp" 
+              alt="Connessione Wi-Fi Meeting Aziendali - Ristorante TRE Merate"
+              loading="lazy"
+              decoding="async"
+              width="400"
+              height="280"
+            />
+          </div>
+          <div class="service-card-content">
+            <h3>Connessione<br />Wi-Fi sempre<br />disponibile</h3>
+            <p>Per navigare e lavorare con tranquillità.</p>
+          </div>
+        </div>
+
+        <!-- Attrezzature Tecniche -->
+        <div class="service-card">
+          <div class="service-card-image">
+            <img 
+              src="/img/meeting/attrezzature-tecniche-meeting-cene-aziendali-ristorante-pizzeria-tre-merate.webp" 
+              alt="Attrezzature Tecniche Business - Meeting Aziendali TRE Merate"
+              loading="lazy"
+              decoding="async"
+              width="400"
+              height="280"
+            />
+          </div>
+          <div class="service-card-content">
+            <h3>Attrezzature<br />Tecniche per<br />Business</h3>
+            <p>Disponibilità di prese elettriche, adattatori e supporto tecnico in loco.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Personalizza il Tuo Meeting o Cena Aziendale -->
+  <section class="feature-section feature-section-alt" id="personalizza">
+    <div class="container">
+      <div class="personalizza-grid">
+        <!-- Colonna Sinistra: Testo + Steps -->
+        <div class="personalizza-content">
+          <h2>Personalizza il Tuo Meeting o Cena Aziendale</h2>
+          <p class="personalizza-intro">
+            Scegli la formula più adatta al tuo evento aziendale, personalizza il menù e lascia che il nostro team si occupi di tutto, garantendo un servizio impeccabile.
+          </p>
+          
+          <!-- Steps Numerati -->
+          <div class="personalizza-steps">
+            <div class="step-item">
+              <div class="step-circle">1</div>
+              <div class="step-content">
+                <strong>Richiedi un Preventivo</strong>
+                <p>Compila il form con le tue esigenze</p>
+              </div>
+              <div class="step-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                  <polyline points="14,2 14,8 20,8"/>
+                  <line x1="16" y1="13" x2="8" y2="13"/>
+                  <line x1="16" y1="17" x2="8" y2="17"/>
+                  <polyline points="10,9 9,9 8,9"/>
+                </svg>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-circle">2</div>
+              <div class="step-content">
+                <strong>Scegli la Formula</strong>
+                <p>Seleziona il menù ideale per il tuo evento</p>
+              </div>
+              <div class="step-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="11" cy="11" r="8"/>
+                  <path d="m21 21-4.35-4.35"/>
+                </svg>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-circle">3</div>
+              <div class="step-content">
+                <strong>Personalizza il Menù</strong>
+                <p>Adatta i piatti alle tue preferenze</p>
+              </div>
+              <div class="step-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Colonna Destra: Immagine -->
+        <div class="personalizza-image">
+          <img 
+            src="/img/meeting/personalizza-meeting-cene-aziendali-ristorante-pizzeria-tre-merate.webp" 
+            alt="Personalizza il tuo Meeting o Cena Aziendale - Ristorante TRE Merate"
+            loading="lazy"
+            decoding="async"
+            width="600"
+            height="450"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Preventivo Hero -->
+  <section class="cta-preventivo-hero" id="preventivo-cta">
+    <div class="container">
+      <div class="cta-preventivo-hero-content">
+        <h2>Richiedi un Preventivo Personalizzato</h2>
+        <p>
+          Compila il modulo per ricevere un preventivo su misura per il tuo meeting o cena aziendale.
+        </p>
+        <a href="/contatti/?evento=meeting#preventivo" class="btn btn-primary btn-lg">Richiedi Preventivo</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sticky CTA Bottom -->
+  <div class="sticky-cta-bottom" id="sticky-cta">
+    <div class="container">
+      <div class="sticky-cta-container">
+        <div class="sticky-cta-logo">
+          <img src="/img/brand/tre-logo.svg" alt="TRE" width="80" height="45" />
+        </div>
+        <div class="sticky-cta-content">
+          <span class="sticky-cta-title">Meeting e Cene Aziendali</span>
+          <span class="sticky-cta-subtitle">Richiedi un preventivo personalizzato</span>
+        </div>
+        <a href="/contatti/?evento=meeting#preventivo" class="btn btn-primary sticky-cta-btn">Preventivo</a>
+      </div>
+    </div>
+  </div>
 </Layout>
+
+<style>
+  /* Hero Meeting */
+  .hero-meeting {
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+      url('/img/meeting/menu-meeting-cene-aziendali-ristorante-pizzeria-tre-hero.webp');
+  }
+
+  /* Menu Example Divider */
+  .menu-example-divider {
+    text-align: center;
+    color: var(--primary-color);
+    font-size: 12px;
+    letter-spacing: 0.3em;
+    padding: 0.5rem 0;
+    opacity: 0.6;
+  }
+
+  /* CTA Banner */
+  .cta-banner {
+    background-color: var(--bg-dark);
+    padding: 2.5rem 0;
+  }
+
+  .cta-banner-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    text-align: center;
+  }
+
+  @media (min-width: 768px) {
+    .cta-banner-content {
+      flex-direction: row;
+      justify-content: center;
+      text-align: left;
+      gap: 2rem;
+    }
+  }
+
+  .cta-banner-icon {
+    flex-shrink: 0;
+    width: 70px;
+    height: 70px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-white);
+  }
+
+  .cta-banner-text h3 {
+    font-size: 24px;
+    color: var(--text-white);
+    margin-bottom: 0.25rem;
+  }
+
+  .cta-banner-text p {
+    font-size: 16px;
+    color: var(--text-gray);
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .cta-banner-text h3 {
+      font-size: 20px;
+    }
+  }
+
+  /* Feature Section */
+  .feature-section {
+    padding: 4rem 0;
+    background-color: var(--bg-white);
+    scroll-margin-top: 200px;
+  }
+
+  .feature-section-alt {
+    background-color: var(--bg-light);
+  }
+
+  @media (min-width: 768px) {
+    .feature-section {
+      padding: 5rem 0;
+    }
+  }
+
+  @media (min-width: 992px) {
+    .feature-section {
+      scroll-margin-top: 210px;
+    }
+  }
+
+  /* Services Grid - 3 colonne desktop, impilate mobile */
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .services-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+  }
+
+  /* Service Cards */
+  .service-card {
+    background-color: var(--bg-white);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+  }
+
+  .service-card-image {
+    height: 200px;
+    overflow: hidden;
+  }
+
+  .service-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .service-card:hover .service-card-image img {
+    transform: scale(1.05);
+  }
+
+  .service-card-content {
+    padding: 1.5rem;
+    text-align: center;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .service-card-content h3 {
+    font-size: 20px;
+    line-height: 26px;
+    color: var(--text-dark);
+    margin-bottom: 0.75rem;
+  }
+
+  .service-card-content p {
+    font-size: 15px;
+    line-height: 22px;
+    color: var(--text-dark);
+    opacity: 0.75;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .service-card-image {
+      height: 180px;
+    }
+
+    .service-card-content h3 {
+      font-size: 18px;
+      line-height: 24px;
+    }
+
+    .service-card-content p {
+      font-size: 14px;
+      line-height: 20px;
+    }
+  }
+
+  /* Personalizza Grid */
+  .personalizza-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  @media (min-width: 992px) {
+    .personalizza-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+  }
+
+  .personalizza-content h2 {
+    font-size: 36px;
+    line-height: 44px;
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+  }
+
+  .personalizza-intro {
+    font-size: 18px;
+    line-height: 28px;
+    color: var(--text-dark);
+    opacity: 0.85;
+    margin-bottom: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .personalizza-content h2 {
+      font-size: 28px;
+      line-height: 36px;
+    }
+
+    .personalizza-intro {
+      font-size: 16px;
+      line-height: 26px;
+    }
+  }
+
+  /* Personalizza Steps */
+  .personalizza-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .personalizza-steps .step-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background-color: var(--bg-white);
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+  }
+
+  .personalizza-steps .step-item:hover {
+    transform: translateX(5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .personalizza-steps .step-circle {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    background-color: var(--primary-color);
+    color: var(--text-white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 700;
+    font-family: var(--font-main);
+  }
+
+  .personalizza-steps .step-content {
+    flex: 1;
+  }
+
+  .personalizza-steps .step-content strong {
+    display: block;
+    font-size: 17px;
+    color: var(--text-dark);
+    margin-bottom: 0.15rem;
+  }
+
+  .personalizza-steps .step-content p {
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--text-dark);
+    opacity: 0.7;
+    margin: 0;
+  }
+
+  .personalizza-steps .step-icon {
+    flex-shrink: 0;
+    color: var(--primary-color);
+    opacity: 0.5;
+  }
+
+  @media (max-width: 768px) {
+    .personalizza-steps .step-circle {
+      width: 40px;
+      height: 40px;
+      font-size: 16px;
+    }
+
+    .personalizza-steps .step-content strong {
+      font-size: 16px;
+    }
+
+    .personalizza-steps .step-icon {
+      display: none;
+    }
+  }
+
+  /* Personalizza Image */
+  .personalizza-image {
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .personalizza-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  @media (max-width: 991px) {
+    .personalizza-image {
+      order: -1;
+    }
+  }
+
+  /* CTA Preventivo Hero */
+  .cta-preventivo-hero {
+    color: var(--text-white);
+    text-align: center;
+
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)),
+      url('/img/meeting/richiedi-preventivo-meeting-cene-aziendali-ristorante-pizzeria-tre-merate.webp');
+    background-size: cover;
+    background-position: center;
+
+    min-height: clamp(420px, 50vh, 600px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 5rem 0;
+  }
+
+  @media (max-width: 768px) {
+    .cta-preventivo-hero {
+      min-height: clamp(380px, 45vh, 520px);
+      padding: 4rem 0;
+    }
+  }
+
+  .cta-preventivo-hero-content {
+    max-width: 800px;
+  }
+
+  .cta-preventivo-hero h2 {
+    margin-bottom: 1rem;
+    color: var(--text-white);
+  }
+
+  .cta-preventivo-hero p {
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    color: var(--text-gray);
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const header = document.getElementById('main-header');
+    const submenu = document.getElementById('submenu-sticky');
+    const submenuLinks = document.querySelectorAll('.submenu-link');
+    const sections = document.querySelectorAll('.formula-detail-section[id], .feature-section[id]');
+    
+    // Sticky CTA elements
+    const stickyCta = document.getElementById('sticky-cta');
+    const heroSection = document.querySelector('.hero');
+    const ctaPreventivoSection = document.querySelector('.cta-preventivo-hero');
+
+    // Calcola offset totale
+    const getOffset = () => {
+      const headerHeight = header ? header.offsetHeight : 0;
+      const submenuHeight = submenu ? submenu.offsetHeight : 0;
+      return headerHeight + submenuHeight + 40;
+    };
+
+    // Smooth scroll per submenu links
+    submenuLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href')?.substring(1);
+        const targetSection = document.getElementById(targetId || '');
+        
+        if (targetSection) {
+          const offset = getOffset();
+          const targetPosition = targetSection.getBoundingClientRect().top + window.scrollY - offset;
+          
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Active submenu link on scroll
+    const updateActiveLink = () => {
+      const scrollPosition = window.scrollY + getOffset() + 100;
+      
+      let currentSection = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        
+        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+          currentSection = section.getAttribute('id') || '';
+        }
+      });
+
+      submenuLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${currentSection}`) {
+          link.classList.add('active');
+        }
+      });
+    };
+
+    // Sticky CTA visibility
+    const updateStickyCta = () => {
+      if (!stickyCta || !heroSection) return;
+
+      const heroBottom = heroSection.getBoundingClientRect().bottom;
+      const ctaTop = ctaPreventivoSection ? ctaPreventivoSection.getBoundingClientRect().top : window.innerHeight + 1000;
+      const windowHeight = window.innerHeight;
+
+      // Show when hero is scrolled past, hide when CTA section is visible
+      if (heroBottom < 0 && ctaTop > windowHeight * 0.8) {
+        stickyCta.classList.add('visible');
+      } else {
+        stickyCta.classList.remove('visible');
+      }
+    };
+
+    // Event listeners
+    window.addEventListener('scroll', () => {
+      updateActiveLink();
+      updateStickyCta();
+    }, { passive: true });
+
+    // Initial calls
+    updateActiveLink();
+    updateStickyCta();
+  });
+</script>
