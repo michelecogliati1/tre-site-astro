@@ -1,13 +1,152 @@
 ﻿---
 import Layout from "../../layouts/Layout.astro";
-const title = "privacy-policy | Ristorante TRE";
-const h1 = "privacy-policy";
+
+// SEO Data
+const seoData = {
+  title: "Privacy Policy - Ristorante Pizzeria TRE Merate",
+  description: "Informativa sulla privacy e sul trattamento dei dati personali del Ristorante Pizzeria TRE a Merate.",
+  robots: "noindex, follow",
+  canonical: "https://www.ristorantepizzeriatre.it/privacy-policy/",
+};
 ---
 
-<Layout title={title} description="Pagina in allestimento.">
-  <section class="container" style="padding: 140px 0 80px; text-align:center;">
-    <h1>{h1}</h1>
-    <p>Pagina in allestimento.</p>
-    <p><a href="/" class="btn btn-primary">Torna alla Home</a></p>
+<Layout 
+  title={seoData.title}
+  description={seoData.description}
+  robots={seoData.robots}
+  canonical={seoData.canonical}
+>
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li aria-current="page">Privacy Policy</li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- Privacy Policy Content -->
+  <section class="policy-section">
+    <div class="container">
+      <div class="policy-content">
+        <h1>Privacy Policy</h1>
+        
+        <!-- 
+          =============================================
+          IUBENDA EMBED - ISTRUZIONI
+          =============================================
+          
+          1. Accedi al tuo account Iubenda
+          2. Vai su Privacy Policy > Integra
+          3. Copia il codice "Self-hosted" o "Direct text embedding"
+          4. Sostituisci il div sottostante con il codice Iubenda
+          
+          Esempio di codice Iubenda:
+          <a href="https://www.iubenda.com/privacy-policy/XXXXXXXX" 
+             class="iubenda-white iubenda-noiframe iubenda-embed iubenda-noiframe" 
+             title="Privacy Policy">Privacy Policy</a>
+          <script type="text/javascript">
+            (function (w,d) {
+              // script Iubenda...
+            })(window,document);
+          </script>
+          
+          =============================================
+        -->
+        
+        <div class="iubenda-embed-container" id="iubenda-privacy-policy">
+          <!-- Inserisci qui il codice embed di Iubenda per la Privacy Policy -->
+          <p class="policy-placeholder">
+            Il contenuto della Privacy Policy verrà caricato da Iubenda.<br>
+            Se non visualizzi il contenuto, <a href="https://www.iubenda.com" target="_blank" rel="noopener">clicca qui</a>.
+          </p>
+        </div>
+
+      </div>
+    </div>
   </section>
 </Layout>
+
+<style>
+  .policy-section {
+    padding: 3rem 0 5rem;
+    background-color: var(--bg-white);
+  }
+
+  @media (min-width: 768px) {
+    .policy-section {
+      padding: 4rem 0 6rem;
+    }
+  }
+
+  .policy-content {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .policy-content h1 {
+    font-size: 40px;
+    line-height: 48px;
+    margin-bottom: 2rem;
+    color: var(--text-dark);
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    .policy-content h1 {
+      font-size: 32px;
+      line-height: 40px;
+    }
+  }
+
+  /* Container per embed Iubenda */
+  .iubenda-embed-container {
+    background-color: var(--bg-light);
+    border-radius: 8px;
+    padding: 2rem;
+    min-height: 400px;
+  }
+
+  /* Stili per il contenuto generato da Iubenda */
+  .iubenda-embed-container h2,
+  .iubenda-embed-container h3 {
+    color: var(--text-dark);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .iubenda-embed-container p,
+  .iubenda-embed-container li {
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--text-dark);
+  }
+
+  .iubenda-embed-container ul,
+  .iubenda-embed-container ol {
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .iubenda-embed-container a {
+    color: var(--primary-color);
+    text-decoration: underline;
+  }
+
+  .iubenda-embed-container a:hover {
+    color: var(--primary-hover);
+  }
+
+  /* Placeholder mentre Iubenda non è integrato */
+  .policy-placeholder {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-dark);
+    opacity: 0.7;
+  }
+
+  .policy-placeholder a {
+    color: var(--primary-color);
+  }
+</style>
