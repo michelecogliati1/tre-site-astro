@@ -1,13 +1,93 @@
 ﻿---
 import Layout from "../../layouts/Layout.astro";
-const title = "ordine-asporto | Ristorante TRE";
-const h1 = "ordine-asporto";
+
+// SEO Data - noindex per thank you page
+const seoData = {
+  title: "Ordine Ricevuto - TRE Grill + Pizzeria",
+  description: "Grazie per il tuo ordine d'asporto al Ristorante Pizzeria TRE. Il tuo cibo sarà pronto per il ritiro all'orario selezionato.",
+  robots: "noindex, nofollow",
+  canonical: "https://www.ristorantepizzeriatre.it/ordine-asporto/",
+};
 ---
 
-<Layout title={title} description="Pagina in allestimento.">
-  <section class="container" style="padding: 140px 0 80px; text-align:center;">
-    <h1>{h1}</h1>
-    <p>Pagina in allestimento.</p>
-    <p><a href="/" class="btn btn-primary">Torna alla Home</a></p>
+<Layout 
+  title={seoData.title}
+  description={seoData.description}
+  robots={seoData.robots}
+  canonical={seoData.canonical}
+>
+  <!-- Hero Thank You -->
+  <section class="hero-thankyou">
+    <div class="container hero-thankyou-content">
+      <h1>Ordine Ricevuto!</h1>
+      <p>
+        Grazie per il tuo ordine! Il tuo cibo sarà pronto per il ritiro<br />
+        all'orario da te selezionato. Controlla l'email con il riepilogo dell'ordine.
+      </p>
+      <a href="/" class="btn btn-primary">Torna alla Homepage</a>
+    </div>
   </section>
 </Layout>
+
+<style>
+  .hero-thankyou {
+    color: var(--text-white);
+    text-align: center;
+
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+      url('/img/ordine-asporto/grazie-per-la-richiesta-ristorante-pizzeria-tre-merate.webp');
+    background-size: cover;
+    background-position: center;
+
+    min-height: clamp(500px, 70vh, 700px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 5rem 0;
+  }
+
+  @media (max-width: 768px) {
+    .hero-thankyou {
+      min-height: clamp(450px, 65vh, 600px);
+      padding: 4rem 0;
+    }
+  }
+
+  .hero-thankyou-content {
+    max-width: 800px;
+  }
+
+  .hero-thankyou h1 {
+    font-size: 48px;
+    font-weight: 600;
+    font-style: italic;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    color: var(--text-white);
+  }
+
+  @media (max-width: 768px) {
+    .hero-thankyou h1 {
+      font-size: 35px;
+    }
+  }
+
+  .hero-thankyou p {
+    font-size: 20px;
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+    color: var(--text-gray);
+  }
+
+  @media (max-width: 768px) {
+    .hero-thankyou p {
+      font-size: 18px;
+    }
+
+    .hero-thankyou p br {
+      display: none;
+    }
+  }
+</style>
