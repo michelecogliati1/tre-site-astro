@@ -102,7 +102,7 @@ const partners = [
   }
 ];
 
-// Schema.org per Event + BreadcrumbList
+// Schema.org
 const schemaOrg = {
   "@context": "https://schema.org",
   "@graph": [
@@ -110,7 +110,7 @@ const schemaOrg = {
       "@type": "Event",
       "@id": "https://www.ristorantepizzeriatre.it/cene-a-tema/#event-oktoberfest",
       "name": "Cena a Tema Oktoberfest",
-      "description": "Serata a tema bavarese con menù degustazione e birre artigianali selezionate. Aperitivo, antipasto, primo, secondo, dessert e caffè inclusi.",
+      "description": "Serata a tema bavarese con menù degustazione e birre artigianali selezionate.",
       "startDate": "2024-10-18T20:00:00+02:00",
       "endDate": "2024-10-18T23:30:00+02:00",
       "eventStatus": "https://schema.org/EventScheduled",
@@ -127,94 +127,20 @@ const schemaOrg = {
           "addressCountry": "IT"
         }
       },
-      "image": "https://www.ristorantepizzeriatre.it/img/cene-tema/cena-tema-oktoberfest-ristorante-pizzeria-tre-merate-hero.webp",
       "offers": {
         "@type": "Offer",
         "price": "50.00",
         "priceCurrency": "EUR",
-        "availability": "https://schema.org/InStock",
-        "validFrom": "2024-09-01"
-      },
-      "organizer": {
-        "@type": "Restaurant",
-        "name": "Ristorante Pizzeria TRE",
-        "url": "https://www.ristorantepizzeriatre.it/",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Via Statale, 44", 
-          "addressLocality": "Merate",
-          "addressRegion": "LC",
-          "postalCode": "23807",
-          "addressCountry": "IT"
-        }
+        "availability": "https://schema.org/InStock"
       }
-    },
-    {
-      "@type": "ItemList",
-      "@id": "https://www.ristorantepizzeriatre.it/cene-a-tema/#past-events",
-      "name": "Cene a Tema Passate",
-      "description": "Archivio delle cene a tema organizzate dal Ristorante Pizzeria TRE",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Oktoberfest",
-          "description": "Serata a tema bavarese - 18 Ottobre 2024"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "ArTRE - arte in pizzeria",
-          "description": "Arte e gastronomia - 16 Marzo 2023"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "Birra Vetra e Sapori Rustici",
-          "description": "Degustazione birre artigianali - 13 Settembre 2022"
-        },
-        {
-          "@type": "ListItem",
-          "position": 4,
-          "name": "Uniti per il Nepal - cena solidale",
-          "description": "Cena benefica - 16 Giugno 2015"
-        }
-      ]
     },
     {
       "@type": "BreadcrumbList",
       "@id": "https://www.ristorantepizzeriatre.it/cene-a-tema/#breadcrumb",
       "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Home",
-          "item": "https://www.ristorantepizzeriatre.it/"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Cene a Tema",
-          "item": "https://www.ristorantepizzeriatre.it/cene-a-tema/"
-        }
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.ristorantepizzeriatre.it/" },
+        { "@type": "ListItem", "position": 2, "name": "Cene a Tema", "item": "https://www.ristorantepizzeriatre.it/cene-a-tema/" }
       ]
-    },
-    {
-      "@type": "WebPage",
-      "@id": "https://www.ristorantepizzeriatre.it/cene-a-tema/#webpage",
-      "url": "https://www.ristorantepizzeriatre.it/cene-a-tema/",
-      "name": "Cene a Tema - Eccellenze del Territorio | Ristorante Pizzeria TRE Merate",
-      "isPartOf": {
-        "@id": "https://www.ristorantepizzeriatre.it/#website"
-      },
-      "primaryImageOfPage": {
-        "@type": "ImageObject",
-        "url": "https://www.ristorantepizzeriatre.it/img/cene-tema/cena-tema-ristorante-pizzeria-tre-merate-hero.webp"
-      },
-      "breadcrumb": {
-        "@id": "https://www.ristorantepizzeriatre.it/cene-a-tema/#breadcrumb"
-      },
-      "inLanguage": "it-IT"
     }
   ]
 };
@@ -230,6 +156,11 @@ const schemaOrg = {
   <!-- Schema.org JSON-LD -->
   <Fragment slot="schema">
     <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
+  </Fragment>
+
+  <!-- Brevo Form Styles (in head) -->
+  <Fragment slot="head">
+    <link rel="stylesheet" href="https://sibforms.com/forms/end-form/build/sib-styles.css">
   </Fragment>
 
   <!-- Hero Section -->
@@ -304,9 +235,7 @@ const schemaOrg = {
     <div class="container">
       <div class="section-header">
         <h2>Le Nostre Cene a Tema passate</h2>
-        <p>
-          Dai uno sguardo alle serate passate, con piatti unici e bevande abbinate per ogni tema
-        </p>
+        <p>Dai uno sguardo alle serate passate, con piatti unici e bevande abbinate per ogni tema</p>
       </div>
 
       <div class="carousel-wrapper">
@@ -320,14 +249,7 @@ const schemaOrg = {
           <div class="carousel-track">
             {cenePasate.map((cena) => (
               <div class="cena-passata-card">
-                <img
-                  src={cena.immagine}
-                  alt={`Cena a tema ${cena.titolo} - Ristorante TRE Merate`}
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="500"
-                />
+                <img src={cena.immagine} alt={`Cena a tema ${cena.titolo}`} loading="lazy" decoding="async" width="400" height="500" />
                 <div class="cena-passata-overlay">
                   <h3 class="cena-passata-titolo">{cena.titolo}</h3>
                   <p class="cena-passata-data">{cena.data}</p>
@@ -355,9 +277,7 @@ const schemaOrg = {
     <div class="container">
       <div class="section-header">
         <h2>I Nostri Partner</h2>
-        <p>
-          Dopo cena, se lo desideri, porta con te un ricordo speciale
-        </p>
+        <p>Dopo cena, se lo desideri, porta con te un ricordo speciale</p>
       </div>
 
       <div class="carousel-wrapper">
@@ -371,14 +291,7 @@ const schemaOrg = {
           <div class="carousel-track">
             {partners.map((partner) => (
               <div class="partner-card">
-                <img
-                  src={partner.logo}
-                  alt={`Logo ${partner.nome} - Partner Ristorante TRE`}
-                  loading="lazy"
-                  decoding="async"
-                  width="180"
-                  height="100"
-                />
+                <img src={partner.logo} alt={`Logo ${partner.nome}`} loading="lazy" decoding="async" width="180" height="100" />
               </div>
             ))}
           </div>
@@ -401,174 +314,287 @@ const schemaOrg = {
   <section class="cta-section cta-section-cene-tema">
     <div class="container">
       <h2>Prenota il Tuo Tavolo</h2>
-      <p>
-        Prenota comodamente online in pochi click o chiamaci per riservare il tuo tavolo
-      </p>
+      <p>Prenota comodamente online in pochi click o chiamaci per riservare il tuo tavolo</p>
       <a href="/contatti/" class="btn btn-primary">Prenota Ora</a>
     </div>
   </section>
 
   <div class="section-divider"></div>
 
-  <!-- Newsletter Cene a Tema - FORM CUSTOM + BREVO -->
+  <!-- ========================================
+       NEWSLETTER - FORM BREVO NATIVO + STYLING TRE
+       ======================================== -->
   <section class="newsletter-cene-section" id="newsletter-cene">
     <div class="container">
-      <div class="newsletter-form-wrapper">
-
-        <!-- Header -->
-        <div class="form-header">
-          <div class="form-logo">
-            <img src="/img/brand/tre-logo.svg" alt="Ristorante TRE" width="100" height="100" />
-          </div>
-          <h2>Ricevi Anteprima Cene a Tema</h2>
-          <div class="form-divider"></div>
-          <p>Iscriviti per ricevere in anteprima i menù e non perderti le prossime serate</p>
-        </div>
-
-        <!-- 
-          Form con submit NATIVO a Brevo.
-          Brevo processa il form e reindirizza automaticamente a /conferma-iscrizione-cene/
-          (configurato nel pannello Brevo come "Confirmation page URL")
-          NOTA: ID diverso da "newsletter-form" per evitare conflitto con main.js
-        -->
-        <form id="brevo-newsletter-form" 
-              action="https://c8d2f6e3.sibforms.com/serve/MUIFANv3tncnH7osbpBYwz2vOyLWFWrHEgvFIjza1AHGTUdE2ZjxGpVdBnw4x_waW8urYilQX8wfdnziQVmUxk0eoa_hMMVsDF6rcE8P44HtG6Oq88vnzYDtkiIfSGlGfDCIUMq7X-rC4xeW0glbmdfUtW5ilaSph4zl8U7rmgjnLBwbG-54YSWmrgFqbiwmclo7C4B7kaxE9P5O" 
-              method="POST">
+      
+      <!-- Begin Brevo Form - Struttura NATIVA Brevo con override CSS -->
+      <div class="sib-form">
+        <div id="sib-form-container" class="sib-form-container">
           
-          <!-- Nome e Cognome -->
-          <div class="form-row">
-            <div class="form-group">
-              <label for="NOME">Inserisci il tuo NOME *</label>
-              <input type="text" id="NOME" name="NOME" placeholder="NOME" required />
-            </div>
-            <div class="form-group">
-              <label for="COGNOME">Inserisci il tuo COGNOME *</label>
-              <input type="text" id="COGNOME" name="COGNOME" placeholder="COGNOME" required />
-            </div>
-          </div>
-
-          <!-- Email -->
-          <div class="form-group">
-            <label for="EMAIL">Inserisci il tuo indirizzo EMAIL *</label>
-            <input type="email" id="EMAIL" name="EMAIL" placeholder="EMAIL" required />
-          </div>
-
-          <!-- WhatsApp - LAYOUT CORRETTO CON FLEXBOX -->
-          <div class="form-group">
-            <label for="SMS">Inserisci il tuo numero di WHATSAPP *</label>
-            <div class="brevo-phone-field">
-              <select name="SMS__COUNTRY_CODE" id="SMS_COUNTRY_CODE" class="brevo-phone-select">
-                <option value="+39" selected>+39 IT</option>
-                <option value="+41">+41 CH</option>
-                <option value="+43">+43 AT</option>
-                <option value="+33">+33 FR</option>
-                <option value="+49">+49 DE</option>
-                <option value="+34">+34 ES</option>
-                <option value="+44">+44 GB</option>
-                <option value="+1">+1 US</option>
-                <option value="+32">+32 BE</option>
-                <option value="+31">+31 NL</option>
-                <option value="+351">+351 PT</option>
-                <option value="+352">+352 LU</option>
-                <option value="+377">+377 MC</option>
-                <option value="+378">+378 SM</option>
-                <option value="+379">+379 VA</option>
-                <option value="+386">+386 SI</option>
-                <option value="+385">+385 HR</option>
-              </select>
-              <input type="tel" id="SMS" name="SMS" placeholder="3331234567" required autocomplete="off" class="brevo-phone-number" />
-            </div>
-            <span class="field-hint">Il numero deve contenere tra 6 e 19 cifre (es. 3331234567)</span>
-          </div>
-
-          <div class="form-divider"></div>
-
-          <!-- Sezione Preferenze -->
-          <h3 class="section-title">Scegli quali Notizie Ricevere</h3>
-
-          <div class="checkbox-group">
-            <label class="custom-checkbox">
-              <input type="checkbox" name="CENE_TEMA" value="1" />
-              <span class="checkbox-box"></span>
-              <span class="checkbox-content">
-                <strong>Cene a Tema in Anteprima</strong>
-                <small>Voglio ricevere i menù delle cene a tema in anteprima</small>
-              </span>
-            </label>
-
-            <label class="custom-checkbox">
-              <input type="checkbox" name="PIATTI_FUORI_LISTA" value="1" />
-              <span class="checkbox-box"></span>
-              <span class="checkbox-content">
-                <strong>Piatti Stagionali Fuori Lista</strong>
-                <small>Voglio ricevere aggiornamenti su piatti fuori lista</small>
-              </span>
-            </label>
-
-            <label class="custom-checkbox">
-              <input type="checkbox" name="FESTE_NAZIONALI" value="1" />
-              <span class="checkbox-box"></span>
-              <span class="checkbox-content">
-                <strong>Feste Nazionali (Natale, Capodanno,...)</strong>
-                <small>Voglio ricevere in anteprima i menù delle feste nazionali</small>
-              </span>
-            </label>
-
-            <label class="custom-checkbox">
-              <input type="checkbox" name="IDEE_REGALO" value="1" />
-              <span class="checkbox-box"></span>
-              <span class="checkbox-content">
-                <strong>Idee Regalo</strong>
-                <small>Voglio ricevere idee regalo per occasioni speciali</small>
-              </span>
-            </label>
-          </div>
-
-          <div class="form-divider"></div>
-
-          <!-- Privacy e Consenso -->
-          <div class="form-group">
-            <label class="custom-checkbox checkbox-required">
-              <input type="checkbox" name="OPT_IN" value="1" required />
-              <span class="checkbox-box"></span>
-              <span class="checkbox-content">
-                <strong>Consenso alla ricezione di comunicazioni *</strong>
-                <small>Accetto di ricevere le newsletter e l'informativa sulla privacy</small>
-              </span>
-            </label>
-            <span class="field-hint">Per annullare l'iscrizione usa il link nella newsletter.</span>
-          </div>
-
-          <!-- Brevo Privacy Notice -->
-          <div class="privacy-notice">
-            <svg width="40" height="40" viewBox="0 0 63 63">
-              <path fill="#0092FF" d="M31.54 0l1.05 3.06 3.385-.01-2.735 1.897 1.05 3.042-2.748-1.886-2.738 1.886 1.044-3.05-2.745-1.897h3.393zm13.97 3.019L46.555 6.4l3.384.01-2.743 2.101 1.048 3.387-2.752-2.1-2.752 2.1 1.054-3.382-2.745-2.105h3.385zm9.998 10.056l1.039 3.382h3.38l-2.751 2.1 1.05 3.382-2.744-2.091-2.743 2.091 1.054-3.381-2.754-2.1h3.385zM58.58 27.1l1.04 3.372h3.379l-2.752 2.096 1.05 3.387-2.744-2.091-2.75 2.092 1.054-3.387-2.747-2.097h3.376zm-3.076 14.02l1.044 3.364h3.385l-2.743 2.09 1.05 3.392-2.744-2.097-2.743 2.097 1.052-3.377-2.752-2.117 3.385-.01zm-9.985 9.91l1.045 3.364h3.393l-2.752 2.09 1.05 3.393-2.745-2.097-2.743 2.097 1.05-3.383-2.751-2.1 3.384-.01zM31.45 55.01l1.044 3.043 3.393-.008-2.752 1.9L34.19 63l-2.744-1.895-2.748 1.891 1.054-3.05-2.743-1.9h3.384zm-13.934-3.98l1.036 3.364h3.402l-2.752 2.09 1.053 3.393-2.747-2.097-2.752 2.097 1.053-3.382-2.743-2.1 3.384-.01zm-9.981-9.91l1.045 3.364h3.398l-2.748 2.09 1.05 3.392-2.753-2.1-2.752 2.096 1.053-3.382-2.743-2.102 3.384-.009zM4.466 27.1l1.038 3.372H8.88l-2.752 2.097 1.053 3.387-2.743-2.09-2.748 2.09 1.053-3.387L0 30.472h3.385zm3.069-14.025l1.045 3.382h3.395L9.23 18.56l1.05 3.381-2.752-2.09-2.752 2.09 1.053-3.381-2.744-2.1h3.384zm9.99-10.056L18.57 6.4l3.393.01-2.743 2.1 1.05 3.373-2.754-2.092-2.751 2.092 1.053-3.382-2.744-2.1h3.384zm24.938 19.394l-10-4.22a2.48 2.48 0 00-1.921 0l-10 4.22A2.529 2.529 0 0019 24.75c0 10.47 5.964 17.705 11.537 20.057a2.48 2.48 0 001.921 0C36.921 42.924 44 36.421 44 24.75a2.532 2.532 0 00-1.537-2.336zm-2.46 6.023l-9.583 9.705a.83.83 0 01-1.177 0l-5.416-5.485a.855.855 0 010-1.192l1.177-1.192a.83.83 0 011.177 0l3.65 3.697 7.819-7.916a.83.83 0 011.177 0l1.177 1.191a.843.843 0 010 1.192z"/>
-            </svg>
-            <p>Utilizziamo Brevo come piattaforma di marketing. Inviando questo modulo, accetti che i dati personali vengano trasferiti a Brevo per il trattamento in conformità <a href="https://www.brevo.com/it/legal/privacypolicy/" target="_blank" rel="noopener">all'Informativa sulla privacy di Brevo</a>.</p>
-          </div>
-
-          <!-- reCAPTCHA -->
-          <div class="recaptcha-wrapper">
-            <label>Conferma di non essere un robot *</label>
-            <div class="g-recaptcha" data-sitekey="6LforPIqAAAAAEqw89kHSZ6WB3VUsIVeHEKS2z44"></div>
-            <span class="field-hint">Modulo sicuro con reCAPTCHA</span>
-          </div>
-
-          <!-- Submit Button -->
-          <button type="submit" class="btn btn-primary submit-btn" id="submit-btn">
-            <span class="btn-text">RICEVI ANTEPRIMA</span>
-            <span class="btn-loader" style="display: none;">
-              <svg viewBox="0 0 512 512" width="20" height="20">
-                <path fill="currentColor" d="M460.116 373.846l-20.823-12.022c-5.541-3.199-7.54-10.159-4.663-15.874 30.137-59.886 28.343-131.652-5.386-189.946-33.641-58.394-94.896-95.833-161.827-99.676C261.028 55.961 256 50.751 256 44.352V20.309c0-6.904 5.808-12.337 12.703-11.982 83.556 4.306 160.163 50.864 202.11 123.677 42.063 72.696 44.079 162.316 6.031 236.832-3.14 6.148-10.75 8.461-16.728 5.01z" />
+          <!-- Messaggio Errore -->
+          <div id="error-message" class="sib-form-message-panel" style="display:none;">
+            <div class="sib-form-message-panel__text sib-form-message-panel__text--center">
+              <svg viewBox="0 0 512 512" class="sib-icon sib-notification__icon" width="20" height="20">
+                <path d="M256 40c118.621 0 216 96.075 216 216 0 119.291-96.61 216-216 216-119.244 0-216-96.562-216-216 0-119.203 96.602-216 216-216m0-32C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm-11.49 120h22.979c6.823 0 12.274 5.682 11.99 12.5l-7 168c-.268 6.428-5.556 11.5-11.99 11.5h-8.979c-6.433 0-11.722-5.073-11.99-11.5l-7-168c-.283-6.818 5.167-12.5 11.99-12.5zM256 340c-15.464 0-28 12.536-28 28s12.536 28 28 28 28-12.536 28-28-12.536-28-28-28z" fill="currentColor"/>
               </svg>
-            </span>
-          </button>
+              <span class="sib-form-message-panel__inner-text">La tua iscrizione non può essere convalidata.</span>
+            </div>
+          </div>
 
-          <!-- Hidden honeypot field -->
-          <input type="text" name="email_address_check" value="" style="display: none;">
-          <input type="hidden" name="locale" value="it">
-        </form>
+          <!-- Messaggio Successo -->
+          <div id="success-message" class="sib-form-message-panel" style="display:none;">
+            <div class="sib-form-message-panel__text sib-form-message-panel__text--center">
+              <svg viewBox="0 0 512 512" class="sib-icon sib-notification__icon" width="20" height="20">
+                <path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 464c-118.664 0-216-96.055-216-216 0-118.663 96.055-216 216-216 118.664 0 216 96.055 216 216 0 118.663-96.055 216-216 216zm141.63-274.961L217.15 376.071c-4.705 4.667-12.303 4.637-16.97-.068l-85.878-86.572c-4.667-4.705-4.637-12.303.068-16.97l8.52-8.451c4.705-4.667 12.303-4.637 16.97.068l68.976 69.533 163.441-162.13c4.705-4.667 12.303-4.637 16.97.068l8.451 8.52c4.668 4.705 4.637 12.303-.068 16.97z" fill="currentColor"/>
+              </svg>
+              <span class="sib-form-message-panel__inner-text">La tua iscrizione è avvenuta correttamente.</span>
+            </div>
+          </div>
+
+          <!-- Container Form -->
+          <div id="sib-container" class="sib-container--large sib-container--vertical">
+            
+            <form id="sib-form" method="POST" 
+                  action="https://c8d2f6e3.sibforms.com/serve/MUIFANv3tncnH7osbpBYwz2vOyLWFWrHEgvFIjza1AHGTUdE2ZjxGpVdBnw4x_waW8urYilQX8wfdnziQVmUxk0eoa_hMMVsDF6rcE8P44HtG6Oq88vnzYDtkiIfSGlGfDCIUMq7X-rC4xeW0glbmdfUtW5ilaSph4zl8U7rmgjnLBwbG-54YSWmrgFqbiwmclo7C4B7kaxE9P5O" 
+                  data-type="subscription">
+              
+              <!-- Logo -->
+              <div class="tre-form-header">
+                <img src="/img/brand/tre-logo.svg" alt="Ristorante TRE" width="100" height="100" />
+                <h2>Ricevi Anteprima Cene a Tema</h2>
+                <div class="tre-form-divider"></div>
+                <p>Iscriviti per ricevere in anteprima i menù e non perderti le prossime serate</p>
+              </div>
+
+              <!-- NOME -->
+              <div class="sib-input sib-form-block">
+                <div class="form__entry entry_block">
+                  <div class="form__label-row">
+                    <label class="entry__label" for="NOME" data-required="*">Inserisci il tuo NOME</label>
+                    <div class="entry__field">
+                      <input class="input" maxlength="200" type="text" id="NOME" name="NOME" autocomplete="off" placeholder="NOME" data-required="true" required />
+                    </div>
+                  </div>
+                  <label class="entry__error entry__error--primary"></label>
+                </div>
+              </div>
+
+              <!-- COGNOME -->
+              <div class="sib-input sib-form-block">
+                <div class="form__entry entry_block">
+                  <div class="form__label-row">
+                    <label class="entry__label" for="COGNOME" data-required="*">Inserisci il tuo COGNOME</label>
+                    <div class="entry__field">
+                      <input class="input" maxlength="200" type="text" id="COGNOME" name="COGNOME" autocomplete="off" placeholder="COGNOME" data-required="true" required />
+                    </div>
+                  </div>
+                  <label class="entry__error entry__error--primary"></label>
+                </div>
+              </div>
+
+              <!-- EMAIL -->
+              <div class="sib-input sib-form-block">
+                <div class="form__entry entry_block">
+                  <div class="form__label-row">
+                    <label class="entry__label" for="EMAIL" data-required="*">Inserisci il tuo indirizzo EMAIL</label>
+                    <div class="entry__field">
+                      <input class="input" type="text" id="EMAIL" name="EMAIL" autocomplete="off" placeholder="EMAIL" data-required="true" required />
+                    </div>
+                  </div>
+                  <label class="entry__error entry__error--primary"></label>
+                </div>
+              </div>
+
+              <!-- WHATSAPP/SMS -->
+              <div class="sib-sms-field sib-form-block">
+                <div class="form__entry entry_block">
+                  <div class="form__label-row">
+                    <label class="entry__label" for="SMS" data-required="*">Inserisci il tuo numero di WHATSAPP</label>
+                    <div class="sib-sms-input-wrapper">
+                      <div class="sib-sms-input" data-placeholder="WHATSAPP" data-required="1" data-country-code="IT" data-value="">
+                        <div class="entry__field sib-sms-select-field">
+                          <select class="input" name="SMS__COUNTRY_CODE" data-required="true">
+                            <option value="+39" selected>+39 IT</option>
+                            <option value="+41">+41 CH</option>
+                            <option value="+43">+43 AT</option>
+                            <option value="+33">+33 FR</option>
+                            <option value="+49">+49 DE</option>
+                            <option value="+34">+34 ES</option>
+                            <option value="+44">+44 GB</option>
+                            <option value="+32">+32 BE</option>
+                            <option value="+31">+31 NL</option>
+                            <option value="+351">+351 PT</option>
+                            <option value="+352">+352 LU</option>
+                            <option value="+377">+377 MC</option>
+                            <option value="+378">+378 SM</option>
+                            <option value="+379">+379 VA</option>
+                            <option value="+386">+386 SI</option>
+                            <option value="+385">+385 HR</option>
+                            <option value="+1">+1 US</option>
+                          </select>
+                        </div>
+                        <div class="entry__field sib-sms-number-field">
+                          <input type="tel" class="input" id="SMS" name="SMS" autocomplete="off" placeholder="3331234567" data-required="true" required />
+                        </div>
+                      </div>
+                      <div class="sib-sms-tooltip">
+                        <span class="sib-sms-tooltip__icon">?</span>
+                        <div class="sib-sms-tooltip__box">Il numero deve contenere tra 6 e 19 cifre (es. 3331234567)</div>
+                      </div>
+                    </div>
+                  </div>
+                  <label class="entry__error entry__error--primary"></label>
+                </div>
+              </div>
+
+              <!-- Divider -->
+              <div class="sib-form-block sib-divider-form-block">
+                <div class="tre-form-divider"></div>
+              </div>
+
+              <!-- Titolo Sezione -->
+              <div class="sib-form-block tre-section-title">
+                <h3>Scegli quali Notizie Ricevere</h3>
+              </div>
+
+              <!-- CENE_TEMA Checkbox -->
+              <div class="sib-optin sib-form-block">
+                <div class="form__entry entry_mcq">
+                  <div class="form__label-row">
+                    <label class="entry__label" for="CENE_TEMA">Cene a Tema in Anteprima</label>
+                    <div class="entry__choice">
+                      <label class="tre-checkbox-label">
+                        <input type="checkbox" class="input_replaced" value="1" id="CENE_TEMA" name="CENE_TEMA" />
+                        <span class="checkbox checkbox_tick_positive"></span>
+                        <span class="tre-checkbox-text">Voglio ricevere i menù delle cene a tema in anteprima</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PIATTI_FUORI_LISTA Checkbox -->
+              <div class="sib-optin sib-form-block">
+                <div class="form__entry entry_mcq">
+                  <div class="form__label-row">
+                    <label class="entry__label" for="PIATTI_FUORI_LISTA">Piatti Stagionali Fuori Lista</label>
+                    <div class="entry__choice">
+                      <label class="tre-checkbox-label">
+                        <input type="checkbox" class="input_replaced" value="1" id="PIATTI_FUORI_LISTA" name="PIATTI_FUORI_LISTA" />
+                        <span class="checkbox checkbox_tick_positive"></span>
+                        <span class="tre-checkbox-text">Voglio ricevere aggiornamenti su piatti fuori lista</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- FESTE_NAZIONALI Checkbox -->
+              <div class="sib-optin sib-form-block">
+                <div class="form__entry entry_mcq">
+                  <div class="form__label-row">
+                    <label class="entry__label" for="FESTE_NAZIONALI">Feste Nazionali (Natale, Capodanno,...)</label>
+                    <div class="entry__choice">
+                      <label class="tre-checkbox-label">
+                        <input type="checkbox" class="input_replaced" value="1" id="FESTE_NAZIONALI" name="FESTE_NAZIONALI" />
+                        <span class="checkbox checkbox_tick_positive"></span>
+                        <span class="tre-checkbox-text">Voglio ricevere in anteprima i menù delle feste nazionali</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- IDEE_REGALO Checkbox -->
+              <div class="sib-optin sib-form-block">
+                <div class="form__entry entry_mcq">
+                  <div class="form__label-row">
+                    <label class="entry__label" for="IDEE_REGALO">Idee Regalo</label>
+                    <div class="entry__choice">
+                      <label class="tre-checkbox-label">
+                        <input type="checkbox" class="input_replaced" value="1" id="IDEE_REGALO" name="IDEE_REGALO" />
+                        <span class="checkbox checkbox_tick_positive"></span>
+                        <span class="tre-checkbox-text">Voglio ricevere idee regalo per occasioni speciali</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Divider -->
+              <div class="sib-form-block sib-divider-form-block">
+                <div class="tre-form-divider"></div>
+              </div>
+
+              <!-- OPT_IN Checkbox (Required) -->
+              <div class="sib-optin sib-form-block" data-required="true">
+                <div class="form__entry entry_mcq">
+                  <div class="form__label-row">
+                    <label class="entry__label" for="OPT_IN" data-required="*">Consenso alla ricezione di comunicazioni di Marketing</label>
+                    <div class="entry__choice">
+                      <label class="tre-checkbox-label">
+                        <input type="checkbox" class="input_replaced" value="1" id="OPT_IN" name="OPT_IN" required />
+                        <span class="checkbox checkbox_tick_positive"></span>
+                        <span class="tre-checkbox-text">Accetto di ricevere le newsletter e l'informativa sulla privacy</span>
+                      </label>
+                    </div>
+                  </div>
+                  <label class="entry__error entry__error--primary"></label>
+                  <label class="entry__specification">Per annullare l'iscrizione in qualsiasi momento tramite il link presente nella newsletter.</label>
+                </div>
+              </div>
+
+              <!-- Brevo Privacy Declaration -->
+              <div class="sib-form__declaration">
+                <div class="declaration-block-icon">
+                  <svg width="50" height="50" viewBox="0 0 63 63">
+                    <path fill="#0092FF" d="M31.54 0l1.05 3.06 3.385-.01-2.735 1.897 1.05 3.042-2.748-1.886-2.738 1.886 1.044-3.05-2.745-1.897h3.393zm13.97 3.019L46.555 6.4l3.384.01-2.743 2.101 1.048 3.387-2.752-2.1-2.752 2.1 1.054-3.382-2.745-2.105h3.385zm9.998 10.056l1.039 3.382h3.38l-2.751 2.1 1.05 3.382-2.744-2.091-2.743 2.091 1.054-3.381-2.754-2.1h3.385zM58.58 27.1l1.04 3.372h3.379l-2.752 2.096 1.05 3.387-2.744-2.091-2.75 2.092 1.054-3.387-2.747-2.097h3.376zm-3.076 14.02l1.044 3.364h3.385l-2.743 2.09 1.05 3.392-2.744-2.097-2.743 2.097 1.052-3.377-2.752-2.117 3.385-.01zm-9.985 9.91l1.045 3.364h3.393l-2.752 2.09 1.05 3.393-2.745-2.097-2.743 2.097 1.05-3.383-2.751-2.1 3.384-.01zM31.45 55.01l1.044 3.043 3.393-.008-2.752 1.9L34.19 63l-2.744-1.895-2.748 1.891 1.054-3.05-2.743-1.9h3.384zm-13.934-3.98l1.036 3.364h3.402l-2.752 2.09 1.053 3.393-2.747-2.097-2.752 2.097 1.053-3.382-2.743-2.1 3.384-.01zm-9.981-9.91l1.045 3.364h3.398l-2.748 2.09 1.05 3.392-2.753-2.1-2.752 2.096 1.053-3.382-2.743-2.102 3.384-.009zM4.466 27.1l1.038 3.372H8.88l-2.752 2.097 1.053 3.387-2.743-2.09-2.748 2.09 1.053-3.387L0 30.472h3.385zm3.069-14.025l1.045 3.382h3.395L9.23 18.56l1.05 3.381-2.752-2.09-2.752 2.09 1.053-3.381-2.744-2.1h3.384zm9.99-10.056L18.57 6.4l3.393.01-2.743 2.1 1.05 3.373-2.754-2.092-2.751 2.092 1.053-3.382-2.744-2.1h3.384zm24.938 19.394l-10-4.22a2.48 2.48 0 00-1.921 0l-10 4.22A2.529 2.529 0 0019 24.75c0 10.47 5.964 17.705 11.537 20.057a2.48 2.48 0 001.921 0C36.921 42.924 44 36.421 44 24.75a2.532 2.532 0 00-1.537-2.336zm-2.46 6.023l-9.583 9.705a.83.83 0 01-1.177 0l-5.416-5.485a.855.855 0 010-1.192l1.177-1.192a.83.83 0 011.177 0l3.65 3.697 7.819-7.916a.83.83 0 011.177 0l1.177 1.191a.843.843 0 010 1.192z"/>
+                  </svg>
+                </div>
+                <div class="tre-privacy-text">
+                  <p>Utilizziamo Brevo come piattaforma di marketing. Inviando questo modulo, accetti che i dati personali vengano trasferiti a Brevo per il trattamento in conformità <a href="https://www.brevo.com/it/legal/privacypolicy/" target="_blank" rel="noopener">all'Informativa sulla privacy di Brevo</a>.</p>
+                </div>
+              </div>
+
+              <!-- reCAPTCHA -->
+              <div class="sib-captcha sib-form-block">
+                <div class="form__entry entry_block">
+                  <div class="form__label-row">
+                    <label class="entry__label">Conferma di non essere un robot</label>
+                    <script>
+                      function handleCaptchaResponse() {
+                        var event = new Event('captchaChange');
+                        document.getElementById('sib-captcha').dispatchEvent(event);
+                      }
+                    </script>
+                    <div class="g-recaptcha sib-visible-recaptcha" id="sib-captcha" 
+                         data-sitekey="6LforPIqAAAAAEqw89kHSZ6WB3VUsIVeHEKS2z44" 
+                         data-callback="handleCaptchaResponse"></div>
+                  </div>
+                  <label class="entry__error entry__error--primary"></label>
+                  <label class="entry__specification">Modulo sicuro con reCAPTCHA</label>
+                </div>
+              </div>
+
+              <!-- Submit Button -->
+              <div class="sib-form-block tre-submit-wrapper">
+                <button class="sib-form-block__button sib-form-block__button-with-loader" form="sib-form" type="submit">
+                  <svg class="icon clickable__icon progress-indicator__icon sib-hide-loader-icon" viewBox="0 0 512 512">
+                    <path d="M460.116 373.846l-20.823-12.022c-5.541-3.199-7.54-10.159-4.663-15.874 30.137-59.886 28.343-131.652-5.386-189.946-33.641-58.394-94.896-95.833-161.827-99.676C261.028 55.961 256 50.751 256 44.352V20.309c0-6.904 5.808-12.337 12.703-11.982 83.556 4.306 160.163 50.864 202.11 123.677 42.063 72.696 44.079 162.316 6.031 236.832-3.14 6.148-10.75 8.461-16.728 5.01z" fill="currentColor"/>
+                  </svg>
+                  RICEVI ANTEPRIMA
+                </button>
+              </div>
+
+              <!-- Hidden fields -->
+              <input type="text" name="email_address_check" value="" class="input--hidden" style="display:none;">
+              <input type="hidden" name="locale" value="it">
+            </form>
+          </div>
+        </div>
       </div>
+      <!-- End Brevo Form -->
+
     </div>
   </section>
 
@@ -611,9 +637,7 @@ const schemaOrg = {
   }
 
   @media (min-width: 768px) {
-    .prossima-cena-section {
-      padding: 5rem 0;
-    }
+    .prossima-cena-section { padding: 5rem 0; }
   }
 
   .prossima-cena-header {
@@ -861,10 +885,7 @@ const schemaOrg = {
   }
 
   @media (max-width: 768px) {
-    .partner-card {
-      padding: 1rem;
-      min-height: 80px;
-    }
+    .partner-card { padding: 1rem; min-height: 80px; }
     .partner-card img { max-height: 80px; }
   }
 
@@ -890,377 +911,376 @@ const schemaOrg = {
     }
   }
 
-  /* ===== NEWSLETTER FORM STYLES ===== */
+  /* ========================================
+     BREVO FORM - OVERRIDE STYLING CON DESIGN TRE
+     ======================================== */
+  
   .newsletter-cene-section {
     padding: 4rem 0;
-    background-color: var(--bg-light-orange);
+    background-color: var(--bg-light);
   }
 
   @media (min-width: 768px) {
     .newsletter-cene-section { padding: 5rem 0; }
   }
 
-  .newsletter-form-wrapper {
+  /* Override Brevo wrapper */
+  .sib-form {
+    text-align: center;
+    background-color: transparent !important;
+  }
+
+  #sib-form-container {
     max-width: 600px;
     margin: 0 auto;
-    background-color: var(--bg-white);
-    border-radius: 20px;
-    padding: 2.5rem 2rem;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    border: 2px solid var(--primary-color);
   }
 
-  @media (min-width: 768px) {
-    .newsletter-form-wrapper { padding: 3rem; }
+  #sib-container {
+    background-color: var(--bg-white) !important;
+    border: 2px solid var(--primary-color) !important;
+    border-radius: 20px !important;
+    padding: 2.5rem !important;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1) !important;
+    text-align: left !important;
+    max-width: 100% !important;
   }
 
-  /* Messaggi di stato */
-  .form-message {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 1rem;
-    border-radius: 8px;
-    margin-bottom: 1.5rem;
-    font-size: 16px;
-    font-weight: 500;
-    font-family: var(--font-main);
+  @media (max-width: 768px) {
+    #sib-container { padding: 1.5rem !important; }
   }
 
-  .form-message-error {
-    background-color: #ffeded;
-    color: #661d1d;
-    border: 1px solid #ff4949;
-  }
-
-  .form-message-success {
-    background-color: #e7faf0;
-    color: #085229;
-    border: 1px solid #13ce66;
-  }
-
-  /* Header */
-  .form-header {
+  /* Header TRE */
+  .tre-form-header {
     text-align: center;
     margin-bottom: 2rem;
   }
 
-  .form-logo { margin-bottom: 1.5rem; }
-
-  .form-logo img {
+  .tre-form-header img {
     width: 100px;
     height: 100px;
-    margin: 0 auto;
+    margin: 0 auto 1.5rem;
   }
 
-  .form-header h2 {
+  .tre-form-header h2 {
     font-size: 28px;
-    font-weight: 700;
+    font-weight: 600;
     color: var(--text-dark);
     margin-bottom: 1rem;
     font-family: var(--font-main);
   }
 
-  .form-header p {
+  .tre-form-header p {
     font-size: 18px;
     color: var(--text-dark);
-    opacity: 0.8;
+    opacity: 0.75;
     margin: 0;
     font-family: var(--font-main);
   }
 
   @media (max-width: 768px) {
-    .form-header h2 { font-size: 24px; }
-    .form-header p { font-size: 16px; }
+    .tre-form-header h2 { font-size: 24px; }
+    .tre-form-header p { font-size: 16px; }
   }
 
-  .form-divider {
-    height: 1px;
-    background-color: #E5EDF6;
+  /* Divider */
+  .tre-form-divider {
+    border: 0;
+    border-bottom: 1px solid #E5EDF6;
     margin: 1.5rem 0;
   }
 
-  /* Form Groups */
-  .form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+  /* Labels */
+  #sib-container .entry__label {
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    color: var(--text-dark) !important;
+    font-family: var(--font-main) !important;
+    margin-bottom: 0.5rem !important;
+    display: block !important;
   }
 
-  @media (max-width: 600px) {
-    .form-row { grid-template-columns: 1fr; }
+  #sib-container .entry__label[data-required="*"]::after {
+    content: " *";
+    color: var(--primary-color);
   }
 
-  .form-group { margin-bottom: 1.25rem; }
-
-  .form-group > label {
-    display: block;
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text-dark);
-    margin-bottom: 0.5rem;
-    font-family: var(--font-main);
+  /* Input fields */
+  #sib-container .input {
+    width: 100% !important;
+    padding: 14px 16px !important;
+    border: 2px solid #ddd !important;
+    border-radius: 8px !important;
+    font-size: 16px !important;
+    font-family: var(--font-main) !important;
+    color: var(--text-dark) !important;
+    background-color: var(--bg-white) !important;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease !important;
+    box-sizing: border-box !important;
   }
 
-  .form-group input,
-  .form-group select {
-    width: 100%;
-    padding: 14px 16px;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    font-family: var(--font-main);
-    font-size: 16px;
-    color: var(--text-dark);
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    background-color: var(--bg-white);
-    box-sizing: border-box;
+  #sib-container .input:focus {
+    outline: none !important;
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 0 0 3px rgba(244, 119, 58, 0.15) !important;
   }
 
-  .form-group input:focus,
-  .form-group select:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(244, 119, 58, 0.15);
+  #sib-container .input::placeholder {
+    color: #999 !important;
+    font-family: var(--font-main) !important;
   }
 
-  .form-group input::placeholder { color: #999; }
-
-  /* ===== PHONE FIELD - LAYOUT CORRETTO ===== */
-  .brevo-phone-field {
-    display: flex;
-    flex-direction: row;
-    gap: 12px;
-    width: 100%;
+  /* Form blocks spacing */
+  .sib-form-block {
+    padding: 8px 0 !important;
   }
 
-  .brevo-phone-select {
+  /* SMS/Phone field layout */
+  .sib-sms-input-wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+
+  .sib-sms-input {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 12px !important;
+    width: 100% !important;
+  }
+
+  .sib-sms-select-field {
     width: 130px !important;
     min-width: 130px !important;
     flex: 0 0 130px !important;
+  }
+
+  .sib-sms-select-field .input {
+    width: 100% !important;
     padding: 14px 12px !important;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    font-family: var(--font-main);
-    font-size: 16px;
-    color: var(--text-dark);
-    background-color: var(--bg-white);
-    cursor: pointer;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
   }
 
-  .brevo-phone-select:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(244, 119, 58, 0.15);
-  }
-
-  .brevo-phone-number {
+  .sib-sms-number-field {
     flex: 1 1 auto !important;
-    min-width: 0 !important;
+    width: auto !important;
   }
 
-  /* Mobile: stack verticalmente solo su schermi molto piccoli */
-  @media (max-width: 420px) {
-    .brevo-phone-field {
-      flex-direction: column;
-      gap: 8px;
+  @media (max-width: 480px) {
+    .sib-sms-input {
+      flex-direction: column !important;
     }
-    
-    .brevo-phone-select {
+    .sib-sms-select-field {
       width: 100% !important;
       flex: 0 0 auto !important;
     }
   }
 
-  .field-hint {
-    display: block;
-    font-size: 12px;
-    color: var(--text-dark);
-    opacity: 0.6;
-    margin-top: 0.5rem;
-    font-family: var(--font-main);
+  /* Tooltip */
+  .sib-sms-tooltip {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    font-size: 13px !important;
+    color: var(--text-dark) !important;
+    opacity: 0.6 !important;
   }
 
-  /* Section Title */
-  .section-title {
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--text-dark);
-    text-align: center;
-    margin-bottom: 1.5rem;
-    font-family: var(--font-main);
+  .sib-sms-tooltip__icon {
+    width: 18px !important;
+    height: 18px !important;
+    border-radius: 50% !important;
+    background-color: #ddd !important;
+    color: var(--text-dark) !important;
+    font-size: 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: help !important;
+  }
+
+  .sib-sms-tooltip__box {
+    display: none;
+  }
+
+  /* Section title */
+  .tre-section-title {
+    text-align: center !important;
+    margin: 1rem 0 !important;
+  }
+
+  .tre-section-title h3 {
+    font-size: 24px !important;
+    font-weight: 600 !important;
+    color: var(--text-dark) !important;
+    font-family: var(--font-main) !important;
+    margin: 0 !important;
   }
 
   @media (max-width: 768px) {
-    .section-title { font-size: 20px; }
+    .tre-section-title h3 { font-size: 20px !important; }
   }
 
-  /* ===== CUSTOM CHECKBOXES ===== */
-  .checkbox-group {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
+  /* Checkboxes TRE style */
+  .tre-checkbox-label {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+    cursor: pointer !important;
+    padding: 0.75rem 0 !important;
   }
 
-  .custom-checkbox {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.75rem;
-    cursor: pointer;
-    padding: 1rem;
-    background-color: var(--bg-light);
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
+  .tre-checkbox-label .checkbox {
+    width: 24px !important;
+    height: 24px !important;
+    min-width: 24px !important;
+    border: 2px solid #ddd !important;
+    border-radius: 4px !important;
+    background-color: var(--bg-white) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.2s ease !important;
+    margin-top: 2px !important;
   }
 
-  .custom-checkbox:hover {
-    background-color: var(--bg-light-orange);
+  .tre-checkbox-label .checkbox::after {
+    content: "" !important;
+    display: none !important;
+    width: 6px !important;
+    height: 12px !important;
+    border: solid var(--bg-white) !important;
+    border-width: 0 2px 2px 0 !important;
+    transform: rotate(45deg) !important;
+    margin-bottom: 2px !important;
   }
 
-  /* Nascondo l'input nativo */
-  .custom-checkbox input[type="checkbox"] {
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
+  .tre-checkbox-label input:checked + .checkbox {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
   }
 
-  /* Box del checkbox custom */
-  .checkbox-box {
-    width: 24px;
-    height: 24px;
-    min-width: 24px;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    background-color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-    margin-top: 2px;
-    position: relative;
+  .tre-checkbox-label input:checked + .checkbox::after {
+    display: block !important;
   }
 
-  /* Checkmark (nascosto di default) */
-  .checkbox-box::after {
-    content: '';
-    width: 6px;
-    height: 12px;
-    border: solid white;
-    border-width: 0 2.5px 2.5px 0;
-    transform: rotate(45deg);
-    opacity: 0;
-    transition: opacity 0.2s ease;
-    position: absolute;
-    top: 3px;
-    left: 7px;
+  .tre-checkbox-label input {
+    position: absolute !important;
+    opacity: 0 !important;
+    cursor: pointer !important;
   }
 
-  /* Stato hover */
-  .custom-checkbox:hover .checkbox-box {
-    border-color: var(--primary-color);
+  .tre-checkbox-text {
+    font-size: 15px !important;
+    color: var(--text-dark) !important;
+    font-family: var(--font-main) !important;
+    line-height: 1.4 !important;
   }
 
-  /* Stato checked */
-  .custom-checkbox input[type="checkbox"]:checked + .checkbox-box {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
+  /* Entry specification (hint text) */
+  .entry__specification {
+    display: block !important;
+    font-size: 13px !important;
+    color: var(--text-dark) !important;
+    opacity: 0.6 !important;
+    margin-top: 0.5rem !important;
+    font-family: var(--font-main) !important;
   }
 
-  .custom-checkbox input[type="checkbox"]:checked + .checkbox-box::after {
-    opacity: 1;
+  /* Error labels */
+  .entry__error {
+    display: block !important;
+    font-size: 14px !important;
+    color: #cc0000 !important;
+    margin-top: 0.25rem !important;
+    font-family: var(--font-main) !important;
   }
 
-  /* Contenuto del checkbox */
-  .checkbox-content { flex: 1; }
-
-  .checkbox-content strong {
-    display: block;
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text-dark);
-    margin-bottom: 0.25rem;
-    font-family: var(--font-main);
+  /* Privacy declaration */
+  .sib-form__declaration {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 1rem !important;
+    padding: 1.5rem !important;
+    background-color: var(--bg-light) !important;
+    border-radius: 12px !important;
+    margin: 1.5rem 0 !important;
   }
 
-  .checkbox-content small {
-    font-size: 14px;
-    color: var(--text-dark);
-    opacity: 0.7;
-    font-family: var(--font-main);
-    display: block;
+  .declaration-block-icon svg {
+    width: 50px !important;
+    height: 50px !important;
+    flex-shrink: 0 !important;
   }
 
-  /* Checkbox required (privacy) */
-  .checkbox-required {
-    background-color: transparent;
-    padding: 0;
+  .tre-privacy-text {
+    flex: 1 !important;
   }
 
-  .checkbox-required:hover {
-    background-color: transparent;
+  .tre-privacy-text p {
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+    color: var(--text-dark) !important;
+    opacity: 0.75 !important;
+    margin: 0 !important;
+    font-family: var(--font-main) !important;
   }
 
-  /* Privacy Notice */
-  .privacy-notice {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    padding: 1rem;
-    background-color: var(--bg-light);
-    border-radius: 8px;
-    margin: 1.5rem 0;
-  }
-
-  .privacy-notice svg { flex-shrink: 0; }
-
-  .privacy-notice p {
-    font-size: 13px;
-    line-height: 1.5;
-    color: var(--text-dark);
-    opacity: 0.7;
-    margin: 0;
-    font-family: var(--font-main);
-  }
-
-  .privacy-notice a {
-    color: var(--primary-color);
-    text-decoration: underline;
+  .tre-privacy-text a {
+    color: var(--primary-color) !important;
+    text-decoration: underline !important;
   }
 
   /* reCAPTCHA */
-  .recaptcha-wrapper { margin: 1.5rem 0; }
-
-  .recaptcha-wrapper > label {
-    display: block;
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text-dark);
-    margin-bottom: 0.75rem;
-    font-family: var(--font-main);
+  .sib-captcha {
+    margin: 1.5rem 0 !important;
   }
 
-  .recaptcha-wrapper .g-recaptcha {
-    display: flex;
-    justify-content: center;
+  .sib-captcha .entry__label {
+    margin-bottom: 1rem !important;
   }
 
-  /* Submit Button */
-  .submit-btn {
-    width: 100%;
-    padding: 16px 24px;
-    font-size: 18px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-top: 1rem;
+  .g-recaptcha {
+    display: flex !important;
+    justify-content: center !important;
   }
 
-  .btn-loader {
-    animation: spin 1s linear infinite;
+  /* Submit button */
+  .tre-submit-wrapper {
+    text-align: center !important;
+    margin-top: 1.5rem !important;
+  }
+
+  .sib-form-block__button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    padding: 16px 40px !important;
+    background-color: var(--primary-color) !important;
+    color: var(--text-white) !important;
+    border: 2px solid var(--primary-color) !important;
+    border-radius: 8px !important;
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    font-family: var(--font-main) !important;
+    letter-spacing: 0.05em !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    min-width: 250px !important;
+  }
+
+  .sib-form-block__button:hover {
+    background-color: var(--bg-white) !important;
+    color: var(--primary-color) !important;
+  }
+
+  .sib-form-block__button .progress-indicator__icon {
+    width: 20px !important;
+    height: 20px !important;
+    animation: spin 1s linear infinite !important;
+  }
+
+  .sib-hide-loader-icon {
+    display: none !important;
   }
 
   @keyframes spin {
@@ -1268,16 +1288,60 @@ const schemaOrg = {
     to { transform: rotate(360deg); }
   }
 
-  .submit-btn:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
+  /* Message panels */
+  .sib-form-message-panel {
+    padding: 1rem 1.5rem !important;
+    border-radius: 8px !important;
+    margin-bottom: 1.5rem !important;
+    font-family: var(--font-main) !important;
+  }
+
+  .sib-form-message-panel__text {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    font-size: 16px !important;
+  }
+
+  .sib-notification__icon {
+    flex-shrink: 0 !important;
+  }
+
+  #error-message {
+    background-color: #ffeded !important;
+    border: 1px solid #ff4949 !important;
+    color: #661d1d !important;
+  }
+
+  #success-message {
+    background-color: #e7faf0 !important;
+    border: 1px solid #13ce66 !important;
+    color: #085229 !important;
   }
 </style>
 
-<!-- reCAPTCHA Script -->
-<script is:inline src="https://www.google.com/recaptcha/api.js?hl=it" async defer></script>
-
+<!-- Brevo Scripts - DEVONO essere alla fine del body -->
 <script is:inline>
+  window.REQUIRED_CODE_ERROR_MESSAGE = 'Scegli un prefisso paese';
+  window.LOCALE = 'it';
+  window.EMAIL_INVALID_MESSAGE = window.SMS_INVALID_MESSAGE = "Le informazioni fornite non sono valide. Controlla il formato del campo e riprova.";
+  window.REQUIRED_ERROR_MESSAGE = "Questo campo non può essere lasciato vuoto.";
+  window.GENERIC_INVALID_MESSAGE = "Le informazioni fornite non sono valide. Controlla il formato del campo e riprova.";
+  window.translation = {
+    common: {
+      selectedList: '{quantity} lista selezionata',
+      selectedLists: '{quantity} liste selezionate',
+      selectedOption: '{quantity} selezionato',
+      selectedOptions: '{quantity} selezionati',
+    }
+  };
+  var AUTOHIDE = Boolean(0);
+</script>
+
+<script is:inline defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
+<script is:inline src="https://www.google.com/recaptcha/api.js?hl=it"></script>
+
+<script>
 document.addEventListener('DOMContentLoaded', () => {
   // Inizializza i caroselli
   if (typeof Carousel !== 'undefined') {
@@ -1287,9 +1351,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Sticky CTA
   initStickyCta();
-
-  // Form - mostra loader al submit (poi Brevo fa redirect)
-  initFormSubmit();
 });
 
 function initStickyCta() {
@@ -1309,25 +1370,5 @@ function initStickyCta() {
 
   window.addEventListener('scroll', handleScroll);
   handleScroll();
-}
-
-function initFormSubmit() {
-  const form = document.getElementById('brevo-newsletter-form');
-  const submitBtn = document.getElementById('submit-btn');
-  const btnText = submitBtn?.querySelector('.btn-text');
-  const btnLoader = submitBtn?.querySelector('.btn-loader');
-
-  if (!form || !submitBtn) return;
-
-  form.addEventListener('submit', function(e) {
-    // Mostra loader - il form farà submit nativo a Brevo
-    // Brevo poi reindirizza a /conferma-iscrizione-cene/
-    if (btnText) btnText.textContent = 'Invio in corso...';
-    if (btnLoader) btnLoader.style.display = 'inline-block';
-    submitBtn.disabled = true;
-    
-    // Il form prosegue con il submit normale a Brevo
-    // NON facciamo e.preventDefault()
-  });
 }
 </script>
