@@ -2,7 +2,7 @@
 // Ottieni il pathname corrente per evidenziare la voce di menu attiva
 const currentPath = Astro.url.pathname;
 
-// Funzione per determinare se una voce è attiva
+// Funzione per determinare se una voce Ã¨ attiva
 const isActive = (path: string) => currentPath === path;
 
 // Funzione per determinare se un menu dropdown contiene la pagina attiva
@@ -18,7 +18,7 @@ const eventiPaths = ['/compleanni/', '/battesimi-comunioni-cresime/', '/lauree/'
     <div class="container header-container">
         <div class="logo">
             <a href="/">
-                <img src="/img/brand/tre-logo.svg" alt="Ristorante TRE Grill + Pizzeria" width="150" height="80">
+                <img src="/img/brand/tre-logo-esteso.svg" alt="Ristorante TRE Grill + Pizzeria" width="150" height="80">
             </a>
         </div>
 
@@ -57,7 +57,6 @@ const eventiPaths = ['/compleanni/', '/battesimi-comunioni-cresime/', '/lauree/'
         <button class="mobile-menu-btn" aria-label="Menu">
             <span class="hamburger-line"></span>
             <span class="hamburger-line"></span>
-            <span class="hamburger-line"></span>
         </button>
     </div>
 
@@ -65,7 +64,7 @@ const eventiPaths = ['/compleanni/', '/battesimi-comunioni-cresime/', '/lauree/'
     <div class="mobile-menu-overlay">
         <div class="mobile-menu-header">
             <div class="logo">
-                <img src="/img/brand/tre-logo.svg" alt="Ristorante TRE Grill + Pizzeria" width="150" height="80">
+                <img src="/img/brand/tre-logo-esteso.svg" alt="Ristorante TRE Grill + Pizzeria" width="150" height="80">
             </div>
             <button class="mobile-menu-close" aria-label="Chiudi menu">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
