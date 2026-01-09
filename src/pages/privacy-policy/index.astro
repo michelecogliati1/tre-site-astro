@@ -5,7 +5,7 @@ import Layout from "../../layouts/Layout.astro";
 const seoData = {
   title: "Privacy Policy - Ristorante Pizzeria TRE Merate",
   description: "Informativa sulla privacy e sul trattamento dei dati personali del Ristorante Pizzeria TRE a Merate.",
-  robots: "noindex, follow",
+  robots: "index, follow",
   canonical: "https://www.ristorantepizzeriatre.it/privacy-policy/",
 };
 ---
@@ -32,35 +32,13 @@ const seoData = {
       <div class="policy-content">
         <h1>Privacy Policy</h1>
         
-        <!-- 
-          =============================================
-          IUBENDA EMBED - ISTRUZIONI
-          =============================================
-          
-          1. Accedi al tuo account Iubenda
-          2. Vai su Privacy Policy > Integra
-          3. Copia il codice "Self-hosted" o "Direct text embedding"
-          4. Sostituisci il div sottostante con il codice Iubenda
-          
-          Esempio di codice Iubenda:
-          <a href="https://www.iubenda.com/privacy-policy/XXXXXXXX" 
-             class="iubenda-white iubenda-noiframe iubenda-embed iubenda-noiframe" 
-             title="Privacy Policy">Privacy Policy</a>
-          <script type="text/javascript">
-            (function (w,d) {
-              // script Iubenda...
-            })(window,document);
-          </script>
-          
-          =============================================
-        -->
-        
-        <div class="iubenda-embed-container" id="iubenda-privacy-policy">
-          <!-- Inserisci qui il codice embed di Iubenda per la Privacy Policy -->
-          <p class="policy-placeholder">
-            Il contenuto della Privacy Policy verrà caricato da Iubenda.<br>
-            Se non visualizzi il contenuto, <a href="https://www.iubenda.com" target="_blank" rel="noopener">clicca qui</a>.
-          </p>
+        <!-- Iubenda Privacy Policy - Iframe diretto -->
+        <div class="iubenda-embed-container">
+          <iframe 
+            src="https://www.iubenda.com/privacy-policy/97540451"
+            title="Privacy Policy"
+            loading="lazy"
+          ></iframe>
         </div>
 
       </div>
@@ -100,53 +78,23 @@ const seoData = {
     }
   }
 
-  /* Container per embed Iubenda */
+  /* Container per iframe Iubenda */
   .iubenda-embed-container {
     background-color: var(--bg-light);
     border-radius: 8px;
-    padding: 2rem;
-    min-height: 400px;
+    overflow: hidden;
   }
 
-  /* Stili per il contenuto generato da Iubenda */
-  .iubenda-embed-container h2,
-  .iubenda-embed-container h3 {
-    color: var(--text-dark);
-    margin-top: 2rem;
-    margin-bottom: 1rem;
+  .iubenda-embed-container iframe {
+    width: 100%;
+    height: 800px;
+    border: none;
+    display: block;
   }
 
-  .iubenda-embed-container p,
-  .iubenda-embed-container li {
-    font-size: 18px;
-    line-height: 1.7;
-    color: var(--text-dark);
-  }
-
-  .iubenda-embed-container ul,
-  .iubenda-embed-container ol {
-    margin-left: 1.5rem;
-    margin-bottom: 1rem;
-  }
-
-  .iubenda-embed-container a {
-    color: var(--primary-color);
-    text-decoration: underline;
-  }
-
-  .iubenda-embed-container a:hover {
-    color: var(--primary-hover);
-  }
-
-  /* Placeholder mentre Iubenda non è integrato */
-  .policy-placeholder {
-    text-align: center;
-    padding: 3rem;
-    color: var(--text-dark);
-    opacity: 0.7;
-  }
-
-  .policy-placeholder a {
-    color: var(--primary-color);
+  @media (max-width: 768px) {
+    .iubenda-embed-container iframe {
+      height: 600px;
+    }
   }
 </style>
