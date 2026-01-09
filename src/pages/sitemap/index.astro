@@ -1,0 +1,302 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+// SEO Data
+const seoData = {
+  title: "Mappa del Sito - Ristorante Pizzeria TRE Merate",
+  description: "Esplora tutte le pagine del sito del Ristorante Pizzeria TRE di Merate. Menù, eventi, contatti e informazioni.",
+  canonical: "https://www.ristorantepizzeriatre.it/sitemap/",
+  robots: "index, follow",
+};
+
+// Struttura del sito organizzata per sezioni
+const siteStructure = [
+  {
+    title: "Menù",
+    icon: "🍕",
+    links: [
+      { name: "Menù Pizze", url: "/menu-pizze/", description: "Pizze tradizionali e speciali cotte nel forno a legna" },
+      { name: "Menù alla Carta", url: "/menu-alla-carta/", description: "Primi, secondi e specialità alla griglia" },
+      { name: "Menù d'Asporto", url: "/menu-asporto/", description: "Ordina online e ritira senza attese" },
+      { name: "Menù del Giorno", url: "/menu-del-giorno/", description: "Proposte fresche che cambiano ogni giorno" },
+    ]
+  },
+  {
+    title: "Eventi",
+    icon: "🎉",
+    links: [
+      { name: "Compleanni", url: "/compleanni/", description: "Festeggia il tuo compleanno con noi" },
+      { name: "Battesimi, Comunioni e Cresime", url: "/battesimi-comunioni-cresime/", description: "Celebra i momenti importanti in famiglia" },
+      { name: "Lauree", url: "/lauree/", description: "Un traguardo speciale merita una festa speciale" },
+      { name: "Anniversari", url: "/anniversari/", description: "Festeggia l'amore con una cena indimenticabile" },
+      { name: "Meeting e Cene Aziendali", url: "/meeting-cene-aziendali/", description: "Spazi riservati per il tuo business" },
+      { name: "Cene a Tema", url: "/cene-a-tema/", description: "Serate speciali con menù degustazione" },
+    ]
+  },
+  {
+    title: "Informazioni",
+    icon: "ℹ️",
+    links: [
+      { name: "Chi Siamo", url: "/chi-siamo/", description: "La nostra storia dal 1953" },
+      { name: "Contatti", url: "/contatti/", description: "Prenota un tavolo o contattaci" },
+    ]
+  },
+  {
+    title: "Legal",
+    icon: "📄",
+    links: [
+      { name: "Privacy Policy", url: "/privacy-policy/", description: "Informativa sulla privacy" },
+      { name: "Cookie Policy", url: "/cookie-policy/", description: "Informativa sui cookie" },
+    ]
+  }
+];
+
+// Schema.org BreadcrumbList
+const schemaOrg = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.ristorantepizzeriatre.it/" },
+    { "@type": "ListItem", "position": 2, "name": "Mappa del Sito" }
+  ]
+};
+---
+
+<Layout 
+  title={seoData.title}
+  description={seoData.description}
+  canonical={seoData.canonical}
+  robots={seoData.robots}
+>
+  <Fragment slot="schema">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
+  </Fragment>
+
+  <!-- Hero Section -->
+  <section class="hero hero-sitemap">
+    <div class="container hero-content">
+      <h1>Mappa del Sito</h1>
+      <p>Esplora tutte le sezioni del nostro sito</p>
+    </div>
+  </section>
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li aria-current="page">Mappa del Sito</li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- Sitemap Content -->
+  <section class="sitemap-section">
+    <div class="container">
+      
+      <!-- Home Link -->
+      <div class="sitemap-home">
+        <a href="/" class="sitemap-home-link">
+          <span class="sitemap-icon">🏠</span>
+          <div class="sitemap-home-content">
+            <h2>Home</h2>
+            <p>Pagina principale del Ristorante Pizzeria TRE</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Site Sections Grid -->
+      <div class="sitemap-grid">
+        {siteStructure.map((section) => (
+          <div class="sitemap-category">
+            <div class="sitemap-category-header">
+              <span class="sitemap-icon">{section.icon}</span>
+              <h2>{section.title}</h2>
+            </div>
+            <ul class="sitemap-links">
+              {section.links.map((link) => (
+                <li>
+                  <a href={link.url}>
+                    <span class="link-name">{link.name}</span>
+                    <span class="link-description">{link.description}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+  /* Hero Sitemap */
+  .hero-sitemap {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #c45a20 100%);
+    padding: 4rem 0 3rem;
+    text-align: center;
+    min-height: auto;
+  }
+
+  .hero-sitemap h1 {
+    color: white;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-sitemap p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.1rem;
+  }
+
+  /* Sitemap Section */
+  .sitemap-section {
+    padding: 3rem 0 4rem;
+    background: var(--bg-light, #f8f9fa);
+  }
+
+  /* Home Link */
+  .sitemap-home {
+    margin-bottom: 2.5rem;
+  }
+
+  .sitemap-home-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+  }
+
+  .sitemap-home-link:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 16px rgba(244, 119, 58, 0.15);
+    transform: translateY(-2px);
+  }
+
+  .sitemap-home-content h2 {
+    color: var(--text-dark, #1a1a1a);
+    font-size: 1.25rem;
+    margin: 0 0 0.25rem;
+  }
+
+  .sitemap-home-content p {
+    color: var(--text-muted, #666);
+    font-size: 0.9rem;
+    margin: 0;
+  }
+
+  /* Icon */
+  .sitemap-icon {
+    font-size: 2rem;
+    line-height: 1;
+  }
+
+  /* Grid */
+  .sitemap-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  /* Category Card */
+  .sitemap-category {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  .sitemap-category-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--primary-color);
+  }
+
+  .sitemap-category-header h2 {
+    font-size: 1.25rem;
+    margin: 0;
+    color: var(--text-dark, #1a1a1a);
+  }
+
+  /* Links List */
+  .sitemap-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .sitemap-links li {
+    margin-bottom: 0.75rem;
+  }
+
+  .sitemap-links li:last-child {
+    margin-bottom: 0;
+  }
+
+  .sitemap-links a {
+    display: block;
+    padding: 0.75rem;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    background: var(--bg-light, #f8f9fa);
+  }
+
+  .sitemap-links a:hover {
+    background: rgba(244, 119, 58, 0.1);
+  }
+
+  .sitemap-links .link-name {
+    display: block;
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .sitemap-links .link-description {
+    display: block;
+    color: var(--text-muted, #666);
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero-sitemap {
+      padding: 3rem 0 2rem;
+    }
+
+    .hero-sitemap h1 {
+      font-size: 2rem;
+    }
+
+    .sitemap-section {
+      padding: 2rem 0 3rem;
+    }
+
+    .sitemap-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .sitemap-home-link {
+      padding: 1.25rem;
+    }
+
+    .sitemap-icon {
+      font-size: 1.75rem;
+    }
+  }
+</style>
