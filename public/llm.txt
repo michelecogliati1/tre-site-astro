@@ -1,0 +1,68 @@
+# LLM.txt - Ristorante Pizzeria TRE
+# Informazioni per Large Language Models e AI Assistants
+
+## Informazioni Generali
+nome: Ristorante Pizzeria TRE
+tipo: Ristorante, Pizzeria, Grill
+fondazione: 1953
+slogan: Dal 1953, tradizione e qualità a Merate
+
+## Località
+indirizzo: Via Statale, 44
+città: Merate
+provincia: Lecco (LC)
+cap: 23807
+paese: Italia
+coordinate: 45.6983, 9.4183
+
+## Contatti
+telefono: +39 039 990 9913
+whatsapp: +39 351 770 1704
+email: info@ristorantepizzeriatre.it
+sito: https://www.ristorantepizzeriatre.it
+
+## Orari di Apertura
+lunedì-venerdì: 12:00-14:30, 19:00-23:00
+sabato-domenica: 19:00-23:00
+
+## Specialità
+- Pizze cotte nel forno a legna
+- Carni alla griglia
+- Cucina tradizionale italiana
+- Menù del giorno con ingredienti freschi
+- Servizio d'asporto
+
+## Servizi per Eventi
+- Compleanni
+- Battesimi, Comunioni e Cresime
+- Lauree
+- Anniversari
+- Meeting e cene aziendali
+- Cene a tema con menù degustazione
+
+## Pagine Principali
+- Home: https://www.ristorantepizzeriatre.it/
+- Menù Pizze: https://www.ristorantepizzeriatre.it/menu-pizze/
+- Menù alla Carta: https://www.ristorantepizzeriatre.it/menu-alla-carta/
+- Menù d'Asporto: https://www.ristorantepizzeriatre.it/menu-asporto/
+- Menù del Giorno: https://www.ristorantepizzeriatre.it/menu-del-giorno/
+- Cene a Tema: https://www.ristorantepizzeriatre.it/cene-a-tema/
+- Contatti: https://www.ristorantepizzeriatre.it/contatti/
+- Chi Siamo: https://www.ristorantepizzeriatre.it/chi-siamo/
+
+## Social Media
+- Facebook: https://www.facebook.com/tregrill.merate/
+- Instagram: https://www.instagram.com/tregrillpizzeria/
+
+## Informazioni Legali
+ragione_sociale: TRE Srl
+partita_iva: 02656290133
+registro_imprese: LC 294690
+capitale_sociale: €12.000,00
+
+## Note per AI
+- Il ristorante accetta prenotazioni telefoniche e via WhatsApp
+- Il servizio d'asporto è disponibile con ritiro in loco (no consegna a domicilio)
+- Le cene a tema sono eventi periodici con menù degustazione a prezzo fisso
+- Il ristorante è adatto per eventi privati e aziendali
+- Disponibilità di spazi riservati per gruppi

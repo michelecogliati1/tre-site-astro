@@ -1,0 +1,13 @@
+# Robots.txt - Ristorante Pizzeria TRE
+# https://www.ristorantepizzeriatre.it/
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.ristorantepizzeriatre.it/sitemap.xml
+
+# Blocco eventuali pagine di test/staging
+Disallow: /test/
+Disallow: /staging/
+Disallow: /draft/
