@@ -1,0 +1,19 @@
+{
+  "redirects": [
+    {
+      "source": "/CucinaPizze.pdf",
+      "destination": "/menu-pizze/",
+      "permanent": true
+    },
+    {
+      "source": "/privacy.html",
+      "destination": "/privacy-policy/",
+      "permanent": true
+    },
+    {
+      "source": "/cookies-policy.html",
+      "destination": "/cookie-policy/",
+      "permanent": true
+    }
+  ]
+}
