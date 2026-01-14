@@ -177,10 +177,10 @@ Richiesta inviata dal sito web ristorantepizzeriatre.it
             email: 'info@ristorantepizzeriatre.it',
             name: 'Ristorante Pizzeria TRE'
           },
-          {
-            email: 'residencepassone@gmail.com',
-            name: 'Test TRE'
-          }
+          //{
+            //email: 'residencepassone@gmail.com',
+            //name: 'Test TRE'
+          //}
         ],
         replyTo: {
           email: data.email,
