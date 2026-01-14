@@ -1,4 +1,9 @@
 {
+  "functions": {
+    "**/*": {
+      "runtime": "nodejs20.x"
+    }
+  },
   "redirects": [
     {
       "source": "/CucinaPizze.pdf",
