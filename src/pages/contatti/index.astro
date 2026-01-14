@@ -1147,6 +1147,11 @@ const schemaOrg = {
     font-size: 18px;
   }
 
+  .btn-submit:disabled {
+    opacity: 0.7;
+    cursor: wait;
+  }
+
   @media (min-width: 768px) {
     .btn-submit {
       width: auto;
@@ -1429,74 +1434,33 @@ const schemaOrg = {
       });
     }
 
-    // Form submission - genera email con mailto: e redirect a thank you page
+    // Form submission - invio tramite API Brevo
     const form = document.getElementById('preventivo-form');
     if (form) {
-      form.addEventListener('submit', (e) => {
+      form.addEventListener('submit', async (e) => {
         e.preventDefault();
         
+        // Disabilita il bottone durante l'invio
+        const submitBtn = form.querySelector('.btn-submit');
+        const originalBtnText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Invio in corso...';
+        
         // Raccogli i dati del form
-        const evento = document.getElementById('evento');
-        const eventoText = evento.options[evento.selectedIndex].text;
-        const eventoValue = evento.value;
-        
-        const dataInput = document.getElementById('data');
-        const dataCheckbox = document.getElementById('data-da-definire');
-        let dataText = dataCheckbox.checked ? 'Da definire' : dataInput.value;
-        // Formatta la data in italiano se presente
-        if (!dataCheckbox.checked && dataInput.value) {
-          const d = new Date(dataInput.value);
-          dataText = d.toLocaleDateString('it-IT', { day: '2-digit', month: '2-digit', year: 'numeric' });
-        }
-        
-        const servizio = document.getElementById('servizio');
-        const servizioText = servizio.options[servizio.selectedIndex].text;
-        
-        const partecipantiInput = document.getElementById('partecipanti');
-        const numeroCheckbox = document.getElementById('numero-da-definire');
-        const partecipantiText = numeroCheckbox.checked ? 'Da definire' : (partecipantiInput.value || 'Non specificato');
-        
-        const nome = document.getElementById('nome').value;
-        const cognome = document.getElementById('cognome').value;
-        const email = document.getElementById('email').value;
-        const telefono = document.getElementById('telefono').value || 'Non specificato';
-        const messaggio = document.getElementById('messaggio').value || 'Nessun messaggio aggiuntivo';
-        
-        // Genera l'oggetto email automatico
-        const oggetto = `Richiesta Preventivo: ${eventoText} - ${dataText} - ${servizioText} - ${partecipantiText} persone`;
-        
-        // Genera il corpo email strutturato
-        const corpoEmail = `
-═══════════════════════════════════════════════════
-   RICHIESTA PREVENTIVO - RISTORANTE PIZZERIA TRE
-═══════════════════════════════════════════════════
+        const formData = {
+          evento: document.getElementById('evento').value,
+          data: document.getElementById('data').value,
+          dataDaDefinire: document.getElementById('data-da-definire').checked,
+          servizio: document.getElementById('servizio').value,
+          nome: document.getElementById('nome').value,
+          cognome: document.getElementById('cognome').value,
+          partecipanti: document.getElementById('partecipanti').value,
+          numeroDaDefinire: document.getElementById('numero-da-definire').checked,
+          telefono: document.getElementById('telefono').value,
+          email: document.getElementById('email').value,
+          messaggio: document.getElementById('messaggio').value
+        };
 
-DETTAGLI EVENTO:
-────────────────────────────────────────────────────
-• Tipo Evento:         ${eventoText}
-• Data:                ${dataText}
-• Servizio:            ${servizioText}
-• N° Partecipanti:     ${partecipantiText}
-
-DATI DI CONTATTO:
-────────────────────────────────────────────────────
-• Nome:                ${nome}
-• Cognome:             ${cognome}
-• Email:               ${email}
-• Telefono:            ${telefono}
-
-MESSAGGIO DEL CLIENTE:
-────────────────────────────────────────────────────
-${messaggio}
-
-═══════════════════════════════════════════════════
-Richiesta inviata dal sito web ristorantepizzeriatre.it
-═══════════════════════════════════════════════════
-`;
-
-        // Indirizzi email destinatari
-        const destinatari = 'info@ristorantepizzeriatre.it';
-        
         // Determina la thank you page corretta in base all'evento
         const thankYouPages = {
           'compleanno': '/preventivo-compleanno/',
@@ -1506,31 +1470,45 @@ Richiesta inviata dal sito web ristorantepizzeriatre.it
           'laurea': '/preventivo-laurea/',
           'anniversario': '/preventivo-anniversario/',
           'meeting': '/preventivo-meeting/',
-          'altro': '/contatti/' // Fallback
+          'altro': '/contatti/grazie/'
         };
-        
-        const thankYouPage = thankYouPages[eventoValue] || '/contatti/';
-        
-        // Crea il link mailto con oggetto e corpo
-        const mailtoLink = `mailto:${destinatari}?subject=${encodeURIComponent(oggetto)}&body=${encodeURIComponent(corpoEmail)}`;
-        
-        // Apri il client email
-        window.location.href = mailtoLink;
-        
-        // Redirect alla thank you page dopo un breve delay
-        setTimeout(() => {
-          const confirmed = confirm(
-            'Si aprirà il tuo client email con la richiesta precompilata.\n\n' +
-            'Clicca OK dopo aver inviato l\'email per vedere la pagina di conferma.\n\n' +
-            'Se il client email non si apre automaticamente, contattaci a:\n' +
-            'info@ristorantepizzeriatre.it\n' +
-            'oppure chiamaci al: 039 990 9913'
-          );
-          
-          if (confirmed) {
+
+        try {
+          // Invia i dati all'API
+          const response = await fetch('/api/send-preventivo', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+          });
+
+          const result = await response.json();
+
+          if (result.success) {
+            // Successo! Redirect alla thank you page
+            const thankYouPage = thankYouPages[formData.evento] || '/contatti/grazie/';
             window.location.href = thankYouPage;
+          } else {
+            // Errore dall'API
+            throw new Error(result.error || 'Errore nell\'invio');
           }
-        }, 1000);
+
+        } catch (error) {
+          console.error('Errore invio preventivo:', error);
+          
+          // Riabilita il bottone
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalBtnText;
+          
+          // Mostra messaggio di errore user-friendly
+          alert(
+            'Si è verificato un errore nell\'invio della richiesta.\n\n' +
+            'Puoi riprovare oppure contattarci direttamente:\n' +
+            '📞 Telefono: 039 990 9913\n' +
+            '📧 Email: info@ristorantepizzeriatre.it'
+          );
+        }
       });
     }
   });
