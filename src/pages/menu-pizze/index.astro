@@ -1,5 +1,15 @@
 ﻿---
 import Layout from "../../layouts/Layout.astro";
+import { fetchSheetData, filterByCategory, formatPrice, formatAllergens, SHEET_GIDS } from "../../utils/googleSheets";
+
+// Fetch dati da Google Sheets (avviene solo al BUILD TIME)
+const allItems = await fetchSheetData(SHEET_GIDS.menuPizze);
+
+// Raggruppa per categoria
+const pizzeTradizionali = filterByCategory(allItems, 'pizze-tradizionali');
+const pizzeSpeciali = filterByCategory(allItems, 'pizze-speciali');
+const filoncini = filterByCategory(allItems, 'filoncini');
+const pizzeVegetariane = filterByCategory(allItems, 'pizze-vegetariane');
 
 // SEO Data
 const seoData = {
@@ -31,75 +41,31 @@ const schemaOrg = {
           "@type": "MenuSection",
           "name": "Pizze Tradizionali",
           "description": "Pizze classiche preparate con impasto a lunga lievitazione e ingredienti freschi",
-          "hasMenuItem": [
-            {
-              "@type": "MenuItem",
-              "name": "Margherita",
-              "description": "mozzarella e pomodoro",
-              "offers": {
-                "@type": "Offer",
-                "price": "7.00",
-                "priceCurrency": "EUR"
-              }
-            },
-            {
-              "@type": "MenuItem",
-              "name": "Prosciutto Cotto",
-              "description": "mozzarella, pomodoro e prosciutto cotto",
-              "offers": {
-                "@type": "Offer",
-                "price": "9.50",
-                "priceCurrency": "EUR"
-              }
-            },
-            {
-              "@type": "MenuItem",
-              "name": "Bufalina",
-              "description": "mozzarella, pomodoro, mozzarella di bufala e pomodorini",
-              "offers": {
-                "@type": "Offer",
-                "price": "9.50",
-                "priceCurrency": "EUR"
-              }
-            },
-            {
-              "@type": "MenuItem",
-              "name": "4 Formaggi",
-              "description": "mozzarella, zola, scamorza affumicata di Battipaglia, taleggio",
-              "offers": {
-                "@type": "Offer",
-                "price": "9.50",
-                "priceCurrency": "EUR"
-              }
+          "hasMenuItem": pizzeTradizionali.slice(0, 4).map(pizza => ({
+            "@type": "MenuItem",
+            "name": pizza.nome,
+            "description": pizza.descrizione,
+            "offers": {
+              "@type": "Offer",
+              "price": pizza.prezzo.replace(',', '.'),
+              "priceCurrency": "EUR"
             }
-          ]
+          }))
         },
         {
           "@type": "MenuSection",
           "name": "Pizze Speciali",
           "description": "Pizze con ingredienti selezionati e combinazioni ricercate",
-          "hasMenuItem": [
-            {
-              "@type": "MenuItem",
-              "name": "Anchoas",
-              "description": "Pomodoro, mozz. di bufala DOP, origano, pomodori semi secchi, olive leccino, acciughe Cantabrico",
-              "offers": {
-                "@type": "Offer",
-                "price": "16.00",
-                "priceCurrency": "EUR"
-              }
-            },
-            {
-              "@type": "MenuItem",
-              "name": "Patanegra",
-              "description": "Mozzarella, pomodoro, paleta de cebo iberica",
-              "offers": {
-                "@type": "Offer",
-                "price": "15.00",
-                "priceCurrency": "EUR"
-              }
+          "hasMenuItem": pizzeSpeciali.slice(0, 2).map(pizza => ({
+            "@type": "MenuItem",
+            "name": pizza.nome,
+            "description": pizza.descrizione,
+            "offers": {
+              "@type": "Offer",
+              "price": pizza.prezzo.replace(',', '.'),
+              "priceCurrency": "EUR"
             }
-          ]
+          }))
         },
         {
           "@type": "MenuSection",
@@ -213,237 +179,18 @@ const schemaOrg = {
       </div>
 
       <div class="menu-list">
-        <div class="menu-item">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">MARGHERITA</h3>
-            <span class="menu-item-price">€ 7,00</span>
+        {pizzeTradizionali.map((pizza) => (
+          <div class="menu-item">
+            <div class="menu-item-header">
+              <h3 class="menu-item-name">{pizza.nome}</h3>
+              <span class="menu-item-price">{formatPrice(pizza.prezzo)}</span>
+            </div>
+            <p class="menu-item-desc">
+              {pizza.descrizione} 
+              {pizza.allergeni && <span class="allergens">{formatAllergens(pizza.allergeni)}</span>}
+            </p>
           </div>
-          <p class="menu-item-desc">mozzarella e pomodoro <span class="allergens">(1, 6, 7)</span></p>
-        </div>
-
-        <div class="menu-item">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">PROSCIUTTO COTTO</h3>
-            <span class="menu-item-price">€ 9,50</span>
-          </div>
-          <p class="menu-item-desc">mozzarella, pomodoro e prosciutto cotto <span class="allergens">(1, 6, 7)</span></p>
-        </div>
-
-        <div class="menu-item">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">NAPOLI</h3>
-            <span class="menu-item-price">€ 8,50</span>
-          </div>
-          <p class="menu-item-desc">mozzarella, pomodoro, acciughe e origano <span class="allergens">(1, 4, 6, 7)</span></p>
-        </div>
-
-        <div class="menu-item">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">BUFALINA</h3>
-            <span class="menu-item-price">€ 9,50</span>
-          </div>
-          <p class="menu-item-desc">mozzarella, pomodoro, mozzarella di bufala e pomodorini <span class="allergens">(1, 6, 7)</span></p>
-        </div>
-
-        <div class="menu-item">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">PARMENSE</h3>
-            <span class="menu-item-price">€ 9,50</span>
-          </div>
-          <p class="menu-item-desc">mozzarella, pomodoro, prosciutto crudo Leporati, scaglie di grana <span class="allergens">(1, 6, 7)</span></p>
-        </div>
-
-        <div class="menu-item">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">4 FORMAGGI</h3>
-            <span class="menu-item-price">€ 9,50</span>
-          </div>
-          <p class="menu-item-desc">mozzarella, zola, scamorza affumicata di Battipaglia, taleggio <span class="allergens">(1, 6, 7)</span></p>
-        </div>
-
-        <div class="menu-item">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">TIROLESE</h3>
-            <span class="menu-item-price">€ 9,50</span>
-          </div>
-          <p class="menu-item-desc">mozzarella, pomodoro, speck, spinaci e noci <span class="allergens">(1, 6, 7, 8)</span></p>
-        </div>
-
-        <div class="menu-item">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">MELA VI</h3>
-            <span class="menu-item-price">€ 9,50</span>
-          </div>
-          <p class="menu-item-desc">mozzarella, zola, panna, mele e noci <span class="allergens">(1, 6, 7, 8)</span></p>
-        </div>
-
-        <div class="menu-item">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">VEGETARIANA</h3>
-            <span class="menu-item-price">€ 9,50</span>
-          </div>
-          <p class="menu-item-desc">mozzarella, pomodoro e verdure di stagione alla griglia <span class="allergens">(1, 6, 7)</span></p>
-        </div>
-
-        <div class="menu-item">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">WURSTEL</h3>
-            <span class="menu-item-price">€ 9,50</span>
-          </div>
-          <p class="menu-item-desc">mozzarella, pomodoro e wurstel Servelade <span class="allergens">(1, 6, 7)</span></p>
-        </div>
-
-        <div class="menu-item">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">CAPITANO</h3>
-            <span class="menu-item-price">€ 9,50</span>
-          </div>
-          <p class="menu-item-desc">mozzarella, pomodoro, tonno, cipolla <span class="allergens">(1, 4, 6, 7)</span></p>
-        </div>
-
-        <div class="menu-item">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">VALTELLINA</h3>
-            <span class="menu-item-price">€ 9,50</span>
-          </div>
-          <p class="menu-item-desc">mozzarella, pomodoro, bresaola, funghi, scaglie di grana <span class="allergens">(1, 6, 7)</span></p>
-        </div>
-
-        <div class="menu-item">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">PIACEVOLE</h3>
-            <span class="menu-item-price">€ 9,50</span>
-          </div>
-          <p class="menu-item-desc">mozzarella, pomodoro, brie, acciughe, prosciutto cotto <span class="allergens">(1, 4, 6, 7)</span></p>
-        </div>
-
-        <div class="menu-item">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">MONTEVECCHIA</h3>
-            <span class="menu-item-price">€ 9,50</span>
-          </div>
-          <p class="menu-item-desc">mozzarella, pomodoro, formaggino, cipolla e pancetta <span class="allergens">(1, 6, 7)</span></p>
-        </div>
-
-        <div class="menu-item">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">ZIZO</h3>
-            <span class="menu-item-price">€ 9,50</span>
-          </div>
-          <p class="menu-item-desc">mozzarella, pomodoro, scamorza, pomodorini e pancetta <span class="allergens">(1, 6, 7)</span></p>
-        </div>
-
-        <div class="menu-item">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">CARCIOFINA</h3>
-            <span class="menu-item-price">€ 9,50</span>
-          </div>
-          <p class="menu-item-desc">mozzarella, pomodoro, carciofi e scaglie di grana <span class="allergens">(1, 6, 7)</span></p>
-        </div>
-
-        <div class="menu-item">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">DELICATA</h3>
-            <span class="menu-item-price">€ 9,50</span>
-          </div>
-          <p class="menu-item-desc">mozzarella, prosciutto cotto, zucchine, carciofi, origano <span class="allergens">(1, 6, 7)</span></p>
-        </div>
-
-        <div class="menu-item">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">CALABRESE</h3>
-            <span class="menu-item-price">€ 9,50</span>
-          </div>
-          <p class="menu-item-desc">mozzarella, pomodoro e 'nduja <span class="allergens">(1, 6, 7)</span></p>
-        </div>
-
-        <div class="menu-item">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">NOSTRANA</h3>
-            <span class="menu-item-price">€ 9,50</span>
-          </div>
-          <p class="menu-item-desc">mozzarella, pomodoro, funghi, salsiccia, taleggio <span class="allergens">(1, 6, 7)</span></p>
-        </div>
-
-        <div class="menu-item">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">MIDU</h3>
-            <span class="menu-item-price">€ 9,50</span>
-          </div>
-          <p class="menu-item-desc">mozzarella, pomodoro, ricotta di bufala, melanzane, basilico <span class="allergens">(1, 6, 7)</span></p>
-        </div>
-
-        <div class="menu-item">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">GRATINATA</h3>
-            <span class="menu-item-price">€ 9,50</span>
-          </div>
-          <p class="menu-item-desc">mozzarella, pomodoro, zucchine, grana gratinato <span class="allergens">(1, 6, 7)</span></p>
-        </div>
-
-        <div class="menu-item">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">YATTAMAN</h3>
-            <span class="menu-item-price">€ 9,50</span>
-          </div>
-          <p class="menu-item-desc">mozzarella, pomodoro, zucchine, gamberetti <span class="allergens">(1, 2, 4, 6, 7, 14)</span></p>
-        </div>
-
-        <div class="menu-item">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">JHONNY STECCHINO</h3>
-            <span class="menu-item-price">€ 9,50</span>
-          </div>
-          <p class="menu-item-desc">mozzarella, pomodoro, salsiccia, zola, cipolla, origano <span class="allergens">(1, 6, 7)</span></p>
-        </div>
-
-        <div class="menu-item">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">FRIARIELLI</h3>
-            <span class="menu-item-price">€ 9,50</span>
-          </div>
-          <p class="menu-item-desc">mozzarella, salsiccia, friarielli, provola <span class="allergens">(1, 6, 7, 12)</span></p>
-        </div>
-
-        <div class="menu-item">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">TREVI</h3>
-            <span class="menu-item-price">€ 9,50</span>
-          </div>
-          <p class="menu-item-desc">mozzarella, pomodoro, scamorza, trevisana, speck <span class="allergens">(1, 6, 7)</span></p>
-        </div>
-
-        <div class="menu-item">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">4 STAGIONI</h3>
-            <span class="menu-item-price">€ 9,50</span>
-          </div>
-          <p class="menu-item-desc">mozzarella, pomodoro, prosciutto cotto, carciofi, olive, funghi <span class="allergens">(1, 6, 7)</span></p>
-        </div>
-
-        <div class="menu-item">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">ITALIANA</h3>
-            <span class="menu-item-price">€ 9,50</span>
-          </div>
-          <p class="menu-item-desc">mozzarella, pomodoro, rucola, pomodorini, grana <span class="allergens">(1, 6, 7)</span></p>
-        </div>
-
-        <div class="menu-item">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">FORTE</h3>
-            <span class="menu-item-price">€ 9,50</span>
-          </div>
-          <p class="menu-item-desc">mozzarella, pomodoro, salame piccante, radicchio, pecorino <span class="allergens">(1, 6, 7)</span></p>
-        </div>
-
-        <div class="menu-item">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">UFO ROBOT</h3>
-            <span class="menu-item-price">€ 9,50</span>
-          </div>
-          <p class="menu-item-desc">mozzarella, mozzarella di bufala campana DOP al centro, pomodorini, grana <span class="allergens">(1, 7)</span></p>
-        </div>
+        ))}
       </div>
     </div>
   </section>
@@ -462,78 +209,48 @@ const schemaOrg = {
       </div>
 
       <div class="menu-list">
-        <div class="menu-item menu-item-special">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">ANCHOAS</h3>
-            <span class="menu-item-price">€ 16,00</span>
+        {pizzeSpeciali.map((pizza) => (
+          <div class="menu-item menu-item-special">
+            <div class="menu-item-header">
+              <h3 class="menu-item-name">{pizza.nome}</h3>
+              <span class="menu-item-price">{formatPrice(pizza.prezzo)}</span>
+            </div>
+            <p class="menu-item-desc">
+              {pizza.descrizione} 
+              {pizza.allergeni && <span class="allergens">{formatAllergens(pizza.allergeni)}</span>}
+            </p>
           </div>
-          <p class="menu-item-desc">Pomodoro, mozz. di bufala DOP, origano, pomodori semi secchi, olive leccino, acciughe Cantabrico El Menù Selezione Oro <span class="allergens">(1, 4, 6, 7)</span></p>
-        </div>
-
-        <div class="menu-item menu-item-special">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">JULYA - FOCACCIA CONDITA A FREDDO</h3>
-            <span class="menu-item-price">€ 14,00</span>
-          </div>
-          <p class="menu-item-desc">Salmone Scozia affumicato, stracciatella campana DOP, rucola e zest di limone <span class="allergens">(1, 4, 7)</span></p>
-        </div>
-
-        <div class="menu-item menu-item-special">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">PATANEGRA</h3>
-            <span class="menu-item-price">€ 15,00</span>
-          </div>
-          <p class="menu-item-desc">Mozzarella, pomodoro, paleta de cebo iberica <span class="allergens">(1, 7)</span></p>
-        </div>
-
-        <div class="menu-item menu-item-special">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">ZUCCA</h3>
-            <span class="menu-item-price">€ 13,00</span>
-          </div>
-          <p class="menu-item-desc">Mozzarella, zucca, brie e salsiccia <span class="allergens">(1, 7)</span></p>
-        </div>
+        ))}
       </div>
     </div>
   </section>
 
   <div class="section-divider"></div>
 
-  <!-- I Filoncini -->
+  <!-- Filoncini -->
   <section class="menu-section" id="filoncini">
     <div class="container">
       <div class="section-header">
         <h2>I Filoncini</h2>
         <p>
-          I filoncini sono la nostra interpretazione del classico calzone, croccanti all'esterno e soffici
-          all'interno, perfetti se cerchi una consistenza diversa dalle classiche pizze.
+          I nostri filoncini sono calzoni croccanti all'esterno e soffici all'interno,
+          farciti con ingredienti di qualità per un'esperienza gustativa unica.
         </p>
       </div>
 
       <div class="menu-list">
-        <div class="menu-item">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">CHARLOTTE</h3>
-            <span class="menu-item-price">€ 7,00</span>
+        {filoncini.map((item) => (
+          <div class="menu-item">
+            <div class="menu-item-header">
+              <h3 class="menu-item-name">{item.nome}</h3>
+              <span class="menu-item-price">{formatPrice(item.prezzo)}</span>
+            </div>
+            <p class="menu-item-desc">
+              {item.descrizione} 
+              {item.allergeni && <span class="allergens">{formatAllergens(item.allergeni)}</span>}
+            </p>
           </div>
-          <p class="menu-item-desc">mozzarella, pomodoro, prosciutto cotto, trevisana, casera <span class="allergens">(1, 6, 7)</span></p>
-        </div>
-
-        <div class="menu-item">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">GANDAL</h3>
-            <span class="menu-item-price">€ 8,50</span>
-          </div>
-          <p class="menu-item-desc">mozzarella, brie, tonno rosa, cipolla <span class="allergens">(1, 4, 6, 7)</span></p>
-        </div>
-
-        <div class="menu-item">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">REMÌ</h3>
-            <span class="menu-item-price">€ 9,50</span>
-          </div>
-          <p class="menu-item-desc">mozzarella, funghi, spinaci, grana, casera, speck <span class="allergens">(1, 6, 7)</span></p>
-        </div>
+        ))}
       </div>
     </div>
   </section>
@@ -552,46 +269,18 @@ const schemaOrg = {
       </div>
 
       <div class="menu-list">
-        <div class="menu-item">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">MONTEBIO</h3>
-            <span class="menu-item-price">€ 7,00</span>
+        {pizzeVegetariane.map((pizza) => (
+          <div class="menu-item">
+            <div class="menu-item-header">
+              <h3 class="menu-item-name">{pizza.nome}</h3>
+              <span class="menu-item-price">{formatPrice(pizza.prezzo)}</span>
+            </div>
+            <p class="menu-item-desc">
+              {pizza.descrizione} 
+              {pizza.allergeni && <span class="allergens">{formatAllergens(pizza.allergeni)}</span>}
+            </p>
           </div>
-          <p class="menu-item-desc">crema di asparagi, carciofi, olive, capperi, cipolle, zucchine <span class="allergens">(1, 6)</span></p>
-        </div>
-
-        <div class="menu-item">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">VEGGY</h3>
-            <span class="menu-item-price">€ 8,50</span>
-          </div>
-          <p class="menu-item-desc">crema di asparagi, melanzane, pomodorini, rucola <span class="allergens">(1, 6)</span></p>
-        </div>
-
-        <div class="menu-item">
-          <div class="menu-item-header">
-            <h3 class="menu-item-name">ORTO VERDE</h3>
-            <span class="menu-item-price">€ 9,50</span>
-          </div>
-          <p class="menu-item-desc">crema di asparagi, spinaci, fagiolini, noci, radicchio <span class="allergens">(1, 6, 8)</span></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Allergeni -->
-  <section class="allergens-section">
-    <div class="container">
-      <div class="allergens-box">
-        <h3>Allergeni</h3>
-        <p>
-          (1) glutine, (2) crostacei, (3) uova, (4) pesce, (5) arachidi, (6) soia, (7) latte, (8) frutta a guscio,
-          (9) sedano, (10) senape, (11) semi di sesamo, (12) anidride solforosa, (13) lupini, (14) molluschi
-        </p>
-        <p class="allergens-note">
-          Per intolleranze e allergie chiedere al personale di sala.<br />
-          Alcuni prodotti potrebbero essere congelati.
-        </p>
+        ))}
       </div>
     </div>
   </section>
@@ -603,9 +292,9 @@ const schemaOrg = {
     <div class="container">
       <div class="feature-grid">
         <div class="feature-content">
-          <h2>Il segreto del Nostro Impasto</h2>
+          <h2>Il Segreto del Nostro Impasto</h2>
           <p class="feature-intro">
-            Impasti a lunga lievitazione, con farine selezionate per una pizza leggera e fragrante
+            Ogni pizza nasce da un impasto curato con passione, lievitato naturalmente per una digeribilità unica.
           </p>
           <ul class="feature-list">
             <li>
@@ -615,7 +304,7 @@ const schemaOrg = {
                 </svg>
               </span>
               <div>
-                <strong>Farina Intera:</strong> tipo 0 a basso indice glicemico
+                <strong>Lunga Lievitazione:</strong> 48-72 ore per un impasto leggero e digeribile
               </div>
             </li>
             <li>
@@ -625,7 +314,7 @@ const schemaOrg = {
                 </svg>
               </span>
               <div>
-                <strong>Cereali Antichi:</strong> Mix di grano tenero, lino, farro, kamut e bucce d'uva rossa
+                <strong>Farine Selezionate:</strong> miscela di farine di alta qualità
               </div>
             </li>
             <li>
@@ -635,25 +324,10 @@ const schemaOrg = {
                 </svg>
               </span>
               <div>
-                <strong>Lunga lievitazione:</strong> naturalmente per 48 ore
-              </div>
-            </li>
-            <li>
-              <span class="feature-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-              <div>
-                <strong>Cottura a legna:</strong> per un sapore unico.
+                <strong>Lievito Madre:</strong> per un sapore autentico e una consistenza perfetta
               </div>
             </li>
           </ul>
-          <div class="feature-badges">
-            <span class="badge">Cereali Antichi</span>
-            <span class="badge">Farina Intera</span>
-            <span class="badge">Lunga Lievitazione</span>
-          </div>
         </div>
         <div class="feature-image">
           <img
@@ -774,52 +448,35 @@ const schemaOrg = {
 </style>
 
 <script>
-  // Submenu sticky e highlight attivo
   document.addEventListener('DOMContentLoaded', () => {
     const header = document.getElementById('main-header');
     const submenu = document.getElementById('submenu-sticky');
     const submenuList = document.querySelector('.submenu-list');
     const submenuLinks = document.querySelectorAll('.submenu-link');
     const sections = document.querySelectorAll('.menu-section[id]');
-    
-    // Sticky CTA elements
     const stickyCta = document.getElementById('sticky-cta');
     const heroSection = document.querySelector('.hero');
     const ctaSection = document.querySelector('.cta-section');
 
-    // Calcola offset totale (header + submenu + margine extra per vedere il titolo)
     const getOffset = () => {
       const headerHeight = header ? header.offsetHeight : 0;
       const submenuHeight = submenu ? submenu.offsetHeight : 0;
       return headerHeight + submenuHeight + 40;
     };
 
-    // Scrolla il submenu orizzontalmente per mostrare il link attivo
     const scrollSubmenuToActiveLink = (activeLink) => {
       if (!submenuList || !activeLink) return;
-      
-      // Solo su mobile
       if (window.innerWidth > 768) return;
-
       const scrollLeft = activeLink.offsetLeft - 16;
-      
-      submenuList.scrollTo({
-        left: scrollLeft,
-        behavior: 'smooth'
-      });
+      submenuList.scrollTo({ left: scrollLeft, behavior: 'smooth' });
     };
 
-    // Gestisce la visibilità della sticky CTA
     const handleStickyCta = () => {
       if (!stickyCta || !heroSection || !ctaSection) return;
-
       const heroBottom = heroSection.getBoundingClientRect().bottom;
       const ctaTop = ctaSection.getBoundingClientRect().top;
       const windowHeight = window.innerHeight;
-
-      // Mostra quando hero esce dal viewport E cta finale non è ancora visibile
       const shouldShow = heroBottom < 0 && ctaTop > windowHeight - 100;
-
       if (shouldShow) {
         stickyCta.classList.add('visible');
       } else {
@@ -827,20 +484,16 @@ const schemaOrg = {
       }
     };
 
-    // Highlight link attivo in base allo scroll
     const highlightActiveLink = () => {
       const scrollPos = window.scrollY + getOffset() + 50;
-
       sections.forEach((section) => {
         const sectionTop = section.offsetTop;
         const sectionHeight = section.offsetHeight;
         const sectionId = section.getAttribute('id');
-
         if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
           submenuLinks.forEach((link) => {
             const wasActive = link.classList.contains('active');
             link.classList.remove('active');
-            
             if (link.getAttribute('href') === `#${sectionId}`) {
               link.classList.add('active');
               if (!wasActive) {
@@ -852,18 +505,14 @@ const schemaOrg = {
       });
     };
 
-    // Scroll handler combinato
     const onScroll = () => {
       highlightActiveLink();
       handleStickyCta();
     };
 
     window.addEventListener('scroll', onScroll);
-    
-    // Check iniziale
     handleStickyCta();
 
-    // Smooth scroll per i link del submenu
     submenuLinks.forEach((link) => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
@@ -871,11 +520,7 @@ const schemaOrg = {
         const targetSection = document.querySelector(targetId);
         if (targetSection) {
           const targetPosition = targetSection.offsetTop - getOffset();
-          window.scrollTo({
-            top: targetPosition,
-            behavior: 'smooth'
-          });
-          
+          window.scrollTo({ top: targetPosition, behavior: 'smooth' });
           scrollSubmenuToActiveLink(link);
         }
       });

@@ -1,0 +1,884 @@
+﻿---
+import Layout from "../../layouts/Layout.astro";
+
+// SEO Data
+const seoData = {
+  title: "Menù Pizze Artigianali | a Legna - Pizzeria TRE Merate",
+  description: "Scopri il menù pizze del Ristorante TRE a Merate. Pizze artigianali in forno a legna con impasti a lunga lievitazione e ingredienti freschi.",
+  canonical: "https://www.ristorantepizzeriatre.it/menu-pizze/",
+  ogImage: "https://www.ristorantepizzeriatre.it/img/menu-pizze/menu-pizze-ristorante-pizzeria-tre-merate-hero.webp",
+  preloadImage: "/img/menu-pizze/menu-pizze-ristorante-pizzeria-tre-merate-hero.webp",
+};
+
+// Schema.org per Menu + BreadcrumbList
+const schemaOrg = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Menu",
+      "@id": "https://www.ristorantepizzeriatre.it/menu-pizze/#menu",
+      "name": "Menù Pizze - Ristorante Pizzeria TRE",
+      "description": "Menù delle pizze cotte nel forno a legna con impasti a lunga lievitazione, disponibili presso il Ristorante Pizzeria TRE a Merate.",
+      "url": "https://www.ristorantepizzeriatre.it/menu-pizze/",
+      "mainEntityOfPage": "https://www.ristorantepizzeriatre.it/menu-pizze/",
+      "inLanguage": "it-IT",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "EUR"
+      },
+      "hasMenuSection": [
+        {
+          "@type": "MenuSection",
+          "name": "Pizze Tradizionali",
+          "description": "Pizze classiche preparate con impasto a lunga lievitazione e ingredienti freschi",
+          "hasMenuItem": [
+            {
+              "@type": "MenuItem",
+              "name": "Margherita",
+              "description": "mozzarella e pomodoro",
+              "offers": {
+                "@type": "Offer",
+                "price": "7.00",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Prosciutto Cotto",
+              "description": "mozzarella, pomodoro e prosciutto cotto",
+              "offers": {
+                "@type": "Offer",
+                "price": "9.50",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Bufalina",
+              "description": "mozzarella, pomodoro, mozzarella di bufala e pomodorini",
+              "offers": {
+                "@type": "Offer",
+                "price": "9.50",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "4 Formaggi",
+              "description": "mozzarella, zola, scamorza affumicata di Battipaglia, taleggio",
+              "offers": {
+                "@type": "Offer",
+                "price": "9.50",
+                "priceCurrency": "EUR"
+              }
+            }
+          ]
+        },
+        {
+          "@type": "MenuSection",
+          "name": "Pizze Speciali",
+          "description": "Pizze con ingredienti selezionati e combinazioni ricercate",
+          "hasMenuItem": [
+            {
+              "@type": "MenuItem",
+              "name": "Anchoas",
+              "description": "Pomodoro, mozz. di bufala DOP, origano, pomodori semi secchi, olive leccino, acciughe Cantabrico",
+              "offers": {
+                "@type": "Offer",
+                "price": "16.00",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Patanegra",
+              "description": "Mozzarella, pomodoro, paleta de cebo iberica",
+              "offers": {
+                "@type": "Offer",
+                "price": "15.00",
+                "priceCurrency": "EUR"
+              }
+            }
+          ]
+        },
+        {
+          "@type": "MenuSection",
+          "name": "I Filoncini",
+          "description": "Calzoni croccanti all'esterno e soffici all'interno"
+        },
+        {
+          "@type": "MenuSection",
+          "name": "Pizze Vegetariane e Vegane",
+          "description": "Pizze preparate con ingredienti genuini e naturali"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.ristorantepizzeriatre.it/menu-pizze/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.ristorantepizzeriatre.it/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Menù Pizze",
+          "item": "https://www.ristorantepizzeriatre.it/menu-pizze/"
+        }
+      ]
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.ristorantepizzeriatre.it/menu-pizze/#webpage",
+      "url": "https://www.ristorantepizzeriatre.it/menu-pizze/",
+      "name": "Menù Pizze | Ristorante Pizzeria TRE Merate",
+      "isPartOf": {
+        "@id": "https://www.ristorantepizzeriatre.it/#website"
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://www.ristorantepizzeriatre.it/img/menu-pizze/menu-pizze-ristorante-pizzeria-tre-merate-hero.webp"
+      },
+      "breadcrumb": {
+        "@id": "https://www.ristorantepizzeriatre.it/menu-pizze/#breadcrumb"
+      },
+      "inLanguage": "it-IT"
+    }
+  ]
+};
+---
+
+<Layout 
+  title={seoData.title}
+  description={seoData.description}
+  canonical={seoData.canonical}
+  ogImage={seoData.ogImage}
+  preloadImage={seoData.preloadImage}
+>
+  <!-- Schema.org JSON-LD -->
+  <Fragment slot="schema">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
+  </Fragment>
+
+  <!-- Hero Section -->
+  <section class="hero hero-menu-pizze">
+    <div class="container hero-content">
+      <h1>Menù Pizze</h1>
+      <p>
+        Le nostre Pizze, cotte nel forno a legna,<br />
+        preparate con ingredienti freschi e Stagionali
+      </p>
+      <div class="hero-buttons">
+        <a href="#pizze-tradizionali" class="btn btn-primary">Scopri le Pizze</a>
+        <a href="/contatti/" class="btn btn-outline">Prenota Ora</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li aria-current="page">Menù Pizze</li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- Menu Secondario Sticky -->
+  <nav class="submenu-sticky" id="submenu-sticky">
+    <div class="container">
+      <ul class="submenu-list">
+        <li><a href="#pizze-tradizionali" class="submenu-link active">Pizze tradizionali</a></li>
+        <li><a href="#pizze-speciali" class="submenu-link">Pizze speciali</a></li>
+        <li><a href="#filoncini" class="submenu-link">Filoncini</a></li>
+        <li><a href="#pizze-vegetariane" class="submenu-link">Pizze Vegetariane</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Pizze Tradizionali -->
+  <section class="menu-section" id="pizze-tradizionali">
+    <div class="container">
+      <div class="section-header">
+        <h2>Pizze Tradizionali</h2>
+        <p>
+          Scopri il piacere delle pizze classiche, preparate con un impasto a lunga lievitazione e
+          ingredienti freschi di prima scelta, per offrirti i sapori autentici della tradizione
+        </p>
+      </div>
+
+      <div class="menu-list">
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">MARGHERITA</h3>
+            <span class="menu-item-price">€ 7,00</span>
+          </div>
+          <p class="menu-item-desc">mozzarella e pomodoro <span class="allergens">(1, 6, 7)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">PROSCIUTTO COTTO</h3>
+            <span class="menu-item-price">€ 9,50</span>
+          </div>
+          <p class="menu-item-desc">mozzarella, pomodoro e prosciutto cotto <span class="allergens">(1, 6, 7)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">NAPOLI</h3>
+            <span class="menu-item-price">€ 8,50</span>
+          </div>
+          <p class="menu-item-desc">mozzarella, pomodoro, acciughe e origano <span class="allergens">(1, 4, 6, 7)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">BUFALINA</h3>
+            <span class="menu-item-price">€ 9,50</span>
+          </div>
+          <p class="menu-item-desc">mozzarella, pomodoro, mozzarella di bufala e pomodorini <span class="allergens">(1, 6, 7)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">PARMENSE</h3>
+            <span class="menu-item-price">€ 9,50</span>
+          </div>
+          <p class="menu-item-desc">mozzarella, pomodoro, prosciutto crudo Leporati, scaglie di grana <span class="allergens">(1, 6, 7)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">4 FORMAGGI</h3>
+            <span class="menu-item-price">€ 9,50</span>
+          </div>
+          <p class="menu-item-desc">mozzarella, zola, scamorza affumicata di Battipaglia, taleggio <span class="allergens">(1, 6, 7)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">TIROLESE</h3>
+            <span class="menu-item-price">€ 9,50</span>
+          </div>
+          <p class="menu-item-desc">mozzarella, pomodoro, speck, spinaci e noci <span class="allergens">(1, 6, 7, 8)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">MELA VI</h3>
+            <span class="menu-item-price">€ 9,50</span>
+          </div>
+          <p class="menu-item-desc">mozzarella, zola, panna, mele e noci <span class="allergens">(1, 6, 7, 8)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">VEGETARIANA</h3>
+            <span class="menu-item-price">€ 9,50</span>
+          </div>
+          <p class="menu-item-desc">mozzarella, pomodoro e verdure di stagione alla griglia <span class="allergens">(1, 6, 7)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">WURSTEL</h3>
+            <span class="menu-item-price">€ 9,50</span>
+          </div>
+          <p class="menu-item-desc">mozzarella, pomodoro e wurstel Servelade <span class="allergens">(1, 6, 7)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">CAPITANO</h3>
+            <span class="menu-item-price">€ 9,50</span>
+          </div>
+          <p class="menu-item-desc">mozzarella, pomodoro, tonno, cipolla <span class="allergens">(1, 4, 6, 7)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">VALTELLINA</h3>
+            <span class="menu-item-price">€ 9,50</span>
+          </div>
+          <p class="menu-item-desc">mozzarella, pomodoro, bresaola, funghi, scaglie di grana <span class="allergens">(1, 6, 7)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">PIACEVOLE</h3>
+            <span class="menu-item-price">€ 9,50</span>
+          </div>
+          <p class="menu-item-desc">mozzarella, pomodoro, brie, acciughe, prosciutto cotto <span class="allergens">(1, 4, 6, 7)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">MONTEVECCHIA</h3>
+            <span class="menu-item-price">€ 9,50</span>
+          </div>
+          <p class="menu-item-desc">mozzarella, pomodoro, formaggino, cipolla e pancetta <span class="allergens">(1, 6, 7)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">ZIZO</h3>
+            <span class="menu-item-price">€ 9,50</span>
+          </div>
+          <p class="menu-item-desc">mozzarella, pomodoro, scamorza, pomodorini e pancetta <span class="allergens">(1, 6, 7)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">CARCIOFINA</h3>
+            <span class="menu-item-price">€ 9,50</span>
+          </div>
+          <p class="menu-item-desc">mozzarella, pomodoro, carciofi e scaglie di grana <span class="allergens">(1, 6, 7)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">DELICATA</h3>
+            <span class="menu-item-price">€ 9,50</span>
+          </div>
+          <p class="menu-item-desc">mozzarella, prosciutto cotto, zucchine, carciofi, origano <span class="allergens">(1, 6, 7)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">CALABRESE</h3>
+            <span class="menu-item-price">€ 9,50</span>
+          </div>
+          <p class="menu-item-desc">mozzarella, pomodoro e 'nduja <span class="allergens">(1, 6, 7)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">NOSTRANA</h3>
+            <span class="menu-item-price">€ 9,50</span>
+          </div>
+          <p class="menu-item-desc">mozzarella, pomodoro, funghi, salsiccia, taleggio <span class="allergens">(1, 6, 7)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">MIDU</h3>
+            <span class="menu-item-price">€ 9,50</span>
+          </div>
+          <p class="menu-item-desc">mozzarella, pomodoro, ricotta di bufala, melanzane, basilico <span class="allergens">(1, 6, 7)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">GRATINATA</h3>
+            <span class="menu-item-price">€ 9,50</span>
+          </div>
+          <p class="menu-item-desc">mozzarella, pomodoro, zucchine, grana gratinato <span class="allergens">(1, 6, 7)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">YATTAMAN</h3>
+            <span class="menu-item-price">€ 9,50</span>
+          </div>
+          <p class="menu-item-desc">mozzarella, pomodoro, zucchine, gamberetti <span class="allergens">(1, 2, 4, 6, 7, 14)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">JHONNY STECCHINO</h3>
+            <span class="menu-item-price">€ 9,50</span>
+          </div>
+          <p class="menu-item-desc">mozzarella, pomodoro, salsiccia, zola, cipolla, origano <span class="allergens">(1, 6, 7)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">FRIARIELLI</h3>
+            <span class="menu-item-price">€ 9,50</span>
+          </div>
+          <p class="menu-item-desc">mozzarella, salsiccia, friarielli, provola <span class="allergens">(1, 6, 7, 12)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">TREVI</h3>
+            <span class="menu-item-price">€ 9,50</span>
+          </div>
+          <p class="menu-item-desc">mozzarella, pomodoro, scamorza, trevisana, speck <span class="allergens">(1, 6, 7)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">4 STAGIONI</h3>
+            <span class="menu-item-price">€ 9,50</span>
+          </div>
+          <p class="menu-item-desc">mozzarella, pomodoro, prosciutto cotto, carciofi, olive, funghi <span class="allergens">(1, 6, 7)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">ITALIANA</h3>
+            <span class="menu-item-price">€ 9,50</span>
+          </div>
+          <p class="menu-item-desc">mozzarella, pomodoro, rucola, pomodorini, grana <span class="allergens">(1, 6, 7)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">FORTE</h3>
+            <span class="menu-item-price">€ 9,50</span>
+          </div>
+          <p class="menu-item-desc">mozzarella, pomodoro, salame piccante, radicchio, pecorino <span class="allergens">(1, 6, 7)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">UFO ROBOT</h3>
+            <span class="menu-item-price">€ 9,50</span>
+          </div>
+          <p class="menu-item-desc">mozzarella, mozzarella di bufala campana DOP al centro, pomodorini, grana <span class="allergens">(1, 7)</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Pizze Speciali -->
+  <section class="menu-section" id="pizze-speciali">
+    <div class="container">
+      <div class="section-header">
+        <h2>Pizze Speciali</h2>
+        <p>
+          Se desideri gustare sapori unici e ricercati, le nostre pizze speciali sono create con
+          ingredienti selezionati e combinazioni sorprendenti.
+        </p>
+      </div>
+
+      <div class="menu-list">
+        <div class="menu-item menu-item-special">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">ANCHOAS</h3>
+            <span class="menu-item-price">€ 16,00</span>
+          </div>
+          <p class="menu-item-desc">Pomodoro, mozz. di bufala DOP, origano, pomodori semi secchi, olive leccino, acciughe Cantabrico El Menù Selezione Oro <span class="allergens">(1, 4, 6, 7)</span></p>
+        </div>
+
+        <div class="menu-item menu-item-special">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">JULYA - FOCACCIA CONDITA A FREDDO</h3>
+            <span class="menu-item-price">€ 14,00</span>
+          </div>
+          <p class="menu-item-desc">Salmone Scozia affumicato, stracciatella campana DOP, rucola e zest di limone <span class="allergens">(1, 4, 7)</span></p>
+        </div>
+
+        <div class="menu-item menu-item-special">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">PATANEGRA</h3>
+            <span class="menu-item-price">€ 15,00</span>
+          </div>
+          <p class="menu-item-desc">Mozzarella, pomodoro, paleta de cebo iberica <span class="allergens">(1, 7)</span></p>
+        </div>
+
+        <div class="menu-item menu-item-special">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">ZUCCA</h3>
+            <span class="menu-item-price">€ 13,00</span>
+          </div>
+          <p class="menu-item-desc">Mozzarella, zucca, brie e salsiccia <span class="allergens">(1, 7)</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- I Filoncini -->
+  <section class="menu-section" id="filoncini">
+    <div class="container">
+      <div class="section-header">
+        <h2>I Filoncini</h2>
+        <p>
+          I filoncini sono la nostra interpretazione del classico calzone, croccanti all'esterno e soffici
+          all'interno, perfetti se cerchi una consistenza diversa dalle classiche pizze.
+        </p>
+      </div>
+
+      <div class="menu-list">
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">CHARLOTTE</h3>
+            <span class="menu-item-price">€ 7,00</span>
+          </div>
+          <p class="menu-item-desc">mozzarella, pomodoro, prosciutto cotto, trevisana, casera <span class="allergens">(1, 6, 7)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">GANDAL</h3>
+            <span class="menu-item-price">€ 8,50</span>
+          </div>
+          <p class="menu-item-desc">mozzarella, brie, tonno rosa, cipolla <span class="allergens">(1, 4, 6, 7)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">REMÌ</h3>
+            <span class="menu-item-price">€ 9,50</span>
+          </div>
+          <p class="menu-item-desc">mozzarella, funghi, spinaci, grana, casera, speck <span class="allergens">(1, 6, 7)</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Pizze Vegetariane e Vegane -->
+  <section class="menu-section" id="pizze-vegetariane">
+    <div class="container">
+      <div class="section-header">
+        <h2>Pizze Vegetariane e Vegane</h2>
+        <p>
+          Se cerchi una variante vegetariana o vegana, offriamo una selezione di pizze preparate
+          con ingredienti genuini e naturali, che rispettano il gusto senza compromessi.
+        </p>
+      </div>
+
+      <div class="menu-list">
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">MONTEBIO</h3>
+            <span class="menu-item-price">€ 7,00</span>
+          </div>
+          <p class="menu-item-desc">crema di asparagi, carciofi, olive, capperi, cipolle, zucchine <span class="allergens">(1, 6)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">VEGGY</h3>
+            <span class="menu-item-price">€ 8,50</span>
+          </div>
+          <p class="menu-item-desc">crema di asparagi, melanzane, pomodorini, rucola <span class="allergens">(1, 6)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">ORTO VERDE</h3>
+            <span class="menu-item-price">€ 9,50</span>
+          </div>
+          <p class="menu-item-desc">crema di asparagi, spinaci, fagiolini, noci, radicchio <span class="allergens">(1, 6, 8)</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Allergeni -->
+  <section class="allergens-section">
+    <div class="container">
+      <div class="allergens-box">
+        <h3>Allergeni</h3>
+        <p>
+          (1) glutine, (2) crostacei, (3) uova, (4) pesce, (5) arachidi, (6) soia, (7) latte, (8) frutta a guscio,
+          (9) sedano, (10) senape, (11) semi di sesamo, (12) anidride solforosa, (13) lupini, (14) molluschi
+        </p>
+        <p class="allergens-note">
+          Per intolleranze e allergie chiedere al personale di sala.<br />
+          Alcuni prodotti potrebbero essere congelati.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Il Segreto del Nostro Impasto -->
+  <section class="feature-section">
+    <div class="container">
+      <div class="feature-grid">
+        <div class="feature-content">
+          <h2>Il segreto del Nostro Impasto</h2>
+          <p class="feature-intro">
+            Impasti a lunga lievitazione, con farine selezionate per una pizza leggera e fragrante
+          </p>
+          <ul class="feature-list">
+            <li>
+              <span class="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <div>
+                <strong>Farina Intera:</strong> tipo 0 a basso indice glicemico
+              </div>
+            </li>
+            <li>
+              <span class="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <div>
+                <strong>Cereali Antichi:</strong> Mix di grano tenero, lino, farro, kamut e bucce d'uva rossa
+              </div>
+            </li>
+            <li>
+              <span class="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <div>
+                <strong>Lunga lievitazione:</strong> naturalmente per 48 ore
+              </div>
+            </li>
+            <li>
+              <span class="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <div>
+                <strong>Cottura a legna:</strong> per un sapore unico.
+              </div>
+            </li>
+          </ul>
+          <div class="feature-badges">
+            <span class="badge">Cereali Antichi</span>
+            <span class="badge">Farina Intera</span>
+            <span class="badge">Lunga Lievitazione</span>
+          </div>
+        </div>
+        <div class="feature-image">
+          <img
+            src="/img/menu-pizze/segreto-nostro-impasto-menu-pizze-ristorante-pizzeria-tre-merate.webp"
+            alt="Il segreto del nostro impasto - Ristorante TRE Merate"
+            loading="lazy"
+            decoding="async"
+            width="600"
+            height="450"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Cottura nel Forno a Legna -->
+  <section class="feature-section feature-section-reverse">
+    <div class="container">
+      <div class="feature-grid feature-grid-reverse">
+        <div class="feature-image">
+          <img
+            src="/img/menu-pizze/cottura-forno-pizze-ristorante-pizzeria-tre-merate.webp"
+            alt="Cottura nel forno a legna - Ristorante TRE Merate"
+            loading="lazy"
+            decoding="async"
+            width="600"
+            height="450"
+          />
+        </div>
+        <div class="feature-content">
+          <h2>Cottura nel Forno a Legna</h2>
+          <p class="feature-intro">
+            Il forno a legna è il cuore della nostra cucina, per pizze dal sapore autentico.
+          </p>
+          <ul class="feature-list">
+            <li>
+              <span class="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <div>
+                <strong>Cottura Rapida:</strong> pronta in pochi minuti
+              </div>
+            </li>
+            <li>
+              <span class="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <div>
+                <strong>Sapore Unico:</strong> Il legno conferisce un aroma affumicato inimitabile
+              </div>
+            </li>
+            <li>
+              <span class="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <div>
+                <strong>Cottura Uniforme:</strong> fondo croccante e dorato per una cottura omogenea.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Prenota il Tuo Tavolo CTA -->
+  <section class="cta-section cta-section-menu-pizze">
+    <div class="container">
+      <h2>Prenota il Tuo Tavolo</h2>
+      <p>
+        Prenota comodamente online in pochi click o chiamaci per riservare il tuo tavolo
+      </p>
+      <a href="/contatti/" class="btn btn-primary">Prenota Ora</a>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Sticky CTA Bottom -->
+  <div class="sticky-cta-bottom" id="sticky-cta">
+    <div class="sticky-cta-container">
+      <div class="sticky-cta-logo">
+        <img src="/img/brand/tre-logo.svg" alt="TRE" width="50" height="50" />
+      </div>
+      <div class="sticky-cta-content">
+        <span class="sticky-cta-title">Ristorante Pizzeria TRE</span>
+        <span class="sticky-cta-subtitle">Prenota il tuo tavolo</span>
+      </div>
+      <a href="/contatti/" class="btn btn-primary sticky-cta-btn">Prenota Ora</a>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  /* Hero Menu Pizze */
+  .hero-menu-pizze {
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.62)),
+      url('/img/menu-pizze/menu-pizze-ristorante-pizzeria-tre-merate-hero.webp');
+  }
+
+  /* CTA Menu Pizze */
+  .cta-section-menu-pizze {
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)),
+      url('/img/menu-pizze/ristorante-pizzeria-tre-merate-prenota-menù-pizze.webp');
+  }
+</style>
+
+<script>
+  // Submenu sticky e highlight attivo
+  document.addEventListener('DOMContentLoaded', () => {
+    const header = document.getElementById('main-header');
+    const submenu = document.getElementById('submenu-sticky');
+    const submenuList = document.querySelector('.submenu-list');
+    const submenuLinks = document.querySelectorAll('.submenu-link');
+    const sections = document.querySelectorAll('.menu-section[id]');
+    
+    // Sticky CTA elements
+    const stickyCta = document.getElementById('sticky-cta');
+    const heroSection = document.querySelector('.hero');
+    const ctaSection = document.querySelector('.cta-section');
+
+    // Calcola offset totale (header + submenu + margine extra per vedere il titolo)
+    const getOffset = () => {
+      const headerHeight = header ? header.offsetHeight : 0;
+      const submenuHeight = submenu ? submenu.offsetHeight : 0;
+      return headerHeight + submenuHeight + 40;
+    };
+
+    // Scrolla il submenu orizzontalmente per mostrare il link attivo
+    const scrollSubmenuToActiveLink = (activeLink) => {
+      if (!submenuList || !activeLink) return;
+      
+      // Solo su mobile
+      if (window.innerWidth > 768) return;
+
+      const scrollLeft = activeLink.offsetLeft - 16;
+      
+      submenuList.scrollTo({
+        left: scrollLeft,
+        behavior: 'smooth'
+      });
+    };
+
+    // Gestisce la visibilità della sticky CTA
+    const handleStickyCta = () => {
+      if (!stickyCta || !heroSection || !ctaSection) return;
+
+      const heroBottom = heroSection.getBoundingClientRect().bottom;
+      const ctaTop = ctaSection.getBoundingClientRect().top;
+      const windowHeight = window.innerHeight;
+
+      // Mostra quando hero esce dal viewport E cta finale non è ancora visibile
+      const shouldShow = heroBottom < 0 && ctaTop > windowHeight - 100;
+
+      if (shouldShow) {
+        stickyCta.classList.add('visible');
+      } else {
+        stickyCta.classList.remove('visible');
+      }
+    };
+
+    // Highlight link attivo in base allo scroll
+    const highlightActiveLink = () => {
+      const scrollPos = window.scrollY + getOffset() + 50;
+
+      sections.forEach((section) => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        const sectionId = section.getAttribute('id');
+
+        if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+          submenuLinks.forEach((link) => {
+            const wasActive = link.classList.contains('active');
+            link.classList.remove('active');
+            
+            if (link.getAttribute('href') === `#${sectionId}`) {
+              link.classList.add('active');
+              if (!wasActive) {
+                scrollSubmenuToActiveLink(link);
+              }
+            }
+          });
+        }
+      });
+    };
+
+    // Scroll handler combinato
+    const onScroll = () => {
+      highlightActiveLink();
+      handleStickyCta();
+    };
+
+    window.addEventListener('scroll', onScroll);
+    
+    // Check iniziale
+    handleStickyCta();
+
+    // Smooth scroll per i link del submenu
+    submenuLinks.forEach((link) => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href');
+        const targetSection = document.querySelector(targetId);
+        if (targetSection) {
+          const targetPosition = targetSection.offsetTop - getOffset();
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+          
+          scrollSubmenuToActiveLink(link);
+        }
+      });
+    });
+  });
+</script>
