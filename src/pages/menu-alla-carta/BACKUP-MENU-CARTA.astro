@@ -1,18 +1,5 @@
 ﻿---
 import Layout from "../../layouts/Layout.astro";
-import { fetchSheetData, filterByCategory, formatPrice, formatAllergens, SHEET_GIDS } from "../../utils/googleSheets";
-
-// Fetch dati da Google Sheets (avviene solo al BUILD TIME)
-const allItems = await fetchSheetData(SHEET_GIDS.menuCarta);
-
-// Raggruppa per categoria
-const antipasti = filterByCategory(allItems, 'antipasti');
-const primi = filterByCategory(allItems, 'primi');
-const secondi = filterByCategory(allItems, 'secondi');
-const griglia = filterByCategory(allItems, 'griglia');
-const insalatone = filterByCategory(allItems, 'insalatone');
-const contorni = filterByCategory(allItems, 'contorni');
-const dessert = filterByCategory(allItems, 'dessert');
 
 // SEO Data
 const seoData = {
@@ -43,37 +30,71 @@ const schemaOrg = {
         {
           "@type": "MenuSection",
           "name": "Antipasti",
-          "description": "Un viaggio tra i sapori tradizionali degli antipasti italiani",
-          "hasMenuItem": antipasti.slice(0, 3).map(item => ({
-            "@type": "MenuItem",
-            "name": item.nome,
-            "description": item.descrizione,
-            "offers": {
-              "@type": "Offer",
-              "price": item.prezzo.replace(',', '.'),
-              "priceCurrency": "EUR"
+          "description": "Un viaggio tra i sapori tradizionali degli antipasti italiani, preparati con cura e ingredienti selezionati",
+          "hasMenuItem": [
+            {
+              "@type": "MenuItem",
+              "name": "Soutè di Cozze",
+              "description": "con pomodoro fresco, basilico e crostini di pane",
+              "offers": {
+                "@type": "Offer",
+                "price": "12.00",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Selezione di Salumi",
+              "description": "con formaggini di Montevecchia",
+              "offers": {
+                "@type": "Offer",
+                "price": "13.00",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Piovra Scottata",
+              "description": "su crema di zucca e bacon croccante",
+              "offers": {
+                "@type": "Offer",
+                "price": "16.00",
+                "priceCurrency": "EUR"
+              }
             }
-          }))
+          ]
         },
         {
           "@type": "MenuSection",
           "name": "Primi Piatti",
-          "description": "Piatti che rappresentano la tradizione culinaria italiana",
-          "hasMenuItem": primi.slice(0, 2).map(item => ({
-            "@type": "MenuItem",
-            "name": item.nome,
-            "description": item.descrizione,
-            "offers": {
-              "@type": "Offer",
-              "price": item.prezzo.replace(',', '.'),
-              "priceCurrency": "EUR"
+          "description": "Piatti che rappresentano la tradizione culinaria italiana, arricchiti da ingredienti di alta qualità",
+          "hasMenuItem": [
+            {
+              "@type": "MenuItem",
+              "name": "Risotto Acquerello",
+              "description": "con funghi porcini freschi",
+              "offers": {
+                "@type": "Offer",
+                "price": "16.00",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Scialatielli ai Frutti di Mare",
+              "description": "gamberi, seppie, in base alla disponibilità giornaliera",
+              "offers": {
+                "@type": "Offer",
+                "price": "18.00",
+                "priceCurrency": "EUR"
+              }
             }
-          }))
+          ]
         },
         {
           "@type": "MenuSection",
           "name": "Secondi Piatti",
-          "description": "La tradizione dei secondi piatti italiani"
+          "description": "La tradizione dei secondi piatti italiani con ingredienti genuini"
         },
         {
           "@type": "MenuSection",
@@ -200,18 +221,45 @@ const schemaOrg = {
       </div>
 
       <div class="menu-list">
-        {antipasti.map((item) => (
-          <div class="menu-item">
-            <div class="menu-item-header">
-              <h3 class="menu-item-name">{item.nome}</h3>
-              <span class="menu-item-price">{formatPrice(item.prezzo)}</span>
-            </div>
-            <p class="menu-item-desc">
-              {item.descrizione} 
-              {item.allergeni && <span class="allergens">{formatAllergens(item.allergeni)}</span>}
-            </p>
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">SOUTÈ DI COZZE</h3>
+            <span class="menu-item-price">€ 12,00</span>
           </div>
-        ))}
+          <p class="menu-item-desc">con pomodoro fresco, basilico e crostini di pane <span class="allergens">(1, 14)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">SELEZIONE DI SALUMI</h3>
+            <span class="menu-item-price">€ 13,00</span>
+          </div>
+          <p class="menu-item-desc">con formaggini di Montevecchia <span class="allergens">(7)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">PIOVRA SCOTTATA</h3>
+            <span class="menu-item-price">€ 16,00</span>
+          </div>
+          <p class="menu-item-desc">su crema di zucca e bacon croccante <span class="allergens">(1, 4, 7, 9)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">ACCIUGHE DEL MAR CANTABRICO</h3>
+            <span class="menu-item-price">€ 9,50</span>
+          </div>
+          <p class="menu-item-desc">con burro bio km 0 e pan brioches fatto in casa <span class="allergens">(1, 3, 4, 7)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">CULATTA DI LEPORATI</h3>
+            <span class="menu-item-price">€ 9,50</span>
+          </div>
+          <p class="menu-item-desc">stagionata 13 mesi con mozzarella di bufala DOP campana <span class="allergens">(7)</span></p>
+        </div>
       </div>
     </div>
   </section>
@@ -230,18 +278,37 @@ const schemaOrg = {
       </div>
 
       <div class="menu-list">
-        {primi.map((item) => (
-          <div class="menu-item menu-item-special">
-            <div class="menu-item-header">
-              <h3 class="menu-item-name">{item.nome}</h3>
-              <span class="menu-item-price">{formatPrice(item.prezzo)}</span>
-            </div>
-            <p class="menu-item-desc">
-              {item.descrizione} 
-              {item.allergeni && <span class="allergens">{formatAllergens(item.allergeni)}</span>}
-            </p>
+        <div class="menu-item menu-item-special">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">RISOTTO ACQUERELLO</h3>
+            <span class="menu-item-price">€ 16,00</span>
           </div>
-        ))}
+          <p class="menu-item-desc">con funghi porcini freschi <span class="allergens">(7, 9, 12)</span></p>
+        </div>
+
+        <div class="menu-item menu-item-special">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">SCIALATIELLI AI FRUTTI DI MARE</h3>
+            <span class="menu-item-price">€ 18,00</span>
+          </div>
+          <p class="menu-item-desc">gamberi, seppie, ... in base alla disponibilità giornaliera <span class="allergens">(1, 2, 4, 7, 9, 14)</span></p>
+        </div>
+
+        <div class="menu-item menu-item-special">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">SPAGHETTI ALLE VONGOLE VERACI</h3>
+            <span class="menu-item-price">€ 16,00</span>
+          </div>
+          <p class="menu-item-desc">pomodori datterino gialli e olio alle acciughe <span class="allergens">(1, 4, 9, 12, 14)</span></p>
+        </div>
+
+        <div class="menu-item menu-item-special">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">VELLUTATA DI ZUCCA</h3>
+            <span class="menu-item-price">€ 12,00</span>
+          </div>
+          <p class="menu-item-desc">con castagne al vapore e crostini di pane dorati <span class="allergens">(1, 9)</span></p>
+        </div>
       </div>
     </div>
   </section>
@@ -260,18 +327,29 @@ const schemaOrg = {
       </div>
 
       <div class="menu-list">
-        {secondi.map((item) => (
-          <div class="menu-item">
-            <div class="menu-item-header">
-              <h3 class="menu-item-name">{item.nome}</h3>
-              <span class="menu-item-price">{formatPrice(item.prezzo)}</span>
-            </div>
-            <p class="menu-item-desc">
-              {item.descrizione} 
-              {item.allergeni && <span class="allergens">{formatAllergens(item.allergeni)}</span>}
-            </p>
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">BRANZINO</h3>
+            <span class="menu-item-price">€ 18,00</span>
           </div>
-        ))}
+          <p class="menu-item-desc">trancio di branzino al forno con verdure miste di stagione <span class="allergens">(1, 4, 9)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">ZUPPETTA DI PESCE</h3>
+            <span class="menu-item-price">€ 22,00</span>
+          </div>
+          <p class="menu-item-desc">gamberi, seppie, ... in base alla disponibilità giornaliera <span class="allergens">(1, 2, 4, 7, 9, 14)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">COTOLETTA</h3>
+            <span class="menu-item-price">€ 18,00</span>
+          </div>
+          <p class="menu-item-desc">di vitello nazionale alla milanese, cotta nel burro bio chiarificato <span class="allergens">(1, 3)</span></p>
+        </div>
       </div>
     </div>
   </section>
@@ -290,18 +368,45 @@ const schemaOrg = {
       </div>
 
       <div class="menu-list">
-        {griglia.map((item) => (
-          <div class="menu-item menu-item-special">
-            <div class="menu-item-header">
-              <h3 class="menu-item-name">{item.nome}</h3>
-              <span class="menu-item-price">{formatPrice(item.prezzo)}</span>
-            </div>
-            <p class="menu-item-desc">
-              {item.descrizione} 
-              {item.allergeni && <span class="allergens">{formatAllergens(item.allergeni)}</span>}
-            </p>
+        <div class="menu-item menu-item-special">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">TAGLIATA DI MANZO</h3>
+            <span class="menu-item-price">€ 22,00</span>
           </div>
-        ))}
+          <p class="menu-item-desc">tagliata di manzo (300 gr) con rosmarino di Montevecchia e sale Maldon</p>
+        </div>
+
+        <div class="menu-item menu-item-special">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">TAGLIATA DI PATANEGRA</h3>
+            <span class="menu-item-price">€ 28,00</span>
+          </div>
+          <p class="menu-item-desc">tagliata di pluma iberica (300 gr) con radicchio e scaglie di grana <span class="allergens">(7)</span></p>
+        </div>
+
+        <div class="menu-item menu-item-special">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">PETTO DI POLLO</h3>
+            <span class="menu-item-price">€ 14,00</span>
+          </div>
+          <p class="menu-item-desc">petto di pollo in padella con patate al forno</p>
+        </div>
+
+        <div class="menu-item menu-item-special">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">FILETTO DI MANZO</h3>
+            <span class="menu-item-price">€ 26,00</span>
+          </div>
+          <p class="menu-item-desc">filetto di manzo alla piastra (300 gr)</p>
+        </div>
+
+        <div class="menu-item menu-item-special">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">FIORENTINA</h3>
+            <span class="menu-item-price">€ 55,00</span>
+          </div>
+          <p class="menu-item-desc">fiorentina alla piastra per 2 persone (1200 gr)</p>
+        </div>
       </div>
     </div>
   </section>
@@ -320,18 +425,29 @@ const schemaOrg = {
       </div>
 
       <div class="menu-list">
-        {insalatone.map((item) => (
-          <div class="menu-item">
-            <div class="menu-item-header">
-              <h3 class="menu-item-name">{item.nome}</h3>
-              <span class="menu-item-price">{formatPrice(item.prezzo)}</span>
-            </div>
-            <p class="menu-item-desc">
-              {item.descrizione} 
-              {item.allergeni && <span class="allergens">{formatAllergens(item.allergeni)}</span>}
-            </p>
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">PROVENZALE</h3>
+            <span class="menu-item-price">€ 12,00</span>
           </div>
-        ))}
+          <p class="menu-item-desc">fagiolini, insalata, pomodori, olive, carciofi e tonno <span class="allergens">(6)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">MARI E MONTI</h3>
+            <span class="menu-item-price">€ 14,00</span>
+          </div>
+          <p class="menu-item-desc">pollo, insalata, code di gambero, porcini <span class="allergens">(2)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">LEGGERA</h3>
+            <span class="menu-item-price">€ 13,00</span>
+          </div>
+          <p class="menu-item-desc">misticanza, finocchi, bresaola, grana, noci <span class="allergens">(7, 8)</span></p>
+        </div>
       </div>
     </div>
   </section>
@@ -350,18 +466,37 @@ const schemaOrg = {
       </div>
 
       <div class="menu-list">
-        {contorni.map((item) => (
-          <div class="menu-item">
-            <div class="menu-item-header">
-              <h3 class="menu-item-name">{item.nome}</h3>
-              <span class="menu-item-price">{formatPrice(item.prezzo)}</span>
-            </div>
-            <p class="menu-item-desc">
-              {item.descrizione} 
-              {item.allergeni && <span class="allergens">{formatAllergens(item.allergeni)}</span>}
-            </p>
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">PATATINE FRITTE*</h3>
+            <span class="menu-item-price">€ 5,00</span>
           </div>
-        ))}
+          <p class="menu-item-desc">*prodotto surgelato <span class="allergens">(8)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">PATATE AL FORNO</h3>
+            <span class="menu-item-price">€ 5,00</span>
+          </div>
+          <p class="menu-item-desc">patate al forno con rosmarino <span class="allergens">(7)</span></p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">INSALATA MISTA</h3>
+            <span class="menu-item-price">€ 5,00</span>
+          </div>
+          <p class="menu-item-desc">insalata mista di stagione</p>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">VERDURE ALLA GRIGLIA</h3>
+            <span class="menu-item-price">€ 6,00</span>
+          </div>
+          <p class="menu-item-desc">verdure miste grigliate di stagione</p>
+        </div>
       </div>
     </div>
   </section>
@@ -380,23 +515,49 @@ const schemaOrg = {
       </div>
 
       <div class="menu-list">
-        {dessert.map((item) => (
-          <div class="menu-item menu-item-special">
-            <div class="menu-item-header">
-              <h3 class="menu-item-name">{item.nome}</h3>
-              <span class="menu-item-price">{formatPrice(item.prezzo)}</span>
-            </div>
-            <p class="menu-item-desc">
-              {item.descrizione} 
-              {item.allergeni && <span class="allergens">{formatAllergens(item.allergeni)}</span>}
-            </p>
+        <div class="menu-item menu-item-special">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">TIRAMISÙ</h3>
+            <span class="menu-item-price">€ 7,00</span>
           </div>
-        ))}
+          <p class="menu-item-desc">tiramisù della casa con mascarpone e caffè <span class="allergens">(1, 3, 7)</span></p>
+        </div>
+
+        <div class="menu-item menu-item-special">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">PANNA COTTA</h3>
+            <span class="menu-item-price">€ 6,00</span>
+          </div>
+          <p class="menu-item-desc">panna cotta con frutti di bosco <span class="allergens">(7)</span></p>
+        </div>
+
+        <div class="menu-item menu-item-special">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">TORTA DEL GIORNO</h3>
+            <span class="menu-item-price">€ 6,00</span>
+          </div>
+          <p class="menu-item-desc">chiedere al personale di sala <span class="allergens">(1, 3, 7)</span></p>
+        </div>
+
+        <div class="menu-item menu-item-special">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">GELATO ARTIGIANALE</h3>
+            <span class="menu-item-price">€ 5,00</span>
+          </div>
+          <p class="menu-item-desc">2 gusti a scelta <span class="allergens">(7)</span></p>
+        </div>
+
+        <div class="menu-item menu-item-special">
+          <div class="menu-item-header">
+            <h3 class="menu-item-name">SORBETTO AL LIMONE</h3>
+            <span class="menu-item-price">€ 5,00</span>
+          </div>
+          <p class="menu-item-desc">sorbetto al limone di Sorrento</p>
+        </div>
       </div>
     </div>
   </section>
 
-  
   <!-- Allergeni -->
   <section class="allergens-section">
     <div class="container">
@@ -416,12 +577,12 @@ const schemaOrg = {
 
   <div class="section-divider"></div>
 
-  <!-- Ingredienti Freschi -->
+  <!-- Ingredienti Selezionati e Stagionali -->
   <section class="feature-section">
     <div class="container">
       <div class="feature-grid">
         <div class="feature-content">
-          <h2>Ingredienti Freschi e Selezionati</h2>
+          <h2>Ingredienti Selezionati e Stagionali</h2>
           <p class="feature-intro">
             Utilizziamo ingredienti stagionali di alta qualità, privilegiando prodotti locali
           </p>
@@ -433,7 +594,7 @@ const schemaOrg = {
                 </svg>
               </span>
               <div>
-                <strong>Prodotti freechi,</strong> stagionali e di qualità
+                <strong>Prodotti freschi,</strong> stagionali e di qualità
               </div>
             </li>
             <li>
@@ -443,7 +604,7 @@ const schemaOrg = {
                 </svg>
               </span>
               <div>
-                <strong>Selezionati con cura,</strong> dai migliori produttori
+                <strong>Selezionati con cura</strong> dai migliori produttori
               </div>
             </li>
             <li>
@@ -463,7 +624,7 @@ const schemaOrg = {
                 </svg>
               </span>
               <div>
-                <strong>Carni Pregiate:</strong> grigliate alla perfezione
+                <strong>Carni pregiate</strong> grigliate alla perfezione
               </div>
             </li>
           </ul>
@@ -486,7 +647,6 @@ const schemaOrg = {
       </div>
     </div>
   </section>
-  
 
   <div class="section-divider"></div>
 
@@ -585,7 +745,7 @@ const schemaOrg = {
   }
 
   /* CTA Menu alla Carta */
-  .cta-section-menu-alla-carta {
+  .cta-section-menu-carta {
     background-image:
       linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)),
       url('/img/menu-carta/ristorante-pizzeria-tre-merate-prenota-menu-carta.webp');
@@ -593,35 +753,52 @@ const schemaOrg = {
 </style>
 
 <script>
+  // Submenu sticky e highlight attivo
   document.addEventListener('DOMContentLoaded', () => {
     const header = document.getElementById('main-header');
     const submenu = document.getElementById('submenu-sticky');
     const submenuList = document.querySelector('.submenu-list');
     const submenuLinks = document.querySelectorAll('.submenu-link');
     const sections = document.querySelectorAll('.menu-section[id]');
+    
+    // Sticky CTA elements
     const stickyCta = document.getElementById('sticky-cta');
     const heroSection = document.querySelector('.hero');
     const ctaSection = document.querySelector('.cta-section');
 
+    // Calcola offset totale (header + submenu + margine extra per vedere il titolo)
     const getOffset = () => {
       const headerHeight = header ? header.offsetHeight : 0;
       const submenuHeight = submenu ? submenu.offsetHeight : 0;
       return headerHeight + submenuHeight + 40;
     };
 
+    // Scrolla il submenu orizzontalmente per mostrare il link attivo
     const scrollSubmenuToActiveLink = (activeLink) => {
       if (!submenuList || !activeLink) return;
+      
+      // Solo su mobile
       if (window.innerWidth > 768) return;
+
       const scrollLeft = activeLink.offsetLeft - 16;
-      submenuList.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+      
+      submenuList.scrollTo({
+        left: scrollLeft,
+        behavior: 'smooth'
+      });
     };
 
+    // Gestisce la visibilità della sticky CTA
     const handleStickyCta = () => {
       if (!stickyCta || !heroSection || !ctaSection) return;
+
       const heroBottom = heroSection.getBoundingClientRect().bottom;
       const ctaTop = ctaSection.getBoundingClientRect().top;
       const windowHeight = window.innerHeight;
+
+      // Mostra quando hero esce dal viewport E cta finale non è ancora visibile
       const shouldShow = heroBottom < 0 && ctaTop > windowHeight - 100;
+
       if (shouldShow) {
         stickyCta.classList.add('visible');
       } else {
@@ -629,16 +806,20 @@ const schemaOrg = {
       }
     };
 
+    // Highlight link attivo in base allo scroll
     const highlightActiveLink = () => {
       const scrollPos = window.scrollY + getOffset() + 50;
+
       sections.forEach((section) => {
         const sectionTop = section.offsetTop;
         const sectionHeight = section.offsetHeight;
         const sectionId = section.getAttribute('id');
+
         if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
           submenuLinks.forEach((link) => {
             const wasActive = link.classList.contains('active');
             link.classList.remove('active');
+            
             if (link.getAttribute('href') === `#${sectionId}`) {
               link.classList.add('active');
               if (!wasActive) {
@@ -650,14 +831,18 @@ const schemaOrg = {
       });
     };
 
+    // Scroll handler combinato
     const onScroll = () => {
       highlightActiveLink();
       handleStickyCta();
     };
 
     window.addEventListener('scroll', onScroll);
+    
+    // Check iniziale
     handleStickyCta();
 
+    // Smooth scroll per i link del submenu
     submenuLinks.forEach((link) => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
@@ -665,7 +850,11 @@ const schemaOrg = {
         const targetSection = document.querySelector(targetId);
         if (targetSection) {
           const targetPosition = targetSection.offsetTop - getOffset();
-          window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+          
           scrollSubmenuToActiveLink(link);
         }
       });
