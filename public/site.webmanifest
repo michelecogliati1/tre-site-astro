@@ -1,0 +1,21 @@
+{
+  "name": "Ristorante Pizzeria TRE",
+  "short_name": "TRE",
+  "description": "Ristorante Pizzeria TRE a Merate - Grill + Pizzeria dal 1953",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#C8102E",
+  "background_color": "#1a1a1a",
+  "icons": [
+    {
+      "src": "/img/brand/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/img/brand/favicon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
