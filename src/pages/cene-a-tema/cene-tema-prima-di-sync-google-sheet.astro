@@ -1,45 +1,5 @@
 ﻿---
 import Layout from "../../layouts/Layout.astro";
-import { 
-  fetchCeneTemaData, 
-  getProssimaCenaInfo, 
-  getPortateCena 
-} from "../../utils/googleSheets";
-
-// ============================================
-// DATI SINCRONIZZATI DA GOOGLE SHEETS
-// ============================================
-const rawData = await fetchCeneTemaData();
-const prossimaCenaInfo = getProssimaCenaInfo(rawData);
-const portate = getPortateCena(rawData);
-
-// Costruisci l'oggetto prossimaCena
-const prossimaCena = {
-  titolo: prossimaCenaInfo.titolo,
-  data: prossimaCenaInfo.data,
-  ora: prossimaCenaInfo.ora,
-  prezzo: prossimaCenaInfo.prezzo,
-  portate: portate
-};
-
-// ============================================
-// DATI HARDCODED (modificabili solo nel codice)
-// ============================================
-const cenePasate = [
-  { titolo: "Oktoberfest", data: "18 Ottobre 2024", immagine: "/img/cene-tema/cena-tema-oktober-fest-ristorante-pizzeria-tre-merate-carosello.webp" },
-  { titolo: "ArTRE - arte in pizzeria", data: "16 Marzo 2023", immagine: "/img/cene-tema/cena-a-tema-artre-arte-in-pizzeria-tre-merate.webp" },
-  { titolo: "Birra Vetra e Sapori Rustici", data: "13 Settembre 2022", immagine: "/img/cene-tema/cena-a-tema-birra-vetra-sapori-rustici-ristorante-pizzeria-tre-merate.webp" },
-  { titolo: "Uniti per il Nepal - cena solidale", data: "16 Giugno 2015", immagine: "/img/cene-tema/cena-a-tema-solidale-uniti-per-il-nepal-ristorante-pizzeria-tre-merate.webp" }
-];
-
-const partners = [
-  { nome: "Birra Vetra", logo: "/img/cene-tema/logo-birra-vetra-ristorante-pizzeria-tre-merate.svg" },
-  { nome: "Birrificio Otus", logo: "/img/cene-tema/logo-birrificio-otus-ristorante-pizzeria-tre-merate.svg" },
-  { nome: "Birrificio Rurale", logo: "/img/cene-tema/logo-birrificio-rurale-ristorante-pizzeria-tre-merate.svg" },
-  { nome: "Cantina Villa Erica", logo: "/img/cene-tema/logo-cantina-vinicola-villa-erica-ristorante-pizzeria-tre-merate.svg" },
-  { nome: "Deltetto", logo: "/img/cene-tema/logo-cantina-vinicola-deldetto-ristorante-pizzeria-tre-merate.svg" },
-  { nome: "Moser Trento", logo: "/img/cene-tema/logo-cantina-vinicola-moser-ristorante-pizzeria-tre-merate.svg" }
-];
 
 // SEO Data
 const seoData = {
@@ -50,6 +10,40 @@ const seoData = {
   preloadImage: "/img/cene-tema/cena-tema-ristorante-pizzeria-tre-merate-hero.webp",
 };
 
+// Dati Prossima Cena a Tema
+const prossimaCena = {
+  titolo: "Oktoberfest",
+  data: "Venerdì 18 Ottobre 2024",
+  ora: "ore 20.00",
+  prezzo: "50,00",
+  portate: [
+    { tipo: "Aperitivo", piatto: "Obatzda (crema di formaggi bavaresi) con crostini di segale", abbinamento: "Tegernseer Hell – Herzoglich Bayerisches Brauhaus Tegernsee" },
+    { tipo: "Antipasto", piatto: "Brezel caldo con burro aromatizzato e senape dolce", abbinamento: "Weihenstephaner Hefeweissbier – Weihenstephan" },
+    { tipo: "Primo", piatto: "Zuppa di patate e porri con pancetta croccante", abbinamento: "Kellerbier – Ayinger" },
+    { tipo: "Secondo", piatto: "Stinco di maiale al forno con crauti e patate", abbinamento: "Celebrator Doppelbock – Ayinger" },
+    { tipo: "Dessert", piatto: "Strudel di mele con crema alla vaniglia", abbinamento: "Eisbock – Schneider Weisse" },
+    { tipo: "Caffè", piatto: "", abbinamento: "" }
+  ]
+};
+
+// Dati Cene Passate
+const cenePasate = [
+  { titolo: "Oktoberfest", data: "18 Ottobre 2024", immagine: "/img/cene-tema/cena-tema-oktober-fest-ristorante-pizzeria-tre-merate-carosello.webp" },
+  { titolo: "ArTRE - arte in pizzeria", data: "16 Marzo 2023", immagine: "/img/cene-tema/cena-a-tema-artre-arte-in-pizzeria-tre-merate.webp" },
+  { titolo: "Birra Vetra e Sapori Rustici", data: "13 Settembre 2022", immagine: "/img/cene-tema/cena-a-tema-birra-vetra-sapori-rustici-ristorante-pizzeria-tre-merate.webp" },
+  { titolo: "Uniti per il Nepal - cena solidale", data: "16 Giugno 2015", immagine: "/img/cene-tema/cena-a-tema-solidale-uniti-per-il-nepal-ristorante-pizzeria-tre-merate.webp" }
+];
+
+// Dati Partner
+const partners = [
+  { nome: "Birra Vetra", logo: "/img/cene-tema/logo-birra-vetra-ristorante-pizzeria-tre-merate.svg" },
+  { nome: "Birrificio Otus", logo: "/img/cene-tema/logo-birrificio-otus-ristorante-pizzeria-tre-merate.svg" },
+  { nome: "Birrificio Rurale", logo: "/img/cene-tema/logo-birrificio-rurale-ristorante-pizzeria-tre-merate.svg" },
+  { nome: "Cantina Villa Erica", logo: "/img/cene-tema/logo-cantina-vinicola-villa-erica-ristorante-pizzeria-tre-merate.svg" },
+  { nome: "Deltetto", logo: "/img/cene-tema/logo-cantina-vinicola-deldetto-ristorante-pizzeria-tre-merate.svg" },
+  { nome: "Moser Trento", logo: "/img/cene-tema/logo-cantina-vinicola-moser-ristorante-pizzeria-tre-merate.svg" }
+];
+
 // Schema.org
 const schemaOrg = {
   "@context": "https://schema.org",
@@ -57,12 +51,13 @@ const schemaOrg = {
     {
       "@type": "Event",
       "@id": "https://www.ristorantepizzeriatre.it/cene-a-tema/#event-oktoberfest",
-      "name": `Cena a Tema ${prossimaCena.titolo}`,
-      "description": `Serata a tema ${prossimaCena.titolo} con menù degustazione e bevande artigianali selezionate. Vivi l'atmosfera al Ristorante Pizzeria TRE di Merate con piatti tipici e bevande abbinate.`,
+      "name": "Cena a Tema Oktoberfest",
+      "description": "Serata a tema bavarese con menù degustazione e birre artigianali selezionate. Vivi l'atmosfera dell'Oktoberfest al Ristorante Pizzeria TRE di Merate con piatti tipici bavaresi e birre artigianali.",
       "image": [
-        "https://www.ristorantepizzeriatre.it/img/cene-tema/cena-tema-ristorante-pizzeria-tre-merate-hero.webp"
+        "https://www.ristorantepizzeriatre.it/img/cene-tema/oktoberfest/cena-tema-oktoberfest-ristorante-pizzeria-tre-merate-hero.webp"
       ],
-      "startDate": prossimaCena.data,
+      "startDate": "2025-10-17T20:00:00+02:00",
+      "endDate": "2025-10-17T23:30:00+02:00",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "location": { 
@@ -80,10 +75,11 @@ const schemaOrg = {
       },
       "offers": { 
         "@type": "Offer", 
-        "price": prossimaCena.prezzo.replace(',', '.'), 
+        "price": "50.00", 
         "priceCurrency": "EUR",
         "availability": "https://schema.org/InStock",
         "url": "https://www.ristorantepizzeriatre.it/contatti/",
+        "validFrom": "2025-09-01T00:00:00+02:00"
       },
       "performer": {
         "@type": "Organization",
@@ -147,7 +143,7 @@ const schemaOrg = {
     </div>
   </nav>
 
-  <!-- Prossima Cena a Tema (SINCRONIZZATA) -->
+  <!-- Prossima Cena a Tema -->
   <section class="prossima-cena-section" id="prossima-cena">
     <div class="container">
       <div class="prossima-cena-header">
@@ -180,7 +176,7 @@ const schemaOrg = {
 
   <div class="section-divider"></div>
 
-  <!-- Le Nostre Cene a Tema Passate (HARDCODED) -->
+  <!-- Le Nostre Cene a Tema Passate -->
   <section class="cene-passate-section">
     <div class="container">
       <div class="section-header">
@@ -214,7 +210,7 @@ const schemaOrg = {
 
   <div class="section-divider"></div>
 
-  <!-- I Nostri Partner (HARDCODED) -->
+  <!-- I Nostri Partner -->
   <section class="partner-section">
     <div class="container">
       <div class="section-header">
@@ -641,36 +637,222 @@ const schemaOrg = {
   @media (max-width: 768px) { .carousel-track .partner-card { flex: 0 0 calc(100% - (2 * var(--padding-mobile))); } }
 
   /* ===== NEWSLETTER SECTION ===== */
-  .newsletter-cene-section { padding: 4rem 0; background-color: var(--bg-light); }
-  @media (min-width: 768px) { .newsletter-cene-section { padding: 5rem 0; } }
+  .newsletter-cene-section { 
+    padding: 4rem 0; 
+    background-color: var(--bg-light); 
+  }
+  @media (min-width: 768px) { 
+    .newsletter-cene-section { padding: 5rem 0; } 
+  }
 
   /* ===== TRE DESIGN OVERRIDES FOR BREVO FORM ===== */
-  #sib-container { padding: 0 !important; }
-  .sib-image-form-block { display: flex !important; justify-content: center !important; align-items: center !important; }
-  .sib-image-form-block img { display: block !important; margin: 0 auto !important; }
-  #sib-container .input, #sib-form .input { font-family: var(--font-main), sans-serif !important; font-size: 16px !important; padding: 14px 16px !important; border: 2px solid #ddd !important; border-radius: 8px !important; transition: border-color 0.3s ease, box-shadow 0.3s ease !important; background-color: #fff !important; }
-  #sib-container .input:focus, #sib-form .input:focus { border-color: #F4773A !important; box-shadow: 0 0 0 3px rgba(244, 119, 58, 0.15) !important; outline: none !important; }
-  #sib-container .input::placeholder { color: #999 !important; font-family: var(--font-main), sans-serif !important; }
-  .sib-sms-input { display: flex !important; gap: 0.75rem !important; align-items: stretch !important; }
-  .sib-sms-input > .entry__field:first-child { flex: 0 0 120px !important; width: 120px !important; }
-  .sib-sms-input > .entry__field:last-child { flex: 1 !important; }
-  @media (max-width: 480px) { .sib-sms-input { flex-direction: column !important; } .sib-sms-input > .entry__field:first-child { flex: 1 !important; width: 100% !important; } }
-  #sib-form input[type="checkbox"], .sib-optin input[type="checkbox"], .entry__choice input[type="checkbox"] { appearance: checkbox !important; -webkit-appearance: checkbox !important; -moz-appearance: checkbox !important; position: relative !important; opacity: 1 !important; visibility: visible !important; width: 20px !important; height: 20px !important; min-width: 20px !important; min-height: 20px !important; margin: 0 !important; cursor: pointer !important; z-index: 1 !important; left: auto !important; top: auto !important; flex-shrink: 0 !important; accent-color: #F4773A !important; }
-  #sib-form .checkbox, #sib-form .checkbox_tick_positive, .sib-optin .checkbox, .sib-optin .checkbox_tick_positive, span.checkbox.checkbox_tick_positive { display: none !important; }
-  #sib-form .entry__choice, .sib-optin .entry__choice, .entry__choice { position: relative !important; display: block !important; }
-  #sib-form .entry__choice label, .sib-optin .entry__choice label, .entry__choice label { display: flex !important; flex-direction: row !important; align-items: flex-start !important; gap: 36px !important; cursor: pointer !important; text-align: left !important; position: relative !important; padding-left: 0 !important; }
-  #sib-form .entry__choice label > span, .sib-optin .entry__choice label > span, .entry__choice label > span { flex: 1 !important; line-height: 1.5 !important; padding-top: 0 !important; padding-left: 0 !important; position: relative !important; left: auto !important; top: auto !important; }
-  #sib-form .entry__choice label > span:last-child, .sib-optin .entry__choice label > span:last-child, .entry__choice label > span:last-child { flex: 1 !important; line-height: 1.5 !important; padding-top: 2px !important; padding-left: 0 !important; }
-  .sib-form-block__button:hover { background-color: #E65C00 !important; }
-  #sib-container a, #sib-form a { color: #F4773A !important; text-decoration: underline !important; }
-  #sib-container a:hover, #sib-form a:hover { color: #E65C00 !important; }
-  .sib-captcha .form__label-row { display: flex !important; flex-direction: column !important; align-items: center !important; }
-  .g-recaptcha { display: inline-block !important; }
-  .sib-sms-tooltip__icon { background-color: #F4773A !important; }
-  .sib-form__declaration { display: flex !important; align-items: flex-start !important; gap: 0.75rem !important; text-align: left !important; padding: 1rem !important; background-color: var(--bg-light) !important; border-radius: 8px !important; }
-  .sib-form__declaration p { font-size: 12px !important; line-height: 1.5 !important; margin: 0 !important; color: #687484 !important; }
-  .declaration-block-icon { flex-shrink: 0 !important; }
-  .declaration-block-icon svg, .declaration-block-icon .svgIcon-sphere { width: 32px !important; height: 32px !important; }
+  
+  /* Container */
+  #sib-container {
+    padding: 0 !important;
+  }
+
+  /* FIX 1: Logo centering */
+  .sib-image-form-block {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
+  .sib-image-form-block img {
+    display: block !important;
+    margin: 0 auto !important;
+  }
+
+  /* Input fields - TRE style */
+  #sib-container .input,
+  #sib-form .input {
+    font-family: var(--font-main), sans-serif !important;
+    font-size: 16px !important;
+    padding: 14px 16px !important;
+    border: 2px solid #ddd !important;
+    border-radius: 8px !important;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease !important;
+    background-color: #fff !important;
+  }
+
+  #sib-container .input:focus,
+  #sib-form .input:focus {
+    border-color: #F4773A !important;
+    box-shadow: 0 0 0 3px rgba(244, 119, 58, 0.15) !important;
+    outline: none !important;
+  }
+
+  #sib-container .input::placeholder {
+    color: #999 !important;
+    font-family: var(--font-main), sans-serif !important;
+  }
+
+  /* SMS/WhatsApp field layout */
+  .sib-sms-input {
+    display: flex !important;
+    gap: 0.75rem !important;
+    align-items: stretch !important;
+  }
+
+  .sib-sms-input > .entry__field:first-child {
+    flex: 0 0 120px !important;
+    width: 120px !important;
+  }
+
+  .sib-sms-input > .entry__field:last-child {
+    flex: 1 !important;
+  }
+
+  @media (max-width: 480px) {
+    .sib-sms-input {
+      flex-direction: column !important;
+    }
+    .sib-sms-input > .entry__field:first-child {
+      flex: 1 !important;
+      width: 100% !important;
+    }
+  }
+
+  /* FIX 2: Checkbox styling - FORCE override Brevo absolute positioning */
+  
+  /* FORCE native checkboxes to be visible */
+  #sib-form input[type="checkbox"],
+  .sib-optin input[type="checkbox"],
+  .entry__choice input[type="checkbox"] {
+    appearance: checkbox !important;
+    -webkit-appearance: checkbox !important;
+    -moz-appearance: checkbox !important;
+    position: relative !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px !important;
+    min-height: 20px !important;
+    margin: 0 !important;
+    cursor: pointer !important;
+    z-index: 1 !important;
+    left: auto !important;
+    top: auto !important;
+    flex-shrink: 0 !important;
+    accent-color: #F4773A !important;
+  }
+
+  /* Hide the fake checkbox span since we're using native */
+  #sib-form .checkbox,
+  #sib-form .checkbox_tick_positive,
+  .sib-optin .checkbox,
+  .sib-optin .checkbox_tick_positive,
+  span.checkbox.checkbox_tick_positive {
+    display: none !important;
+  }
+
+  /* Reset the label container */
+  #sib-form .entry__choice,
+  .sib-optin .entry__choice,
+  .entry__choice {
+    position: relative !important;
+    display: block !important;
+  }
+
+  /* FORCE flex layout on label */
+  #sib-form .entry__choice label,
+  .sib-optin .entry__choice label,
+  .entry__choice label {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    gap: 36px !important;
+    cursor: pointer !important;
+    text-align: left !important;
+    position: relative !important;
+    padding-left: 0 !important;
+  }
+
+  /* Text span - must not overlap */
+  #sib-form .entry__choice label > span,
+  .sib-optin .entry__choice label > span,
+  .entry__choice label > span {
+    flex: 1 !important;
+    line-height: 1.5 !important;
+    padding-top: 0 !important;
+    padding-left: 0 !important;
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+  }
+
+  /* Text span after checkbox */
+  #sib-form .entry__choice label > span:last-child,
+  .sib-optin .entry__choice label > span:last-child,
+  .entry__choice label > span:last-child {
+    flex: 1 !important;
+    line-height: 1.5 !important;
+    padding-top: 2px !important;
+    padding-left: 0 !important;
+  }
+
+  /* Button hover */
+  .sib-form-block__button:hover {
+    background-color: #E65C00 !important;
+  }
+
+  /* Links */
+  #sib-container a,
+  #sib-form a {
+    color: #F4773A !important;
+    text-decoration: underline !important;
+  }
+
+  #sib-container a:hover,
+  #sib-form a:hover {
+    color: #E65C00 !important;
+  }
+
+  /* reCAPTCHA centering */
+  .sib-captcha .form__label-row {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  .g-recaptcha {
+    display: inline-block !important;
+  }
+
+  /* Tooltip */
+  .sib-sms-tooltip__icon {
+    background-color: #F4773A !important;
+  }
+
+  /* FIX 3: Declaration block - smaller text */
+  .sib-form__declaration {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 0.75rem !important;
+    text-align: left !important;
+    padding: 1rem !important;
+    background-color: var(--bg-light) !important;
+    border-radius: 8px !important;
+  }
+
+  .sib-form__declaration p {
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+    margin: 0 !important;
+    color: #687484 !important;
+  }
+
+  .declaration-block-icon {
+    flex-shrink: 0 !important;
+  }
+
+  .declaration-block-icon svg,
+  .declaration-block-icon .svgIcon-sphere {
+    width: 32px !important;
+    height: 32px !important;
+  }
 </style>
 
 <!-- Brevo JavaScript -->
