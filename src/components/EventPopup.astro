@@ -1,0 +1,350 @@
+---
+/**
+ * EventPopup.astro - Popup modale per eventi/promozioni
+ * 
+ * Comportamento:
+ * - Appare 1 sola volta per sessione
+ * - Solo nella prima pagina visitata
+ * - Gestito via sessionStorage
+ * - Chiusura con X, click fuori, o ESC
+ */
+
+import { getActivePopupAndBanner, formatEventDate } from "../utils/googleSheets";
+
+// Fetch dati dal Google Sheet
+const { popup } = await getActivePopupAndBanner();
+
+// Se non c'è popup attivo, non renderizzare nulla
+if (!popup) {
+  return null;
+}
+
+// Prepara i dati per il template
+const eventDateFormatted = popup.eventDate ? formatEventDate(popup.eventDate) : '';
+---
+
+<!-- Popup Container - Hidden by default, shown via JS -->
+<div 
+  id="event-popup-overlay" 
+  class="popup-overlay"
+  data-popup-id={popup.id}
+  aria-hidden="true"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="popup-title"
+>
+  <div class="popup-card" role="document">
+    <!-- Close Button -->
+    <button 
+      class="popup-close" 
+      aria-label="Chiudi popup"
+      type="button"
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    
+    <!-- Image (if present) -->
+    {popup.imageUrl && (
+      <div class="popup-image">
+        <img 
+          src={popup.imageUrl} 
+          alt={popup.title}
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    )}
+    
+    <!-- Content -->
+    <div class="popup-content">
+      {eventDateFormatted && (
+        <span class="popup-date">{eventDateFormatted}</span>
+      )}
+      
+      <h2 id="popup-title" class="popup-title">{popup.title}</h2>
+      
+      {popup.description && (
+        <p class="popup-description">{popup.description}</p>
+      )}
+      
+      <!-- CTA Button (if present) -->
+      {popup.ctaText && popup.ctaLink && (
+        <a href={popup.ctaLink} class="btn btn-primary popup-cta">
+          {popup.ctaText}
+        </a>
+      )}
+      
+      <!-- Logo (if present) - SPOSTATO DENTRO popup-content -->
+      {popup.logo && (
+        <div class="popup-logo">
+          <img 
+            src={popup.logo} 
+            alt="Logo Ristorante TRE"
+            loading="lazy"
+          />
+        </div>
+      )}
+    </div>
+  </div>
+</div>
+
+<style>
+  /* ===== POPUP OVERLAY ===== */
+  .popup-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    /* FIX: Previene scroll orizzontale */
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+  
+  .popup-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .popup-overlay[aria-hidden="false"] {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* ===== POPUP CARD ===== */
+  .popup-card {
+    background: #ffffff;
+    border-radius: 16px;
+    max-width: 420px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    transform: scale(0.9) translateY(20px);
+    transition: transform 0.3s ease;
+    /* FIX: Assicura box-sizing corretto */
+    box-sizing: border-box;
+  }
+  
+  .popup-overlay.active .popup-card {
+    transform: scale(1) translateY(0);
+  }
+
+  /* ===== CLOSE BUTTON ===== */
+  .popup-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: background 0.2s ease, transform 0.2s ease;
+    color: #fff;
+  }
+  
+  .popup-close:hover {
+    background: rgba(0, 0, 0, 0.8);
+    transform: scale(1.1);
+  }
+  
+  .popup-close:focus {
+    outline: 2px solid #E65C00;
+    outline-offset: 2px;
+  }
+
+  /* ===== POPUP IMAGE ===== */
+  .popup-image {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: #f5f5f5;
+  }
+  
+  .popup-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* ===== POPUP CONTENT ===== */
+  .popup-content {
+    padding: 1.25rem 1.5rem 1.5rem;
+    text-align: center;
+    box-sizing: border-box;
+  }
+  
+  .popup-date {
+    display: inline-block;
+    font-size: 0.8125rem;
+    color: #E65C00;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.375rem;
+    font-weight: 600;
+  }
+  
+  .popup-title {
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: #333333;
+    margin: 0 0 0.5rem;
+    line-height: 1.25;
+  }
+  
+  .popup-description {
+    font-size: 0.9375rem;
+    color: #555555;
+    line-height: 1.5;
+    margin: 0 0 1rem;
+  }
+
+  /* ===== CTA BUTTON ===== */
+  .popup-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.75rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+    background-color: #E65C00;
+    color: #ffffff;
+    /* FIX: Previene overflow su mobile */
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .popup-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(230, 92, 0, 0.25);
+    background-color: #ffffff;
+    color: #333333;
+    border: 2px solid #E65C00;
+  }
+
+  /* ===== POPUP LOGO ===== */
+  .popup-logo {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+  }
+  
+  .popup-logo img {
+    width: auto;
+    height: 55px;
+    max-width: 160px;
+    object-fit: contain;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 480px) {
+    .popup-overlay {
+      padding: 0.75rem;
+    }
+    
+    .popup-card {
+      border-radius: 12px;
+      max-width: calc(100vw - 1.5rem);
+      max-height: 85vh;
+    }
+    
+    .popup-image {
+      aspect-ratio: 16 / 9;
+    }
+    
+    .popup-content {
+      padding: 1rem 1.25rem 1.25rem;
+    }
+    
+    .popup-date {
+      font-size: 0.75rem;
+      margin-bottom: 0.25rem;
+    }
+    
+    .popup-title {
+      font-size: 1.125rem;
+      margin-bottom: 0.375rem;
+    }
+    
+    .popup-description {
+      font-size: 0.875rem;
+      margin-bottom: 0.875rem;
+    }
+    
+    .popup-cta {
+      width: 100%;
+      padding: 0.75rem 1.25rem;
+      font-size: 0.8125rem;
+    }
+    
+    .popup-logo {
+      margin-top: 1rem;
+      padding-top: 0.875rem;
+    }
+    
+    .popup-logo img {
+      height: 50px;
+      max-width: 120px;
+    }
+    
+    .popup-close {
+      top: 8px;
+      right: 8px;
+      width: 32px;
+      height: 32px;
+    }
+  }
+  
+  /* Extra small devices */
+  @media (max-width: 360px) {
+    .popup-overlay {
+      padding: 0.5rem;
+    }
+    
+    .popup-card {
+      max-width: calc(100vw - 1rem);
+    }
+    
+    .popup-content {
+      padding: 0.875rem 1rem 1rem;
+    }
+    
+    .popup-title {
+      font-size: 1rem;
+    }
+  }
+  
+  /* ===== Prevent body scroll when popup is open ===== */
+  :global(body.popup-open) {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+  }
+</style>

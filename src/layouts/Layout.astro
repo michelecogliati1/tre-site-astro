@@ -1,6 +1,8 @@
 ---
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import AnnouncementBanner from "../components/AnnouncementBanner.astro";
+import EventPopup from "../components/EventPopup.astro";
 import SpeedInsights from "@vercel/speed-insights/astro";
 
 // Props SEO con valori di default
@@ -124,6 +126,9 @@ const finalOgDescription = ogDescription || description;
   </head>
 
   <body>
+    <!-- Announcement Banner (sopra l'header) -->
+    <AnnouncementBanner />
+
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5CXSKFW3"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -133,6 +138,8 @@ const finalOgDescription = ogDescription || description;
       <slot />
     </main>
     <Footer />
+    <!-- Event Popup (modale) -->
+    <EventPopup />
 
     <script src="/js/main.js" is:inline></script>
     

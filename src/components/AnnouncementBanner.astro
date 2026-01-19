@@ -1,0 +1,269 @@
+---
+/**
+ * AnnouncementBanner.astro - Banner slim sopra l'header
+ * 
+ * Comportamento:
+ * - Sempre visibile durante la navigazione (a differenza del popup)
+ * - Dismissabile con X (ricorda preferenza in sessionStorage)
+ * - Riappare in nuova sessione
+ * 
+ * Struttura visiva:
+ * - Striscia colorata sopra il logo/nav
+ * - Logo TRE a sinistra e destra (opzionale)
+ * - Testo centrale con link
+ * - Sfondo scuro (#1a1a1a)
+ */
+
+import { getActivePopupAndBanner } from "../utils/googleSheets";
+
+// Fetch dati dal Google Sheet
+const { banner } = await getActivePopupAndBanner();
+
+// Se non c'è banner attivo, non renderizzare nulla
+if (!banner) {
+  return null;
+}
+
+// Default logo del ristorante se non specificato
+const logoUrl = banner.logo || '/img/brand/tre-logo-small.svg';
+---
+
+<!-- Announcement Banner - Shown above header -->
+<div 
+  id="announcement-banner" 
+  class="announcement-banner"
+  data-banner-id={banner.id}
+  role="banner"
+  aria-label="Annuncio"
+>
+  <div class="banner-container">
+    <!-- Logo Left (optional) -->
+    <div class="banner-logo banner-logo-left">
+      <img 
+        src={logoUrl} 
+        alt=""
+        width="32"
+        height="32"
+        loading="eager"
+        aria-hidden="true"
+      />
+    </div>
+    
+    <!-- Content -->
+    <div class="banner-content">
+      <span class="banner-text">
+        {banner.title}
+        {banner.description && (
+          <span class="banner-description"> - {banner.description}</span>
+        )}
+      </span>
+      
+      {banner.ctaText && banner.ctaLink && (
+        <a href={banner.ctaLink} class="banner-link">
+          {banner.ctaText}
+          <svg 
+            class="banner-link-arrow" 
+            width="16" 
+            height="16" 
+            viewBox="0 0 16 16" 
+            fill="none"
+            aria-hidden="true"
+          >
+            <path 
+              d="M6 12l4-4-4-4" 
+              stroke="currentColor" 
+              stroke-width="2" 
+              stroke-linecap="round" 
+              stroke-linejoin="round"
+            />
+          </svg>
+        </a>
+      )}
+    </div>
+    
+    <!-- Logo Right (optional) -->
+    <div class="banner-logo banner-logo-right">
+      <img 
+        src={logoUrl} 
+        alt=""
+        width="32"
+        height="32"
+        loading="eager"
+        aria-hidden="true"
+      />
+    </div>
+    
+    <!-- Close Button -->
+    <button 
+      class="banner-close" 
+      aria-label="Chiudi annuncio"
+      type="button"
+    >
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M14 4L4 14M4 4l10 10" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<style>
+  /* ===== ANNOUNCEMENT BANNER ===== */
+  .announcement-banner {
+    background: linear-gradient(135deg, #CC5200 0%, #CC5200 100%);
+    color: #fff;
+    width: 100%;
+    position: relative;
+    z-index: 1001; /* Above header */
+    border-bottom: 1px solid rgba(212, 165, 116, 0.2);
+    transition: transform 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease;
+  }
+  
+  /* Hidden state */
+  .announcement-banner.hidden {
+    transform: translateY(-100%);
+    opacity: 0;
+    margin-top: -44px; /* Approximate banner height */
+    pointer-events: none;
+  }
+
+  /* ===== BANNER CONTAINER ===== */
+  .banner-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0.625rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    position: relative;
+    min-height: 44px;
+  }
+
+  /* ===== BANNER LOGOS ===== */
+  .banner-logo {
+    flex-shrink: 0;
+    opacity: 0.7;
+  }
+  
+  .banner-logo img {
+    display: block;
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+  }
+  
+  /* Hide logos on mobile to save space */
+  @media (max-width: 768px) {
+    .banner-logo {
+      display: none;
+    }
+  }
+
+  /* ===== BANNER CONTENT ===== */
+  .banner-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    text-align: center;
+    padding-right: 2rem; /* Space for close button */
+  }
+  
+  .banner-text {
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+  
+  .banner-description {
+    opacity: 0.85;
+    font-weight: 400;
+  }
+  
+  .banner-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: #ffffff;
+    text-decoration: underline;
+    font-weight: 600;
+    font-size: 0.875rem;
+    transition: color 0.2s ease;
+    white-space: nowrap;
+  }
+  
+  .banner-link:hover {
+    color: #e8c49a;
+    text-decoration: none;
+  }
+  
+  .banner-link-arrow {
+    transition: transform 0.2s ease;
+  }
+  
+  .banner-link:hover .banner-link-arrow {
+    transform: translateX(2px);
+  }
+
+  /* ===== CLOSE BUTTON ===== */
+  .banner-close {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.7);
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  
+  .banner-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+  }
+  
+  .banner-close:focus {
+    outline: 2px solid var(--color-primary, #d4a574);
+    outline-offset: 2px;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 600px) {
+    .banner-container {
+      padding: 0.5rem 0.75rem;
+      gap: 0.5rem;
+    }
+    
+    .banner-content {
+      flex-direction: column;
+      gap: 0.25rem;
+      padding-right: 1.75rem;
+    }
+    
+    .banner-text {
+      font-size: 0.8125rem;
+    }
+    
+    .banner-description {
+      display: none; /* Hide description on very small screens */
+    }
+    
+    .banner-link {
+      font-size: 0.8125rem;
+    }
+    
+    .banner-close {
+      right: 0.5rem;
+      width: 24px;
+      height: 24px;
+    }
+  }
+</style>
