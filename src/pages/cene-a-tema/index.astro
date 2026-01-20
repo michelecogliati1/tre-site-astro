@@ -26,6 +26,7 @@ const prossimaCena = {
 // DATI HARDCODED (modificabili solo nel codice)
 // ============================================
 const cenePasate = [
+  { titolo: "Sapori d'Autunno", data: "17 Ottobre 2025", immagine: "/img/cene-tema/cena-tema-sapori-autunno-sezione-carosello.webp" },
   { titolo: "Oktoberfest", data: "18 Ottobre 2024", immagine: "/img/cene-tema/cena-tema-oktober-fest-ristorante-pizzeria-tre-merate-carosello.webp" },
   { titolo: "ArTRE - arte in pizzeria", data: "16 Marzo 2023", immagine: "/img/cene-tema/cena-a-tema-artre-arte-in-pizzeria-tre-merate.webp" },
   { titolo: "Birra Vetra e Sapori Rustici", data: "13 Settembre 2022", immagine: "/img/cene-tema/cena-a-tema-birra-vetra-sapori-rustici-ristorante-pizzeria-tre-merate.webp" },
@@ -33,6 +34,7 @@ const cenePasate = [
 ];
 
 const partners = [
+  { nome: "Villa Domizia", logo: "/img/cene-tema/logo-cantina-vinicola-villa-domizia-ristorante-pizzeria-tre-merate.svg" },
   { nome: "Birra Vetra", logo: "/img/cene-tema/logo-birra-vetra-ristorante-pizzeria-tre-merate.svg" },
   { nome: "Birrificio Otus", logo: "/img/cene-tema/logo-birrificio-otus-ristorante-pizzeria-tre-merate.svg" },
   { nome: "Birrificio Rurale", logo: "/img/cene-tema/logo-birrificio-rurale-ristorante-pizzeria-tre-merate.svg" },
@@ -56,7 +58,7 @@ const schemaOrg = {
   "@graph": [
     {
       "@type": "Event",
-      "@id": "https://www.ristorantepizzeriatre.it/cene-a-tema/#event-oktoberfest",
+      "@id": "https://www.ristorantepizzeriatre.it/cene-a-tema/#event-sapori-autunno",
       "name": `Cena a Tema ${prossimaCena.titolo}`,
       "description": `Serata a tema ${prossimaCena.titolo} con menù degustazione e bevande artigianali selezionate. Vivi l'atmosfera al Ristorante Pizzeria TRE di Merate con piatti tipici e bevande abbinate.`,
       "image": [
