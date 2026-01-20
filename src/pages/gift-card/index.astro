@@ -1,0 +1,428 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+// SEO Data
+const seoData = {
+  title: "Buoni Regalo | Ristorante Pizzeria TRE - Merate",
+  description: "Regala un'esperienza gastronomica unica. Acquista online il buono regalo per Ristorante Pizzeria TRE: pizze al forno a legna, carni alla griglia e cucina tradizionale italiana a Merate.",
+  canonical: "https://www.ristorantepizzeriatre.it/gift-card/",
+  ogImage: "https://www.ristorantepizzeriatre.it/img/gift-card/gift-card-ristorante-pizzeria-tre-merate-hero.webp",
+  preloadImage: "/img/gift-card/gift-card-ristorante-pizzeria-tre-merate-hero.webp",
+};
+
+// Schema.org
+const schemaOrg = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Product",
+      "@id": "https://www.ristorantepizzeriatre.it/gift-card/#product",
+      "name": "Buono Regalo Ristorante Pizzeria TRE",
+      "description": "Gift card digitale per cene e pizze al Ristorante TRE di Merate. Valido 12 mesi, utilizzabile per consumazioni in sala e asporto.",
+      "brand": {
+        "@type": "Restaurant",
+        "name": "Ristorante Pizzeria TRE",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Via Statale, 44",
+          "addressLocality": "Merate",
+          "addressRegion": "LC",
+          "postalCode": "23807",
+          "addressCountry": "IT"
+        }
+      },
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "EUR",
+        "lowPrice": "10",
+        "highPrice": "500",
+        "offerCount": "5",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.ristorantepizzeriatre.it/" },
+        { "@type": "ListItem", "position": 2, "name": "Buoni Regalo", "item": "https://www.ristorantepizzeriatre.it/gift-card/" }
+      ]
+    }
+  ]
+};
+
+// FAQ Data
+const faqItems = [
+  {
+    question: "Come si utilizza il buono regalo?",
+    answer: "Presenta il codice univoco (stampato o su smartphone) al momento del pagamento in ristorante. Il nostro staff scalerà l'importo dal tuo conto."
+  },
+  {
+    question: "Posso usare il buono per l'asporto?",
+    answer: "Sì, il buono regalo è valido sia per consumazioni in sala che per ordini d'asporto."
+  },
+  {
+    question: "Cosa succede se non uso tutto l'importo?",
+    answer: "Il saldo residuo rimane disponibile fino alla scadenza (12 mesi). Potrai utilizzarlo in visite successive."
+  },
+  {
+    question: "Posso regalare il buono a qualcun altro?",
+    answer: "Certo! Durante l'acquisto puoi inserire l'email del destinatario e un messaggio personalizzato. Riceverà direttamente il buono."
+  },
+  {
+    question: "È necessario prenotare per utilizzare il buono?",
+    answer: "Sì, la prenotazione è obbligatoria. Puoi prenotare telefonicamente al 039 990 9913 o via WhatsApp al 351 770 1704."
+  },
+  {
+    question: "Il buono è cumulabile con altre promozioni?",
+    answer: "No, il buono regalo non è cumulabile con altre promozioni o sconti attivi."
+  }
+];
+---
+
+<Layout 
+  title={seoData.title}
+  description={seoData.description}
+  canonical={seoData.canonical}
+  ogImage={seoData.ogImage}
+  preloadImage={seoData.preloadImage}
+>
+  <Fragment slot="schema">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
+  </Fragment>
+
+  <!-- Hero Section -->
+  <section class="hero hero-gift-card">
+    <div class="container hero-content">
+      <h1>Regala un'Esperienza di Gusto</h1>
+      <p>Il regalo perfetto per chi ama la buona cucina italiana.<br />Pizza al forno a legna, carni alla griglia e tanto altro.</p>
+    </div>
+  </section>
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li aria-current="page">Buoni Regalo</li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <section class="gift-card-main">
+    <div class="container">
+      <div class="gift-card-grid">
+        
+        <!-- Left Column: Info -->
+        <div class="gift-card-info">
+          <h2>Come Funziona</h2>
+          
+          <ol class="steps-list">
+            <li>
+              <span class="step-number">1</span>
+              <div class="step-content">
+                <strong>Scegli l'importo</strong>
+                <p>Da €25 a €500 o importo personalizzato</p>
+              </div>
+            </li>
+            <li>
+              <span class="step-number">2</span>
+              <div class="step-content">
+                <strong>Personalizza il messaggio</strong>
+                <p>Aggiungi una dedica speciale per il destinatario</p>
+              </div>
+            </li>
+            <li>
+              <span class="step-number">3</span>
+              <div class="step-content">
+                <strong>Paga online in sicurezza</strong>
+                <p>Carta di credito o debito via Stripe</p>
+              </div>
+            </li>
+            <li>
+              <span class="step-number">4</span>
+              <div class="step-content">
+                <strong>Consegna immediata</strong>
+                <p>Email istantanea con PDF stampabile</p>
+              </div>
+            </li>
+          </ol>
+
+          <div class="gift-card-features">
+            <div class="feature">
+              <span class="feature-icon">🎁</span>
+              <span>Consegna immediata o programmata</span>
+            </div>
+            <div class="feature">
+              <span class="feature-icon">📄</span>
+              <span>PDF stampabile incluso</span>
+            </div>
+            <div class="feature">
+              <span class="feature-icon">💳</span>
+              <span>Utilizzabile anche parzialmente</span>
+            </div>
+            <div class="feature">
+              <span class="feature-icon">📅</span>
+              <span>Validità 12 mesi</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Widget -->
+        <div class="gift-card-widget">
+          <h2>Acquista Ora</h2>
+          <div class="widget-container">
+            <!-- Gift Up! Widget -->
+            <div class="gift-up-target" data-site-id="a2ba6697-549d-4b55-bab3-08de5811b83f" data-platform="Other"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="gift-card-faq">
+    <div class="container">
+      <h2>Domande Frequenti</h2>
+      <div class="faq-list">
+        {faqItems.map((item) => (
+          <details class="faq-item">
+            <summary>{item.question}</summary>
+            <p>{item.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section - Come Prenota il Tuo Tavolo -->
+  <section class="cta-section cta-section-gift-card">
+    <div class="container">
+      <h2>Hai Bisogno di Aiuto?</h2>
+      <p>Contattaci per qualsiasi domanda sui buoni regalo</p>
+      <div class="cta-buttons">
+        <a href="tel:+390399909913" class="btn btn-primary btn-contact">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Chiama Ora
+        </a>
+        <a href="https://wa.me/393517701704" target="_blank" class="btn btn-whatsapp btn-contact">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+
+</Layout>
+
+<!-- Gift Up! Script -->
+<script type="text/javascript">
+(function (g, i, f, t, u, p, s) {
+    g[u] = g[u] || function() { (g[u].q = g[u].q || []).push(arguments) };
+    p = i.createElement(f);
+    p.async = 1;
+    p.src = t;
+    s = i.getElementsByTagName(f)[0];
+    s.parentNode.insertBefore(p, s);
+})(window, document, "script", "https://cdn.giftup.app/dist/gift-up.js", "giftup");
+</script>
+
+<style>
+  /* Hero Gift Card - Override solo immagine */
+  .hero-gift-card {
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.62)),
+      url('/img/gift-card/gift-card-ristorante-pizzeria-tre-merate-hero.webp');
+  }
+
+  /* CTA Section Gift Card - Override solo immagine */
+  .cta-section-gift-card {
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)),
+      url('/img/gift-card/gift-card-ristorante-pizzeria-tre-merate-bisogno-aiuto.webp');
+  }
+
+  /* Main Section */
+  .gift-card-main {
+    padding: 60px 0;
+  }
+
+  .gift-card-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  @media (max-width: 968px) {
+    .gift-card-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+
+  /* Info Column */
+  .gift-card-info h2 {
+    margin-bottom: 2rem;
+    color: var(--text-dark);
+  }
+
+  .steps-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem 0;
+  }
+
+  .steps-list li {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    align-items: flex-start;
+  }
+
+  .step-number {
+    background: var(--primary-color);
+    color: var(--text-white);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .step-content strong {
+    display: block;
+    font-size: 22px;
+    margin-bottom: 0.25rem;
+  }
+
+  .step-content p {
+    font-size: 18px;
+    line-height: 1.4;
+    color: #666;
+    margin: 0;
+  }
+
+  /* Features Grid */
+  .gift-card-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: var(--bg-light-orange);
+    border-radius: 12px;
+  }
+
+  @media (max-width: 500px) {
+    .gift-card-features {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .feature {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 18px;
+  }
+
+  .feature-icon {
+    font-size: 24px;
+  }
+
+  /* Widget Column */
+  .gift-card-widget {
+    background: var(--bg-white);
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 120px;
+  }
+
+  .gift-card-widget h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: var(--text-dark);
+  }
+
+  .widget-container {
+    min-height: 400px;
+  }
+
+  /* FAQ Section */
+  .gift-card-faq {
+    padding: 60px 0;
+    background: var(--bg-light);
+  }
+
+  .gift-card-faq h2 {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .faq-list {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .faq-item {
+    background: var(--bg-white);
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .faq-item summary {
+    padding: 1.25rem 1.5rem;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.3s ease;
+  }
+
+  .faq-item summary:hover {
+    background: var(--bg-light-orange);
+  }
+
+  .faq-item summary::marker {
+    display: none;
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item summary::after {
+    content: '+';
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--primary-color);
+    transition: transform 0.3s ease;
+  }
+
+  .faq-item[open] summary::after {
+    transform: rotate(45deg);
+  }
+
+  .faq-item p {
+    padding: 0 1.5rem 1.25rem;
+    font-size: 18px;
+    line-height: 1.6;
+    color: #555;
+    margin: 0;
+  }
+</style>
