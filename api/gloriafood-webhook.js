@@ -1,7 +1,9 @@
 /**
- * Vercel Serverless Function - GloriaFood Webhook Handler
+ * Vercel Serverless Function - GloriaFood Webhook Handler v4
  * 
- * Riceve prenotazioni tavoli da GloriaFood e le salva in Google Sheets
+ * Gestisce:
+ * - Prenotazioni tavoli (table_reservation) → Foglio "Dati"
+ * - Ordini asporto (pickup) → Foglio "Asporto"
  * 
  * Endpoint: POST /api/gloriafood-webhook
  */
@@ -22,13 +24,29 @@ const GIORNI_SETTIMANA = {
   6: 'Sabato'
 };
 
-// Mapping stati
-const STATI = {
+// Mapping stati prenotazioni
+const STATI_PRENOTAZIONE = {
   'accepted': '✅ Confermata',
   'rejected': '❌ Cancellata',
   'canceled': '❌ Cancellata',
   'timed_out': '❌ Cancellata',
   'pending': '⏳ In attesa'
+};
+
+// Mapping stati ordini asporto
+const STATI_ORDINE = {
+  'accepted': '✅ Confermato',
+  'rejected': '❌ Annullato',
+  'canceled': '❌ Annullato',
+  'timed_out': '❌ Annullato',
+  'pending': '⏳ In attesa'
+};
+
+// Mapping metodi di pagamento
+const METODI_PAGAMENTO = {
+  'CASH': '💵 Contanti',
+  'CARD': '💳 Carta',
+  'ONLINE': '🌐 Online'
 };
 
 /**
@@ -54,7 +72,6 @@ function formatDate(isoString) {
   if (!isoString) return '';
   try {
     const date = new Date(isoString);
-    // Usa Intl.DateTimeFormat per ottenere componenti separati
     const formatter = new Intl.DateTimeFormat('it-IT', {
       timeZone: 'Europe/Rome',
       day: '2-digit',
@@ -100,7 +117,6 @@ function getGiornoSettimana(isoString) {
       weekday: 'long'
     });
     const giorno = formatter.format(date);
-    // Capitalizza prima lettera
     return giorno.charAt(0).toUpperCase() + giorno.slice(1);
   } catch (error) {
     console.error('Errore getGiornoSettimana:', error, 'input:', isoString);
@@ -133,13 +149,53 @@ function getTimestampNow() {
 }
 
 /**
- * Cerca una prenotazione esistente per ID GloriaFood
+ * Converte prezzo da centesimi a euro formattato
  */
-async function findExistingReservation(sheets, spreadsheetId, gloriaFoodId) {
+function formatPrice(cents) {
+  if (!cents && cents !== 0) return '€0.00';
+  const euros = cents / 100;
+  return `€${euros.toFixed(2).replace('.', ',')}`;
+}
+
+/**
+ * Crea stringa prodotti da array items
+ * Formato: "2x Margherita, 1x Diavola"
+ */
+function formatItems(items) {
+  if (!items || !Array.isArray(items) || items.length === 0) {
+    return '';
+  }
+  
+  return items.map(item => {
+    const qty = item.quantity || 1;
+    const name = item.name || 'Prodotto';
+    return `${qty}x ${name}`;
+  }).join(', ');
+}
+
+/**
+ * Determina se l'ordine è ASAP o schedulato
+ */
+function isAsapOrder(order) {
+  // GloriaFood usa un campo specifico o il tempo tra creazione e fulfill
+  // Se fulfill_at è molto vicino ad accepted_at (< 2 ore), probabilmente è ASAP
+  if (!order.fulfill_at || !order.accepted_at) return true;
+  
+  const fulfillTime = new Date(order.fulfill_at).getTime();
+  const acceptedTime = new Date(order.accepted_at).getTime();
+  const diffHours = (fulfillTime - acceptedTime) / (1000 * 60 * 60);
+  
+  return diffHours < 2;
+}
+
+/**
+ * Cerca una prenotazione/ordine esistente per ID GloriaFood
+ */
+async function findExistingEntry(sheets, spreadsheetId, sheetName, idColumn, gloriaFoodId) {
   try {
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId,
-      range: 'Dati!K:K', // Colonna ID GloriaFood
+      range: `${sheetName}!${idColumn}:${idColumn}`,
     });
 
     const rows = response.data.values || [];
@@ -150,104 +206,115 @@ async function findExistingReservation(sheets, spreadsheetId, gloriaFoodId) {
     }
     return null;
   } catch (error) {
-    console.error('Errore ricerca prenotazione:', error);
+    console.error(`Errore ricerca in ${sheetName}:`, error);
     return null;
   }
 }
 
 /**
- * Aggiunge una nuova prenotazione
+ * Aggiunge una nuova riga
  */
-async function addReservation(sheets, spreadsheetId, reservationData) {
-  const row = [
-    reservationData.giorno,
-    reservationData.data,
-    reservationData.ora,
-    reservationData.nome,
-    reservationData.telefono,
-    reservationData.email,
-    reservationData.persone,
-    reservationData.stato,
-    reservationData.fonte,
-    reservationData.note,
-    reservationData.idGloriaFood,
-    reservationData.aggiornato
-  ];
-
+async function addRow(sheets, spreadsheetId, sheetName, row) {
   await sheets.spreadsheets.values.append({
     spreadsheetId,
-    range: 'Dati!A:L',
+    range: `${sheetName}!A:Z`,
     valueInputOption: 'USER_ENTERED',
     requestBody: {
       values: [row]
     }
   });
-
-  console.log('Prenotazione aggiunta:', reservationData.idGloriaFood);
 }
 
 /**
- * Aggiorna una prenotazione esistente
+ * Aggiorna una riga esistente
  */
-async function updateReservation(sheets, spreadsheetId, rowNumber, reservationData) {
-  const row = [
-    reservationData.giorno,
-    reservationData.data,
-    reservationData.ora,
-    reservationData.nome,
-    reservationData.telefono,
-    reservationData.email,
-    reservationData.persone,
-    reservationData.stato,
-    reservationData.fonte,
-    reservationData.note,
-    reservationData.idGloriaFood,
-    reservationData.aggiornato
-  ];
-
+async function updateRow(sheets, spreadsheetId, sheetName, rowNumber, row, lastColumn) {
   await sheets.spreadsheets.values.update({
     spreadsheetId,
-    range: `Dati!A${rowNumber}:L${rowNumber}`,
+    range: `${sheetName}!A${rowNumber}:${lastColumn}${rowNumber}`,
     valueInputOption: 'USER_ENTERED',
     requestBody: {
       values: [row]
     }
   });
-
-  console.log('Prenotazione aggiornata:', reservationData.idGloriaFood, 'riga:', rowNumber);
 }
 
-/**
- * Processa un ordine/prenotazione da GloriaFood
- */
-function parseGloriaFoodOrder(order) {
-  // Verifica che sia una prenotazione tavolo
-  if (order.type !== 'table_reservation') {
-    console.log('Ignorato: non è una prenotazione tavolo, tipo:', order.type);
-    return null;
-  }
+// ============================================
+// PROCESSAMENTO PRENOTAZIONI TAVOLI
+// ============================================
 
+/**
+ * Processa una prenotazione tavolo da GloriaFood
+ */
+function parseTableReservation(order) {
   const fulfillAt = order.fulfill_at;
   
   return {
-    giorno: getGiornoSettimana(fulfillAt),
-    data: formatDate(fulfillAt),
-    ora: formatTime(fulfillAt),
-    nome: `${order.client_first_name || ''} ${order.client_last_name || ''}`.trim(),
-    telefono: order.client_phone || '',
-    email: order.client_email || '',
-    persone: order.persons || 0,
-    stato: STATI[order.status] || '⏳ In attesa',
-    fonte: '🌐 Online',
-    note: order.instructions || '',
-    idGloriaFood: order.id?.toString() || '',
-    aggiornato: getTimestampNow()
+    row: [
+      getGiornoSettimana(fulfillAt),           // A - Giorno
+      formatDate(fulfillAt),                    // B - Data
+      formatTime(fulfillAt),                    // C - Ora
+      `${order.client_first_name || ''} ${order.client_last_name || ''}`.trim(), // D - Nome
+      order.client_phone || '',                 // E - Telefono
+      order.client_email || '',                 // F - Email
+      order.persons || 0,                       // G - Persone
+      STATI_PRENOTAZIONE[order.status] || '⏳ In attesa', // H - Stato
+      '🌐 Online',                              // I - Fonte
+      order.instructions || '',                 // J - Note
+      order.id?.toString() || '',               // K - ID GloriaFood
+      getTimestampNow()                         // L - Aggiornato
+    ],
+    sheetName: 'Dati',
+    idColumn: 'K',
+    lastColumn: 'L',
+    id: order.id?.toString() || ''
   };
 }
 
+// ============================================
+// PROCESSAMENTO ORDINI ASPORTO
+// ============================================
+
 /**
- * Handler principale
+ * Processa un ordine asporto (pickup) da GloriaFood
  */
+function parsePickupOrder(order) {
+  const fulfillAt = order.fulfill_at;
+  const isAsap = isAsapOrder(order);
+  
+  // Aggiungi indicatore ASAP all'ora se necessario
+  let oraRitiro = formatTime(fulfillAt);
+  if (isAsap) {
+    oraRitiro = `${oraRitiro} ⚡`;  // Indica ordine ASAP
+  }
+  
+  return {
+    row: [
+      getGiornoSettimana(fulfillAt),           // A - Giorno
+      formatDate(fulfillAt),                    // B - Data
+      oraRitiro,                                // C - Ora Ritiro
+      `${order.client_first_name || ''} ${order.client_last_name || ''}`.trim(), // D - Nome
+      order.client_phone || '',                 // E - Telefono
+      order.client_email || '',                 // F - Email
+      formatPrice(order.total_price),           // G - Totale €
+      METODI_PAGAMENTO[order.payment] || order.payment || '', // H - Pagamento
+      formatItems(order.items),                 // I - Prodotti
+      STATI_ORDINE[order.status] || '⏳ In attesa', // J - Stato
+      order.instructions || '',                 // K - Note
+      order.id?.toString() || '',               // L - ID GloriaFood
+      getTimestampNow()                         // M - Aggiornato
+    ],
+    sheetName: 'Asporto',
+    idColumn: 'L',
+    lastColumn: 'M',
+    id: order.id?.toString() || ''
+  };
+}
+
+// ============================================
+// HANDLER PRINCIPALE
+// ============================================
+
 export default async function handler(req, res) {
   // Solo POST
   if (req.method !== 'POST') {
@@ -285,42 +352,73 @@ export default async function handler(req, res) {
       throw new Error('GOOGLE_SHEET_ID non configurato');
     }
 
-    let processed = 0;
-    let skipped = 0;
+    let stats = {
+      reservations: { processed: 0, updated: 0 },
+      pickups: { processed: 0, updated: 0 },
+      skipped: 0
+    };
 
     for (const order of orders) {
-      // Parsa la prenotazione
-      const reservationData = parseGloriaFoodOrder(order);
-      
-      if (!reservationData) {
-        skipped++;
+      let parsedData = null;
+      let orderType = '';
+
+      // Determina il tipo di ordine
+      if (order.type === 'table_reservation') {
+        parsedData = parseTableReservation(order);
+        orderType = 'reservation';
+      } else if (order.type === 'pickup') {
+        parsedData = parsePickupOrder(order);
+        orderType = 'pickup';
+      } else {
+        console.log('Tipo ordine non gestito:', order.type);
+        stats.skipped++;
         continue;
       }
 
       // Cerca se esiste già
-      const existingRow = await findExistingReservation(
+      const existingRow = await findExistingEntry(
         sheets, 
         spreadsheetId, 
-        reservationData.idGloriaFood
+        parsedData.sheetName,
+        parsedData.idColumn,
+        parsedData.id
       );
 
       if (existingRow) {
-        // Aggiorna prenotazione esistente
-        await updateReservation(sheets, spreadsheetId, existingRow, reservationData);
+        // Aggiorna entry esistente
+        await updateRow(
+          sheets, 
+          spreadsheetId, 
+          parsedData.sheetName,
+          existingRow, 
+          parsedData.row,
+          parsedData.lastColumn
+        );
+        console.log(`${orderType} aggiornato:`, parsedData.id, 'riga:', existingRow);
+        
+        if (orderType === 'reservation') {
+          stats.reservations.updated++;
+        } else {
+          stats.pickups.updated++;
+        }
       } else {
-        // Aggiungi nuova prenotazione
-        await addReservation(sheets, spreadsheetId, reservationData);
+        // Aggiungi nuova entry
+        await addRow(sheets, spreadsheetId, parsedData.sheetName, parsedData.row);
+        console.log(`${orderType} aggiunto:`, parsedData.id);
+        
+        if (orderType === 'reservation') {
+          stats.reservations.processed++;
+        } else {
+          stats.pickups.processed++;
+        }
       }
-
-      processed++;
     }
 
-    console.log(`Elaborazione completata: ${processed} processate, ${skipped} saltate`);
+    console.log('Elaborazione completata:', JSON.stringify(stats));
 
     return res.status(200).json({ 
       success: true, 
-      processed,
-      skipped
+      stats
     });
 
   } catch (error) {
