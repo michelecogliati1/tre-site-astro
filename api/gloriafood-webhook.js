@@ -153,7 +153,7 @@ function getTimestampNow() {
  */
 function formatPrice(cents) {
   if (!cents && cents !== 0) return '€0.00';
-  const euros = cents / 100;
+  const euros = parseFloat(value); 
   return `€${euros.toFixed(2).replace('.', ',')}`;
 }
 
