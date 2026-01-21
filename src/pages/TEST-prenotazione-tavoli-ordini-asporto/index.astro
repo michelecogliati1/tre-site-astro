@@ -1,6 +1,10 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 
+// GloriaFood Widget IDs
+const gloriaFoodCuid = "ab06e065-1a81-45d4-9159-66102a943d6d";
+const gloriaFoodRuid = "235bfa64-cb7a-4876-a1d9-739c5af0be8b";
+
 // SEO Data
 const seoData = {
   title: "Info e Prenotazioni - Ristorante TRE Grill + Pizzeria",
@@ -149,7 +153,7 @@ const schemaOrg = {
     </div>
   </nav>
 
-  <!-- Prenota il Tavolo Online - CON COMING SOON -->
+  <!-- Prenota il Tavolo Online -->
   <section class="contact-section" id="prenota-tavolo">
     <div class="container">
       <div class="contact-grid">
@@ -164,37 +168,40 @@ const schemaOrg = {
             <a href="#preventivo">contattaci per ricevere un preventivo cliccando qui</a>
           </p>
 
-          <!-- Booking Widget con Coming Soon Overlay -->
-          <div class="booking-widget-wrapper">
-            <div class="booking-widget booking-widget-disabled">
-              <h3>Seleziona il Numero di Ospiti</h3>
-              <div class="guest-grid">
-                <button class="guest-btn" data-guests="1" disabled>1</button>
-                <button class="guest-btn" data-guests="2" disabled>2</button>
-                <button class="guest-btn" data-guests="3" disabled>3</button>
-                <button class="guest-btn" data-guests="4" disabled>4</button>
-                <button class="guest-btn" data-guests="5" disabled>5</button>
-                <button class="guest-btn" data-guests="6" disabled>6</button>
-                <button class="guest-btn" data-guests="7" disabled>7</button>
-                <button class="guest-btn" data-guests="8" disabled>8</button>
-              </div>
-              <p class="guest-note">
-                Per gruppi superiori a 8 persone
-                <a href="#preventivo">Contattaci qui</a>
-              </p>
-            </div>
-            <!-- Coming Soon Overlay -->
-            <div class="coming-soon-overlay">
-              <div class="coming-soon-content">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
-                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
-                  <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <!-- Booking CTA -->
+          <div class="booking-cta">
+            <div class="booking-cta-content">
+              <div class="booking-cta-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                  <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+                  <path d="M16 2v4M8 2v4M3 10h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <circle cx="12" cy="16" r="2" fill="currentColor"/>
                 </svg>
-                <h4>Coming Soon</h4>
-                <p>La prenotazione online sarà disponibile a breve!</p>
-                <p class="coming-soon-alternative">Nel frattempo, <a href="#contatti-rapidi">contattaci telefonicamente</a></p>
+              </div>
+              <div class="booking-cta-text">
+                <h3>Prenota il Tuo Tavolo</h3>
+                <p>Seleziona data, orario e numero di ospiti. Prenotazione immediata!</p>
               </div>
             </div>
+            <span 
+              class="btn btn-primary btn-booking btn-gloriafood"
+              data-glf-cuid={gloriaFoodCuid}
+              data-glf-ruid={gloriaFoodRuid}
+              data-glf-reservation="true"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+                <path d="M16 2v4M8 2v4M3 10h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              Prenota Online
+            </span>
+            <p class="booking-note">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                <path d="M12 16v-4M12 8h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              Prenotazione per gruppi da 2 a 10 persone. Per gruppi più numerosi <a href="#contatti-rapidi">usa i contatti rapidi</a>.
+            </p>
           </div>
         </div>
         <div class="contact-image">
@@ -254,49 +261,55 @@ const schemaOrg = {
 
   <div class="section-divider"></div>
 
-  <!-- Ordina Online d'Asporto - CON COMING SOON -->
+  <!-- Ordina Online d'Asporto -->
   <section class="contact-section" id="asporto">
     <div class="container">
       <div class="contact-grid">
         <div class="contact-content">
           <h2>Ordina Online i Tuoi<br />Piatti d'Asporto</h2>
           <p class="contact-intro">
-            Ordina online e ritira i tuoi piatti preferiti. Scegli il tuo menù e ritira 
-            all'orario che preferisci.
+            Ordina online, seleziona l'orario di ritiro e passa a ritirare il tuo ordine già pronto. Paghi comodamente al ritiro!
           </p>
-          
-          <!-- Coming Soon Box per Asporto -->
-          <div class="asporto-coming-soon">
-            <div class="asporto-coming-soon-icon">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-                <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                <path d="M2 17l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <h4>Ordini Online in Arrivo!</h4>
-            <p>Stiamo lavorando per offrirti un servizio d'asporto online comodo e veloce.</p>
-            <p class="asporto-coming-soon-note">Nel frattempo, puoi ordinare chiamandoci al <a href="tel:+390399909913">039 990 9913</a></p>
-          </div>
+          <ul class="come-funziona-steps">
+            <li>
+              <strong>Scegli i tuoi piatti:</strong> sfoglia il nostro menù d'asporto e aggiungi al carrello i piatti che vuoi ordinare
+            </li>
+            <li>
+              <strong>Seleziona l'orario di ritiro:</strong> scegli l'orario più comodo per ritirare il tuo ordine
+            </li>
+            <li>
+              <strong>Conferma l'ordine:</strong> ricevi la conferma via email con il riepilogo del tuo ordine
+            </li>
+            <li>
+              <strong>Ritira e paga:</strong> ritira il tuo ordine già pronto e paga comodamente al ritiro
+            </li>
+          </ul>
 
-          <div class="asporto-steps asporto-steps-faded">
-            <div class="asporto-step">
-              <span class="asporto-step-number">1</span>
-              <span class="asporto-step-text">Scegli i Piatti</span>
-            </div>
-            <div class="asporto-step">
-              <span class="asporto-step-number">2</span>
-              <span class="asporto-step-text">Scegli l'Orario</span>
-            </div>
-            <div class="asporto-step">
-              <span class="asporto-step-number">3</span>
-              <span class="asporto-step-text">Paga Online</span>
-            </div>
-            <div class="asporto-step">
-              <span class="asporto-step-number">4</span>
-              <span class="asporto-step-text">Vieni e Ritira</span>
-            </div>
+          
+          <div class="asporto-cta">
+            <span 
+              class="btn btn-primary btn-gloriafood"
+              data-glf-cuid={gloriaFoodCuid}
+              data-glf-ruid={gloriaFoodRuid}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M9 22C9.55228 22 10 21.5523 10 21C10 20.4477 9.55228 20 9 20C8.44772 20 8 20.4477 8 21C8 21.5523 8.44772 22 9 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M20 22C20.5523 22 21 21.5523 21 21C21 20.4477 20.5523 20 20 20C19.4477 20 19 20.4477 19 21C19 21.5523 19.4477 22 20 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M1 1H5L7.68 14.39C7.77144 14.8504 8.02191 15.264 8.38755 15.5583C8.75318 15.8526 9.2107 16.009 9.68 16H19.4C19.8693 16.009 20.3268 15.8526 20.6925 15.5583C21.0581 15.264 21.3086 14.8504 21.4 14.39L23 6H6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Ordina Online
+            </span>
+            <a href="https://wa.me/393517701704" target="_blank" rel="noopener" class="btn btn-whatsapp">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+              </svg>
+              WhatsApp
+            </a>
           </div>
+          
+          <p class="asporto-note">
+            <a href="/menu-asporto/">Sfoglia il menù completo d'asporto →</a>
+          </p>
         </div>
         <div class="contact-image">
           <img 
@@ -661,7 +674,99 @@ const schemaOrg = {
     border-radius: 12px;
     overflow: hidden;
   }
+  
+  /* ===== COME FUNZIONA SECTION ===== */
+  .come-funziona-section {
+    padding: 4rem 0;
+    background-color: var(--bg-light);
+    position: relative;
+  }
 
+  @media (min-width: 768px) {
+    .come-funziona-section {
+      padding: 5rem 0;
+    }
+  }
+
+  .come-funziona-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+    margin-bottom: 3rem;
+  }
+
+  @media (min-width: 992px) {
+    .come-funziona-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+  }
+
+  .come-funziona-content h2 {
+    font-size: 40px;
+    line-height: 48px;
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+  }
+
+  .come-funziona-intro {
+    font-size: 20px;
+    line-height: 30px;
+    color: var(--text-dark);
+    opacity: 0.85;
+    margin-bottom: 2rem;
+  }
+
+  .come-funziona-steps {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .come-funziona-steps li {
+    font-size: 18px;
+    line-height: 26px;
+    color: var(--text-dark);
+    padding-left: 1.5rem;
+    position: relative;
+  }
+
+  .come-funziona-steps li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    font-weight: 700;
+  }
+
+  .come-funziona-steps strong {
+    color: var(--primary-color);
+  }
+
+  .come-funziona-image {
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .come-funziona-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  @media (max-width: 768px) {
+    .come-funziona-content h2 {
+      font-size: 32px;
+      line-height: 40px;
+    }
+
+    .come-funziona-intro {
+      font-size: 18px;
+      line-height: 28px;
+    }
+  }
   .contact-image img {
     width: 100%;
     height: auto;
@@ -685,138 +790,103 @@ const schemaOrg = {
     }
   }
 
-  /* Booking Widget Wrapper con Coming Soon Overlay */
-  .booking-widget-wrapper {
-    position: relative;
+  /* Booking CTA */
+  .booking-cta {
     margin-top: 2rem;
-  }
-
-  .booking-widget {
     padding: 2rem;
-    background-color: var(--bg-light);
+    background: linear-gradient(135deg, var(--bg-light-orange) 0%, var(--primary-pale) 100%);
     border-radius: 12px;
+    border: 2px solid var(--primary-light);
   }
 
-  .booking-widget-disabled {
-    filter: blur(3px);
-    pointer-events: none;
-    user-select: none;
-  }
-
-  .booking-widget h3 {
-    font-size: 20px;
-    line-height: 28px;
+  .booking-cta-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
     margin-bottom: 1.5rem;
-    color: var(--text-dark);
-    text-align: center;
   }
 
-  .guest-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.75rem;
-    margin-bottom: 1rem;
-  }
-
-  .guest-btn {
-    width: 100%;
-    aspect-ratio: 1;
-    background-color: var(--bg-white);
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--text-dark);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: var(--font-main);
-  }
-
-  .guest-btn:hover:not(:disabled) {
-    border-color: var(--primary-color);
-    color: var(--primary-color);
-  }
-
-  .guest-btn.active {
+  .booking-cta-icon {
+    width: 60px;
+    height: 60px;
     background-color: var(--primary-color);
-    border-color: var(--primary-color);
-    color: var(--text-white);
-  }
-
-  .guest-note {
-    font-size: 14px;
-    text-align: center;
-    color: var(--text-dark);
-    opacity: 0.7;
-    margin: 0;
-  }
-
-  .guest-note a {
-    color: var(--primary-color);
-    font-weight: 600;
-    text-decoration: underline;
-  }
-
-  /* Coming Soon Overlay */
-  .coming-soon-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(255, 255, 255, 0.92);
     border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 10;
+    flex-shrink: 0;
+    color: var(--text-white);
   }
 
-  .coming-soon-content {
-    text-align: center;
-    padding: 2rem;
-  }
-
-  .coming-soon-content svg {
-    color: var(--primary-color);
-    margin-bottom: 1rem;
-  }
-
-  .coming-soon-content h4 {
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--primary-color);
-    margin-bottom: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
-
-  .coming-soon-content p {
-    font-size: 18px;
-    line-height: 26px;
+  .booking-cta-text h3 {
+    font-size: 22px;
+    line-height: 28px;
     color: var(--text-dark);
     margin-bottom: 0.5rem;
   }
 
-  .coming-soon-alternative {
+  .booking-cta-text p {
     font-size: 16px;
+    line-height: 24px;
     color: var(--text-dark);
-    opacity: 0.8;
+    opacity: 0.85;
+    margin: 0;
   }
 
-  .coming-soon-alternative a {
+  .btn-booking {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 18px;
+    padding: 14px 28px;
+  }
+
+  .booking-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+    font-size: 14px;
+    line-height: 22px;
+    color: var(--text-dark);
+    opacity: 0.75;
+  }
+
+  .booking-note svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .booking-note a {
     color: var(--primary-color);
     font-weight: 600;
     text-decoration: underline;
   }
 
-  @media (max-width: 768px) {
-    .coming-soon-content h4 {
-      font-size: 24px;
+  @media (max-width: 480px) {
+    .booking-cta {
+      padding: 1.5rem;
     }
 
-    .coming-soon-content p {
-      font-size: 16px;
+    .booking-cta-content {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .booking-cta-text h3 {
+      font-size: 20px;
+    }
+
+    .btn-booking {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .booking-note {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
     }
   }
 
@@ -973,6 +1043,48 @@ const schemaOrg = {
     font-size: 14px;
     font-weight: 600;
     color: var(--text-dark);
+  }
+
+  /* GloriaFood Button */
+  .btn-gloriafood {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  /* Asporto CTA */
+  .asporto-cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+  }
+
+  .asporto-note {
+    margin-top: 1.5rem;
+    font-size: 15px;
+  }
+
+  .asporto-note a {
+    color: var(--primary-color);
+    font-weight: 600;
+    text-decoration: underline;
+  }
+
+  .asporto-note a:hover {
+    color: var(--primary-dark);
+  }
+
+  @media (max-width: 480px) {
+    .asporto-cta {
+      flex-direction: column;
+    }
+    
+    .asporto-cta .btn {
+      width: 100%;
+      justify-content: center;
+    }
   }
 
   /* Preventivo Section */
@@ -1513,3 +1625,6 @@ const schemaOrg = {
     }
   });
 </script>
+
+<!-- GloriaFood Script -->
+<script is:inline src="https://www.fbgcdn.com/embedder/js/ewm2.js" defer async></script>
