@@ -48,83 +48,88 @@ async function getGoogleSheetsClient() {
 }
 
 /**
- * Converte data ISO in oggetto con componenti nel fuso orario italiano
- */
-function getItalianDateParts(isoString) {
-  if (!isoString) return null;
-  const date = new Date(isoString);
-  
-  // Formatta nel fuso orario italiano
-  const italianDate = date.toLocaleString('it-IT', { 
-    timeZone: 'Europe/Rome',
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    weekday: 'long'
-  });
-  
-  // Parse del risultato: "sabato 25/01/2025, 19:30"
-  const parts = italianDate.match(/(\w+)\s+(\d{2})\/(\d{2})\/(\d{4}),?\s*(\d{2}):(\d{2})/);
-  
-  if (!parts) {
-    // Fallback se il parsing fallisce
-    console.warn('Parsing data fallito per:', isoString, '-> risultato:', italianDate);
-    return null;
-  }
-  
-  return {
-    giorno: parts[1].charAt(0).toUpperCase() + parts[1].slice(1), // Capitalizza
-    day: parts[2],
-    month: parts[3],
-    year: parts[4],
-    hours: parts[5],
-    minutes: parts[6]
-  };
-}
-
-/**
  * Formatta data da ISO string a DD/MM/YYYY (fuso orario italiano)
  */
 function formatDate(isoString) {
-  const parts = getItalianDateParts(isoString);
-  if (!parts) return '';
-  return `${parts.day}/${parts.month}/${parts.year}`;
+  if (!isoString) return '';
+  try {
+    const date = new Date(isoString);
+    // Usa Intl.DateTimeFormat per ottenere componenti separati
+    const formatter = new Intl.DateTimeFormat('it-IT', {
+      timeZone: 'Europe/Rome',
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    });
+    return formatter.format(date);
+  } catch (error) {
+    console.error('Errore formatDate:', error, 'input:', isoString);
+    return '';
+  }
 }
 
 /**
  * Formatta ora da ISO string a HH:MM (fuso orario italiano)
  */
 function formatTime(isoString) {
-  const parts = getItalianDateParts(isoString);
-  if (!parts) return '';
-  return `${parts.hours}:${parts.minutes}`;
+  if (!isoString) return '';
+  try {
+    const date = new Date(isoString);
+    const formatter = new Intl.DateTimeFormat('it-IT', {
+      timeZone: 'Europe/Rome',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    });
+    return formatter.format(date);
+  } catch (error) {
+    console.error('Errore formatTime:', error, 'input:', isoString);
+    return '';
+  }
 }
 
 /**
  * Ottiene il giorno della settimana in italiano (fuso orario italiano)
  */
 function getGiornoSettimana(isoString) {
-  const parts = getItalianDateParts(isoString);
-  if (!parts) return '';
-  return parts.giorno;
+  if (!isoString) return '';
+  try {
+    const date = new Date(isoString);
+    const formatter = new Intl.DateTimeFormat('it-IT', {
+      timeZone: 'Europe/Rome',
+      weekday: 'long'
+    });
+    const giorno = formatter.format(date);
+    // Capitalizza prima lettera
+    return giorno.charAt(0).toUpperCase() + giorno.slice(1);
+  } catch (error) {
+    console.error('Errore getGiornoSettimana:', error, 'input:', isoString);
+    return '';
+  }
 }
 
 /**
  * Formatta timestamp corrente per colonna "Aggiornato" (fuso orario italiano)
  */
 function getTimestampNow() {
-  const now = new Date();
-  const italianTime = now.toLocaleString('it-IT', {
-    timeZone: 'Europe/Rome',
-    day: '2-digit',
-    month: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit'
-  });
-  // Risultato: "21/01, 15:30" -> formatto come "21/01 15:30"
-  return italianTime.replace(',', '');
+  try {
+    const now = new Date();
+    const dateFormatter = new Intl.DateTimeFormat('it-IT', {
+      timeZone: 'Europe/Rome',
+      day: '2-digit',
+      month: '2-digit'
+    });
+    const timeFormatter = new Intl.DateTimeFormat('it-IT', {
+      timeZone: 'Europe/Rome',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    });
+    return `${dateFormatter.format(now)} ${timeFormatter.format(now)}`;
+  } catch (error) {
+    console.error('Errore getTimestampNow:', error);
+    return new Date().toISOString();
+  }
 }
 
 /**
