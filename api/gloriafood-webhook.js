@@ -35,11 +35,14 @@ const STATI_PRENOTAZIONE = {
 
 // Mapping stati ordini asporto
 const STATI_ORDINE = {
+  'pending': '⏳ In attesa',
   'accepted': '✅ Confermato',
+  'ready': '🔔 Pronto',
+  'in_delivery': '🚗 In consegna',
+  'completed': '✔️ Ritirato',
   'rejected': '❌ Annullato',
   'canceled': '❌ Annullato',
-  'timed_out': '❌ Annullato',
-  'pending': '⏳ In attesa'
+  'timed_out': '❌ Annullato'
 };
 
 // Mapping metodi di pagamento
