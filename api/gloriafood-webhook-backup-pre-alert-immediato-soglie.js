@@ -1,10 +1,9 @@
 /**
- * Vercel Serverless Function - GloriaFood Webhook Handler v5
+ * Vercel Serverless Function - GloriaFood Webhook Handler v4
  * 
  * Gestisce:
  * - Prenotazioni tavoli (table_reservation) → Foglio "Dati"
  * - Ordini asporto (pickup) → Foglio "Asporto"
- * - 🚨 Alert immediati quando si superano le soglie
  * 
  * Endpoint: POST /api/gloriafood-webhook
  */
@@ -13,22 +12,6 @@ import { google } from 'googleapis';
 
 // Configurazione Google Sheets
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
-
-// ============================================
-// 🚨 CONFIGURAZIONE SOGLIE ALERT
-// ============================================
-const ALERT_CONFIG = {
-  // Soglie
-  SOGLIA_COPERTI: parseInt(process.env.SOGLIA_COPERTI) || 50,
-  SOGLIA_TAVOLI: parseInt(process.env.SOGLIA_TAVOLI) || 15,
-  SOGLIA_ORDINI_ASPORTO: parseInt(process.env.SOGLIA_ORDINI_ASPORTO) || 20,
-  
-  // Email destinatari (separati da virgola)
-  EMAIL_DESTINATARI: process.env.ALERT_EMAIL || '',
-  
-  // Abilita/disabilita alert
-  ALERT_ENABLED: process.env.ALERT_ENABLED !== 'false',
-};
 
 // Mapping giorni della settimana in italiano
 const GIORNI_SETTIMANA = {
@@ -262,203 +245,6 @@ async function updateRow(sheets, spreadsheetId, sheetName, rowNumber, row, lastC
 }
 
 // ============================================
-// 🚨 SISTEMA ALERT SOGLIE
-// ============================================
-
-/**
- * Conta coperti e tavoli per una data specifica (formato DD/MM/YYYY)
- */
-async function contaPrenotazioniPerData(sheets, spreadsheetId, dataTarget) {
-  try {
-    const response = await sheets.spreadsheets.values.get({
-      spreadsheetId,
-      range: 'Dati!B:H', // B=Data, G=Persone, H=Stato
-    });
-
-    const rows = response.data.values || [];
-    let coperti = 0;
-    let tavoli = 0;
-
-    for (let i = 1; i < rows.length; i++) {
-      const data = rows[i][0];      // Colonna B (indice 0 nel range)
-      const persone = rows[i][5];   // Colonna G (indice 5 nel range)
-      const stato = rows[i][6];     // Colonna H (indice 6 nel range)
-
-      if (data === dataTarget && stato === '✅ Confermata') {
-        coperti += parseInt(persone) || 0;
-        tavoli++;
-      }
-    }
-
-    return { coperti, tavoli };
-  } catch (error) {
-    console.error('Errore conteggio prenotazioni:', error);
-    return { coperti: 0, tavoli: 0 };
-  }
-}
-
-/**
- * Conta ordini asporto per una data specifica (formato DD/MM/YYYY)
- */
-async function contaOrdiniAsportoPerData(sheets, spreadsheetId, dataTarget) {
-  try {
-    const response = await sheets.spreadsheets.values.get({
-      spreadsheetId,
-      range: 'Asporto!B:J', // B=Data, J=Stato
-    });
-
-    const rows = response.data.values || [];
-    let ordini = 0;
-
-    for (let i = 1; i < rows.length; i++) {
-      const data = rows[i][0];    // Colonna B (indice 0 nel range)
-      const stato = rows[i][8];   // Colonna J (indice 8 nel range)
-
-      if (data === dataTarget && stato === '✅ Confermato') {
-        ordini++;
-      }
-    }
-
-    return ordini;
-  } catch (error) {
-    console.error('Errore conteggio asporto:', error);
-    return 0;
-  }
-}
-
-/**
- * Invia email alert usando Resend API
- */
-async function inviaEmailAlert(tipo, data, giorno, dettagli) {
-  if (!ALERT_CONFIG.ALERT_ENABLED || !ALERT_CONFIG.EMAIL_DESTINATARI) {
-    console.log('Alert disabilitato o email non configurata');
-    return;
-  }
-
-  const resendApiKey = process.env.RESEND_API_KEY;
-  
-  if (!resendApiKey) {
-    console.log('RESEND_API_KEY non configurata - alert non inviato');
-    // Fallback: log dettagliato
-    console.log('🚨 ALERT:', tipo, data, dettagli);
-    return;
-  }
-
-  let oggetto = '';
-  let corpo = '';
-  const spreadsheetUrl = `https://docs.google.com/spreadsheets/d/${process.env.GOOGLE_SHEET_ID}`;
-
-  if (tipo === 'prenotazioni') {
-    oggetto = `🚨 ALERT TRE - Soglia coperti superata per ${giorno} ${data}!`;
-    corpo = `
-🚨 ALERT PRENOTAZIONI - Ristorante Pizzeria TRE
-
-⚠️ SOGLIA SUPERATA!
-
-📅 Data: ${giorno} ${data}
-🪑 Tavoli prenotati: ${dettagli.tavoli}
-👥 Coperti totali: ${dettagli.coperti}
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Soglie configurate:
-• Coperti: ${ALERT_CONFIG.SOGLIA_COPERTI}
-• Tavoli: ${ALERT_CONFIG.SOGLIA_TAVOLI}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-🔴 AZIONE RICHIESTA:
-1. Apri Google Sheet: ${spreadsheetUrl}
-2. Verifica le prenotazioni per ${data}
-3. Valuta se disattivare/limitare:
-   • Prenotazioni online (GloriaFood → Impostazioni)
-   • Accettazione automatica ordini
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Questo messaggio è stato inviato automaticamente.
-    `;
-  } else if (tipo === 'asporto') {
-    oggetto = `🚨 ALERT TRE - Troppi ordini asporto per ${giorno} ${data}!`;
-    corpo = `
-🚨 ALERT ORDINI ASPORTO - Ristorante Pizzeria TRE
-
-⚠️ SOGLIA SUPERATA!
-
-📅 Data: ${giorno} ${data}
-📦 Ordini asporto: ${dettagli.ordini}
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Soglia configurata: ${ALERT_CONFIG.SOGLIA_ORDINI_ASPORTO} ordini
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-🔴 AZIONE RICHIESTA:
-1. Apri Google Sheet: ${spreadsheetUrl}
-2. Verifica gli ordini per ${data}
-3. Valuta se disattivare temporaneamente l'asporto online
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Questo messaggio è stato inviato automaticamente.
-    `;
-  }
-
-  try {
-    const response = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${resendApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: 'Alert TRE <alerts@resend.dev>',
-        to: ALERT_CONFIG.EMAIL_DESTINATARI.split(',').map(e => e.trim()),
-        subject: oggetto,
-        text: corpo,
-      }),
-    });
-
-    if (response.ok) {
-      console.log('✅ Email alert inviata con successo a:', ALERT_CONFIG.EMAIL_DESTINATARI);
-    } else {
-      const errorData = await response.text();
-      console.error('❌ Errore invio email:', errorData);
-    }
-  } catch (error) {
-    console.error('❌ Errore invio email alert:', error);
-  }
-}
-
-/**
- * Controlla soglie e invia alert se necessario
- */
-async function controllaSoglieEAlert(sheets, spreadsheetId, tipo, dataFormattata, giornoSettimana) {
-  if (!ALERT_CONFIG.ALERT_ENABLED) {
-    return;
-  }
-
-  console.log(`Controllo soglie per ${tipo} - ${dataFormattata}`);
-
-  if (tipo === 'prenotazioni') {
-    const { coperti, tavoli } = await contaPrenotazioniPerData(sheets, spreadsheetId, dataFormattata);
-    
-    console.log(`Prenotazioni ${dataFormattata}: ${tavoli} tavoli, ${coperti} coperti`);
-    
-    // Controlla se ESATTAMENTE alla soglia (per evitare alert multipli)
-    // Invia alert solo quando si raggiunge o supera per la prima volta
-    if (coperti >= ALERT_CONFIG.SOGLIA_COPERTI || tavoli >= ALERT_CONFIG.SOGLIA_TAVOLI) {
-      // Verifica se era già sopra soglia prima di questo inserimento
-      // (approssimazione: invia sempre ma considera che potrebbe essere duplicato)
-      await inviaEmailAlert('prenotazioni', dataFormattata, giornoSettimana, { coperti, tavoli });
-    }
-  } else if (tipo === 'asporto') {
-    const ordini = await contaOrdiniAsportoPerData(sheets, spreadsheetId, dataFormattata);
-    
-    console.log(`Asporto ${dataFormattata}: ${ordini} ordini`);
-    
-    if (ordini >= ALERT_CONFIG.SOGLIA_ORDINI_ASPORTO) {
-      await inviaEmailAlert('asporto', dataFormattata, giornoSettimana, { ordini });
-    }
-  }
-}
-
-// ============================================
 // PROCESSAMENTO PRENOTAZIONI TAVOLI
 // ============================================
 
@@ -574,8 +360,7 @@ export default async function handler(req, res) {
     let stats = {
       reservations: { processed: 0, updated: 0 },
       pickups: { processed: 0, updated: 0 },
-      skipped: 0,
-      alertsChecked: 0
+      skipped: 0
     };
 
     for (const order of orders) {
@@ -630,21 +415,6 @@ export default async function handler(req, res) {
           stats.reservations.processed++;
         } else {
           stats.pickups.processed++;
-        }
-      }
-
-      // 🚨 CONTROLLO SOGLIE E ALERT IMMEDIATO
-      // Solo per nuovi inserimenti (non aggiornamenti) con stato confermato
-      if (!existingRow && order.status === 'accepted') {
-        const dataFormattata = parsedData.row[1]; // Colonna B = Data
-        const giornoSettimana = parsedData.row[0]; // Colonna A = Giorno
-        
-        if (orderType === 'reservation') {
-          await controllaSoglieEAlert(sheets, spreadsheetId, 'prenotazioni', dataFormattata, giornoSettimana);
-          stats.alertsChecked++;
-        } else if (orderType === 'pickup') {
-          await controllaSoglieEAlert(sheets, spreadsheetId, 'asporto', dataFormattata, giornoSettimana);
-          stats.alertsChecked++;
         }
       }
     }
