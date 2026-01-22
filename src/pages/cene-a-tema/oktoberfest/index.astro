@@ -1,156 +1,73 @@
 ---
+/**
+ * Cena a Tema: Oktoberfest
+ * 
+ * Questa pagina fetcha tutti i dati (testi, SEO, Schema.org) da Google Sheets.
+ * Per modificare i contenuti, aggiorna il foglio "CenePassate" con slug "oktoberfest".
+ */
+
 import Layout from "../../../layouts/Layout.astro";
+import { 
+  getCenaPassataBySlug, 
+  generateCenaPassataSchemaOrg 
+} from "../../../utils/googleSheets";
 
-// SEO Data
-const seoData = {
-  title: "Cena a Tema Oktoberfest - 18 Ottobre 2024 | TRE Grill + Pizzeria",
-  description: "Rivivi la serata Oktoberfest del 18 Ottobre 2024 al Ristorante TRE Merate. Menù bavarese con birre artigianali selezionate. Scopri le prossime cene a tema.",
-  canonical: "https://www.ristorantepizzeriatre.it/cene-a-tema/oktoberfest/",
-  ogImage: "https://www.ristorantepizzeriatre.it/img/cene-tema/oktoberfest/cena-tema-oktoberfest-ristorante-pizzeria-tre-merate-hero.webp",
-  preloadImage: "/img/cene-tema/oktoberfest/cena-tema-oktoberfest-ristorante-pizzeria-tre-merate-hero.webp",
+// ============================================
+// UNICO PARAMETRO DA MODIFICARE PER OGNI CENA
+// ============================================
+const SLUG = "oktoberfest";
+
+// Fetch dei dati da Google Sheets
+const cena = await getCenaPassataBySlug(SLUG);
+
+// Gestione errore se i dati non sono trovati
+if (!cena) {
+  console.error(`[ERRORE] Nessun dato trovato nel Google Sheet per slug: "${SLUG}"`);
+}
+
+// Destrutturazione dati (con fallback di sicurezza)
+const { info, seo, images, portate } = cena || {
+  info: { titolo: SLUG, data: '', ora: '', prezzo: '0' },
+  seo: { 
+    title: `Cena a Tema ${SLUG} | TRE`, 
+    description: '', 
+    canonical: `/cene-a-tema/${SLUG}/`,
+    ogImage: `/img/cene-tema/${SLUG}/hero.webp`,
+    preloadImage: `/img/cene-tema/${SLUG}/hero.webp`
+  },
+  images: { 
+    heroImage: `/img/cene-tema/${SLUG}/hero.webp`, 
+    ctaImage: `/img/cene-tema/${SLUG}/cta.webp` 
+  },
+  portate: []
 };
 
-// Dati Cena Passata
-const cenaPassata = {
-  titolo: "Oktoberfest",
-  data: "Venerdì 18 Ottobre 2024",
-  ora: "ore 20.00",
-  prezzo: "50,00",
-  portate: [
-    {
-      tipo: "Aperitivo",
-      piatto: "Obatzda (crema di formaggi bavaresi) con crostini di segale",
-      abbinamento: "Tegernseer Hell – Herzoglich Bayerisches Brauhaus Tegernsee"
-    },
-    {
-      tipo: "Antipasto",
-      piatto: "Brezel caldo con burro aromatizzato e senape dolce",
-      abbinamento: "Weihenstephaner Hefeweissbier – Weihenstephan"
-    },
-    {
-      tipo: "Primo",
-      piatto: "Zuppa di patate e porri con pancetta croccante",
-      abbinamento: "Kellerbier – Ayinger"
-    },
-    {
-      tipo: "Secondo",
-      piatto: "Stinco di maiale al forno con crauti e patate",
-      abbinamento: "Celebrator Doppelbock – Ayinger"
-    },
-    {
-      tipo: "Dessert",
-      piatto: "Strudel di mele con crema alla vaniglia",
-      abbinamento: "Eisbock – Schneider Weisse"
-    },
-    {
-      tipo: "Caffè",
-      piatto: "",
-      abbinamento: ""
-    }
-  ]
-};
-
-// Schema.org per Event passato + BreadcrumbList
-const schemaOrg = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Event",
-      "@id": "https://www.ristorantepizzeriatre.it/cene-a-tema/oktoberfest/#event",
-      "name": "Cena a Tema Oktoberfest",
-      "description": "Serata a tema bavarese con menù degustazione e birre artigianali selezionate. Aperitivo, antipasto, primo, secondo, dessert e caffè inclusi.",
-      "startDate": "2024-10-18T20:00:00+02:00",
-      "endDate": "2024-10-18T23:30:00+02:00",
-      "eventStatus": "https://schema.org/EventCancelled",
-      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-      "location": {
-        "@type": "Restaurant",
-        "name": "Ristorante Pizzeria TRE",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Via Statale, 44",
-          "addressLocality": "Merate",
-          "addressRegion": "LC",
-          "postalCode": "23807",
-          "addressCountry": "IT"
-        }
-      },
-      "image": "https://www.ristorantepizzeriatre.it/img/cene-tema/oktoberfest/cena-tema-oktoberfest-ristorante-pizzeria-tre-merate-hero.webp",
-      "offers": {
-        "@type": "Offer",
-        "price": "50.00",
-        "priceCurrency": "EUR",
-        "availability": "https://schema.org/SoldOut"
-      },
-      "organizer": {
-        "@type": "Restaurant",
-        "name": "Ristorante Pizzeria TRE",
-        "url": "https://www.ristorantepizzeriatre.it/"
-      },
-      "previousStartDate": "2024-10-18T20:00:00+02:00"
-    },
-    {
-      "@type": "BreadcrumbList",
-      "@id": "https://www.ristorantepizzeriatre.it/cene-a-tema/oktoberfest/#breadcrumb",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Home",
-          "item": "https://www.ristorantepizzeriatre.it/"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Cene a Tema",
-          "item": "https://www.ristorantepizzeriatre.it/cene-a-tema/"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "Oktoberfest",
-          "item": "https://www.ristorantepizzeriatre.it/cene-a-tema/oktoberfest/"
-        }
-      ]
-    },
-    {
-      "@type": "WebPage",
-      "@id": "https://www.ristorantepizzeriatre.it/cene-a-tema/oktoberfest/#webpage",
-      "url": "https://www.ristorantepizzeriatre.it/cene-a-tema/oktoberfest/",
-      "name": "Cena a Tema Oktoberfest - 18 Ottobre 2024 | Ristorante Pizzeria TRE Merate",
-      "isPartOf": {
-        "@id": "https://www.ristorantepizzeriatre.it/#website"
-      },
-      "primaryImageOfPage": {
-        "@type": "ImageObject",
-        "url": "https://www.ristorantepizzeriatre.it/img/cene-tema/oktoberfest/cena-tema-oktoberfest-ristorante-pizzeria-tre-merate-hero.webp"
-      },
-      "breadcrumb": {
-        "@id": "https://www.ristorantepizzeriatre.it/cene-a-tema/oktoberfest/#breadcrumb"
-      },
-      "inLanguage": "it-IT"
-    }
-  ]
-};
+// Genera Schema.org automaticamente dai dati del Sheet
+const schemaOrg = cena ? generateCenaPassataSchemaOrg(cena) : null;
 ---
 
 <Layout 
-  title={seoData.title}
-  description={seoData.description}
-  canonical={seoData.canonical}
-  ogImage={seoData.ogImage}
-  preloadImage={seoData.preloadImage}
+  title={seo.title}
+  description={seo.description}
+  canonical={seo.canonical}
+  ogImage={seo.ogImage}
+  preloadImage={seo.preloadImage}
 >
-  <!-- Schema.org JSON-LD -->
-  <Fragment slot="schema">
-    <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
-  </Fragment>
+  <!-- Schema.org JSON-LD (generato automaticamente dal Google Sheet) -->
+  {schemaOrg && (
+    <Fragment slot="schema">
+      <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
+    </Fragment>
+  )}
 
-  <!-- Hero Section -->
-  <section class="hero hero-cena-passata">
+  <!-- Hero Section (immagine da Google Sheet) -->
+  <section 
+    class="hero hero-cena-passata"
+    style={`background-image: linear-gradient(rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.62)), url('${images.heroImage}');`}
+  >
     <div class="container hero-content">
-      <h1>{cenaPassata.titolo}</h1>
-      <p class="hero-data">{cenaPassata.data}, {cenaPassata.ora}</p>
+      <h1>{info.titolo}</h1>
+      <p class="hero-data">{info.data}, {info.ora}</p>
       <span class="hero-badge">(evento passato)</span>
       <div class="hero-buttons">
         <a href="/cene-a-tema/" class="btn btn-primary">Prossima Cena</a>
@@ -164,24 +81,24 @@ const schemaOrg = {
       <ol class="breadcrumb">
         <li><a href="/">Home</a></li>
         <li><a href="/cene-a-tema/">Cene a Tema</a></li>
-        <li aria-current="page">{cenaPassata.titolo}</li>
+        <li aria-current="page">{info.titolo}</li>
       </ol>
     </div>
   </nav>
 
-  <!-- Menù della Cena Passata -->
+  <!-- Menù della Cena Passata (portate da Google Sheet) -->
   <section class="menu-cena-passata-section">
     <div class="container">
       <div class="menu-cena-passata-header">
         <span class="menu-label">Menù della Cena Passata</span>
-        <p class="menu-data">{cenaPassata.data}, {cenaPassata.ora}</p>
+        <p class="menu-data">{info.data}, {info.ora}</p>
       </div>
 
       <div class="menu-degustazione">
-        <h2 class="menu-degustazione-titolo">" {cenaPassata.titolo} "</h2>
+        <h2 class="menu-degustazione-titolo">" {info.titolo} "</h2>
 
         <div class="portate-list">
-          {cenaPassata.portate.map((portata) => (
+          {portate.map((portata) => (
             <div class="portata-item">
               <h3 class="portata-tipo">{portata.tipo}</h3>
               {portata.piatto && (
@@ -202,7 +119,7 @@ const schemaOrg = {
         </div>
 
         <div class="menu-prezzo">
-          <span class="prezzo-label">€ {cenaPassata.prezzo}</span>
+          <span class="prezzo-label">€ {info.prezzo}</span>
           <span class="prezzo-suffix">a persona</span>
         </div>
       </div>
@@ -211,8 +128,11 @@ const schemaOrg = {
 
   <div class="section-divider"></div>
 
-  <!-- Scopri la Cena in Programma CTA -->
-  <section class="cta-section cta-section-cena-passata">
+  <!-- CTA Section (immagine da Google Sheet) -->
+  <section 
+    class="cta-section cta-section-cena-passata"
+    style={`background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url('${images.ctaImage}');`}
+  >
     <div class="container">
       <h2>Scopri la Cena in Programma</h2>
       <p>
@@ -242,9 +162,8 @@ const schemaOrg = {
 <style>
   /* Hero Cena Passata */
   .hero-cena-passata {
-    background-image:
-      linear-gradient(rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.62)),
-      url('/img/cene-tema/oktoberfest/cena-tema-oktoberfest-ristorante-pizzeria-tre-merate-hero.webp');
+    background-size: cover;
+    background-position: center;
   }
 
   .hero-cena-passata .hero-content {
@@ -269,31 +188,24 @@ const schemaOrg = {
   }
 
   @media (max-width: 768px) {
-    .hero-data {
-      font-size: 18px;
-    }
-    .hero-badge {
-      font-size: 14px;
-    }
+    .hero-data { font-size: 18px; }
+    .hero-badge { font-size: 14px; }
   }
 
   /* CTA Cena Passata */
   .cta-section-cena-passata {
-    background-image:
-      linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)),
-      url('/img/cene-tema/oktoberfest/cene-tema-ristorante-pizzeria-tre-merate-prenota-tavolo.webp');
+    background-size: cover;
+    background-position: center;
   }
 
-  /* ===== MENU CENA PASSATA SECTION ===== */
+  /* Menu Cena Passata Section */
   .menu-cena-passata-section {
     padding: 4rem 0;
     background-color: var(--bg-white);
   }
 
   @media (min-width: 768px) {
-    .menu-cena-passata-section {
-      padding: 5rem 0;
-    }
+    .menu-cena-passata-section { padding: 5rem 0; }
   }
 
   .menu-cena-passata-header {
@@ -320,12 +232,8 @@ const schemaOrg = {
   }
 
   @media (max-width: 768px) {
-    .menu-label {
-      font-size: 16px;
-    }
-    .menu-data {
-      font-size: 18px;
-    }
+    .menu-label { font-size: 16px; }
+    .menu-data { font-size: 18px; }
   }
 
   /* Menu Degustazione */
@@ -356,9 +264,7 @@ const schemaOrg = {
     gap: 2rem;
   }
 
-  .portata-item {
-    text-align: center;
-  }
+  .portata-item { text-align: center; }
 
   .portata-tipo {
     font-size: 28px;
@@ -387,15 +293,9 @@ const schemaOrg = {
   }
 
   @media (max-width: 768px) {
-    .portata-tipo {
-      font-size: 24px;
-    }
-    .portata-piatto {
-      font-size: 18px;
-    }
-    .portata-abbinamento {
-      font-size: 14px;
-    }
+    .portata-tipo { font-size: 24px; }
+    .portata-piatto { font-size: 18px; }
+    .portata-abbinamento { font-size: 14px; }
   }
 
   .portata-divider {
@@ -433,86 +333,13 @@ const schemaOrg = {
   }
 
   @media (max-width: 768px) {
-    .prezzo-label {
-      font-size: 28px;
-    }
-    .prezzo-suffix {
-      font-size: 16px;
-    }
-  }
-
-  /* ===== CTA INLINE SECTION ===== */
-  .cta-inline-section {
-    padding: 2rem 0;
-    background-color: var(--bg-light);
-  }
-
-  .cta-inline-box {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1.5rem;
-    padding: 1.5rem 2rem;
-    background-color: var(--bg-white);
-    border-radius: 12px;
-    border: 2px solid var(--primary-color);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-  }
-
-  .cta-inline-logo {
-    flex-shrink: 0;
-  }
-
-  .cta-inline-logo img {
-    width: 60px;
-    height: 60px;
-    object-fit: contain;
-  }
-
-  .cta-inline-content {
-    flex: 1;
-  }
-
-  .cta-inline-content h3 {
-    font-size: 22px;
-    font-weight: 600;
-    color: var(--text-dark);
-    margin-bottom: 0.25rem;
-  }
-
-  .cta-inline-content p {
-    font-size: 16px;
-    color: var(--text-dark);
-    opacity: 0.75;
-    margin: 0;
-  }
-
-  .cta-inline-btn {
-    flex-shrink: 0;
-    white-space: nowrap;
-  }
-
-  @media (max-width: 768px) {
-    .cta-inline-box {
-      flex-direction: column;
-      text-align: center;
-      padding: 1.5rem;
-      gap: 1rem;
-    }
-
-    .cta-inline-content h3 {
-      font-size: 20px;
-    }
-
-    .cta-inline-btn {
-      width: 100%;
-    }
+    .prezzo-label { font-size: 28px; }
+    .prezzo-suffix { font-size: 16px; }
   }
 </style>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    // Sticky CTA
     const stickyCta = document.getElementById('sticky-cta');
     const heroSection = document.querySelector('.hero');
     const ctaSection = document.querySelector('.cta-section');
@@ -523,14 +350,9 @@ const schemaOrg = {
       const heroBottom = heroSection.getBoundingClientRect().bottom;
       const ctaTop = ctaSection.getBoundingClientRect().top;
       const windowHeight = window.innerHeight;
-
       const shouldShow = heroBottom < 0 && ctaTop > windowHeight - 100;
 
-      if (shouldShow) {
-        stickyCta.classList.add('visible');
-      } else {
-        stickyCta.classList.remove('visible');
-      }
+      stickyCta.classList.toggle('visible', shouldShow);
     };
 
     window.addEventListener('scroll', handleScroll);
