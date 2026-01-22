@@ -149,11 +149,13 @@ function getTimestampNow() {
 }
 
 /**
- * Converte prezzo da centesimi a euro formattato
+ * Formatta prezzo in euro
+ * NOTA: GloriaFood invia il valore già in euro (es. 18.20), non in centesimi
  */
-function formatPrice(cents) {
-  if (!cents && cents !== 0) return '€0.00';
-  const euros = parseFloat(value); 
+function formatPrice(value) {
+  if (!value && value !== 0) return '€0,00';
+  const euros = parseFloat(value);
+  if (isNaN(euros)) return '€0,00';
   return `€${euros.toFixed(2).replace('.', ',')}`;
 }
 
