@@ -41,7 +41,21 @@
   <!-- EVENTI -->
   <url>
     <loc>https://www.ristorantepizzeriatre.it/cene-a-tema/</loc>
-    <lastmod>2025-01-09</lastmod>
+    <lastmod>2025-01-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.ristorantepizzeriatre.it/cene-a-tema/oktoberfest/</loc>
+    <lastmod>2025-01-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.ristorantepizzeriatre.it/cene-a-tema/sapori-autunno/</loc>
+    <lastmod>2025-01-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
