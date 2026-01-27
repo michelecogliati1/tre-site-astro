@@ -1,5 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import CapacityBanner from "../../components/CapacityBanner.astro";
 
 // GloriaFood Widget IDs
 const gloriaFoodCuid = "ab06e065-1a81-45d4-9159-66102a943d6d";
@@ -152,6 +153,13 @@ const schemaOrg = {
       </ul>
     </div>
   </nav>
+
+  <!-- NUOVO: Banner Capacità (mostra sia prenotazioni che asporto) -->
+  <section class="capacity-alert-section">
+    <div class="container">
+      <CapacityBanner tipo="entrambi" />
+    </div>
+  </section>
 
   <!-- Prenota il Tavolo Online -->
   <section class="contact-section" id="prenota-tavolo">
@@ -1355,6 +1363,9 @@ const schemaOrg = {
       font-size: 14px;
       line-height: 22px;
     }
+  }
+  .capacity-alert-section {
+    padding: 1rem 0 0;
   }
 </style>
 

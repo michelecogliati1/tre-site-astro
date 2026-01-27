@@ -1,6 +1,7 @@
 ﻿---
 import Layout from "../../layouts/Layout.astro";
 import { fetchSheetData, filterByCategory, formatPrice, formatAllergens, SHEET_GIDS } from "../../utils/googleSheets";
+import CapacityBanner from "../../components/CapacityBanner.astro";
 
 // Fetch dati da Google Sheets (avviene solo al BUILD TIME)
 const allItems = await fetchSheetData(SHEET_GIDS.menuAsporto);
@@ -241,6 +242,14 @@ const formatDesc = (item: any) => {
       </ol>
     </div>
   </nav>
+
+  <!-- NUOVO: Banner Capacità (solo asporto) -->
+  <section class="capacity-alert-section">
+    <div class="container">
+      <CapacityBanner tipo="asporto" />
+    </div>
+  </section>
+
 
   <!-- Come Funziona -->
   <section class="come-funziona-section" id="come-funziona">
@@ -2247,6 +2256,11 @@ const formatDesc = (item: any) => {
     color: var(--text-white);
     text-align: center;
   }
+
+  .capacity-alert-section {
+    padding: 1rem 0 0;
+  }
+  
 </style>
 
 <script>
