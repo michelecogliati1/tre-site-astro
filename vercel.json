@@ -14,6 +14,16 @@
       "source": "/cookies-policy.html",
       "destination": "/cookie-policy/",
       "permanent": true
+    },
+    {
+      "source": "/menu",
+      "destination": "/#scopri-menu",
+      "permanent": false
+    },
+    {
+      "source": "/eventi",
+      "destination": "/#organizza-evento", 
+      "permanent": false
     }
   ]
 }
