@@ -18,12 +18,12 @@
     {
       "source": "/menu",
       "destination": "/#scopri-menu",
-      "permanent": false
+      "permanent": true
     },
     {
       "source": "/eventi",
       "destination": "/#organizza-evento", 
-      "permanent": false
+      "permanent": true
     }
   ]
 }
