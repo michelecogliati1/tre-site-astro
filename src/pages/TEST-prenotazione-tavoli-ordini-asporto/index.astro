@@ -154,7 +154,7 @@ const schemaOrg = {
     </div>
   </nav>
 
-  <!-- NUOVO: Banner Capacità (mostra solo prenotazioni) -->
+  <!-- Banner principale -->
   <section class="capacity-alert-section">
     <div class="container">
       <CapacityBanner tipo="prenotazioni" />
@@ -269,16 +269,11 @@ const schemaOrg = {
 
   <div class="section-divider"></div>
 
-  <!-- NUOVO: Banner Capacità (mostra solo asporto) -->
-  <section class="capacity-alert-section">
-    <div class="container">
-      <CapacityBanner tipo="asporto" />
-    </div>
-  </section>
-
   <!-- Ordina Online d'Asporto -->
   <section class="contact-section" id="asporto">
     <div class="container">
+      <!-- NUOVO: Banner Capacità (mostra solo asporto) -->
+      <CapacityBanner tipo="asporto" /> 
       <div class="contact-grid">
         <div class="contact-content">
           <h2>Ordina Online i Tuoi<br />Piatti d'Asporto</h2>
