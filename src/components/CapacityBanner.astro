@@ -99,9 +99,9 @@ const tipoLabel = getTipoLabel(tipo);
         </strong>
         <p class="capacity-banner-text" id="capacity-banner-text">
           {capacityAlerts.length === 1 ? (
-            `${tipoLabel} per ${capacityAlerts[0].giorno} ${capacityAlerts[0].data} esaurite. Altri giorni ancora disponibili.`
+            `${tipoLabel} per ${capacityAlerts[0].giorno} ${capacityAlerts[0].data} esaurite. Prova a contattarci telefonicamente o tramite WhatsApp. Altri giorni ancora disponibili.`
           ) : (
-            `${tipoLabel} esaurite per: ${capacityAlerts.map(a => `${a.giorno} ${a.data}`).join(', ')}. Altri giorni ancora disponibili.`
+            `${tipoLabel} esaurite per: ${capacityAlerts.map(a => `${a.giorno} ${a.data}`).join(', ')}. Prova a contattarci telefonicamente o tramite WhatsApp. Altri giorni ancora disponibili.`
           )}
         </p>
       </div>
@@ -308,10 +308,10 @@ const tipoLabel = getTipoLabel(tipo);
                              'Prenotazioni';
             
             if (alerts.length === 1) {
-              bannerText.textContent = `${tipoLabel} per ${alerts[0].giorno} ${alerts[0].data} esaurite. Altri giorni ancora disponibili.`;
+              bannerText.textContent = `${tipoLabel} per ${alerts[0].giorno} ${alerts[0].data} esaurite. Prova a contattarci telefonicamente o tramite WhatsApp. Altri giorni ancora disponibili.`;
             } else {
               const dateList = alerts.map(a => `${a.giorno} ${a.data}`).join(', ');
-              bannerText.textContent = `${tipoLabel} esaurite per: ${dateList}. Altri giorni ancora disponibili.`;
+              bannerText.textContent = `${tipoLabel} esaurite per: ${dateList}. Prova a contattarci telefonicamente o tramite WhatsApp. Altri giorni ancora disponibili.`;
             }
           }
         }
