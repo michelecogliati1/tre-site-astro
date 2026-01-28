@@ -1,172 +1,117 @@
 ---
 /**
- * CapacityBanner.astro
+ * CapacityBanner.astro - v3.0 (Web App API)
  * 
  * Banner dinamico che mostra le date con capacità esaurita.
- * Legge i dati dal foglio "ControlloCapacita" di Google Sheets via CSV.
+ * Usa il Web App di Google Apps Script come API (niente problemi CORS!)
  * 
  * Props:
  * - tipo: "prenotazioni" | "asporto" | "entrambi" (default: "entrambi")
- * - sheetId: ID del Google Sheet (opzionale, usa env var di default)
- * - gid: GID del foglio ControlloCapacita (default: da configurazione)
  * 
- * Il banner appare SOLO se ci sono date:
- * - Con stato "🔴 FULL"
- * - Con Gestito = FALSE (o vuoto)
- * - Con data >= oggi
+ * Environment Variables richieste in Vercel:
+ * - PUBLIC_CAPACITY_API_URL: URL del Web App di Apps Script
  */
 
 interface Props {
   tipo?: 'prenotazioni' | 'asporto' | 'entrambi';
-  sheetId?: string;
-  gid?: string;
 }
 
-const { 
-  tipo = 'entrambi',
-  sheetId = import.meta.env.PUBLIC_GOOGLE_SHEET_ID || '1JoSO08H7IETrwrwe3baIDcWnp_QEMQQV0z2p31ZbVjQ',
-  gid = import.meta.env.PUBLIC_CONTROLLO_CAPACITA_GID || '2064103736' // Da aggiornare con il GID corretto
-} = Astro.props;
+const { tipo = 'entrambi' } = Astro.props;
 
-// Costruisci URL del CSV pubblicato
-// NOTA: Il foglio deve essere pubblicato come CSV
-// File → Condividi → Pubblica sul Web → Foglio "ControlloCapacita" → CSV
-const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&gid=${gid}`;
+// URL dell'API Web App
+const API_URL = import.meta.env.PUBLIC_CAPACITY_API_URL || '';
 
-// Interfaccia per i dati di capacità
-interface CapacityData {
+// Costruisci URL completo con parametri
+const fullApiUrl = API_URL ? `${API_URL}?action=capacity&tipo=${tipo}` : '';
+
+// Interfaccia per i dati
+interface CapacityAlert {
   data: string;
   giorno: string;
   tipo: string;
   soglia: number;
   attuale: number;
-  stato: string;
-  gestito: boolean;
 }
 
-// Funzione per parsare il CSV
-function parseCSV(csv: string): CapacityData[] {
-  const lines = csv.split('\n').filter(line => line.trim());
-  if (lines.length <= 1) return [];
-  
-  const results: CapacityData[] = [];
-  
-  // Salta header (prima riga)
-  for (let i = 1; i < lines.length; i++) {
-    const line = lines[i];
-    // Parse CSV considerando le virgolette
-    const values = line.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || [];
-    const cleanValues = values.map(v => v.replace(/^"|"$/g, '').trim());
-    
-    if (cleanValues.length >= 8) {
-      results.push({
-        data: cleanValues[0],        // A: Data
-        giorno: cleanValues[1],      // B: Giorno
-        tipo: cleanValues[2],        // C: Tipo
-        soglia: parseInt(cleanValues[3]) || 0,  // D: Soglia
-        attuale: parseInt(cleanValues[4]) || 0, // E: Attuale
-        stato: cleanValues[6],       // G: Stato
-        gestito: cleanValues[7]?.toUpperCase() === 'TRUE' || cleanValues[7] === '✅'
-      });
-    }
-  }
-  
-  return results;
+interface ApiResponse {
+  alerts: CapacityAlert[];
+  count: number;
+  timestamp: string;
+  error?: string;
 }
 
-// Funzione per verificare se una data è >= oggi
-function isDateValid(dateStr: string): boolean {
-  if (!dateStr) return false;
-  
-  // Parse date in formato dd/MM/yyyy
-  const parts = dateStr.split('/');
-  if (parts.length !== 3) return false;
-  
-  const date = new Date(parseInt(parts[2]), parseInt(parts[1]) - 1, parseInt(parts[0]));
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  
-  return date >= today;
-}
-
-// Filtra i dati per il tipo richiesto
-function filterByTipo(data: CapacityData[], tipoFilter: string): CapacityData[] {
-  return data.filter(item => {
-    // Solo date non gestite con stato FULL e data valida
-    if (item.gestito || item.stato !== '🔴 FULL' || !isDateValid(item.data)) {
-      return false;
-    }
-    
-    // Filtra per tipo
-    if (tipoFilter === 'entrambi') return true;
-    if (tipoFilter === 'prenotazioni' && item.tipo === 'Prenotazioni') return true;
-    if (tipoFilter === 'asporto' && item.tipo === 'Asporto') return true;
-    
-    return false;
-  });
-}
-
-// Fetch dati (avviene al build time, ma il client può aggiornare)
-let capacityAlerts: CapacityData[] = [];
+// Variabili per il rendering
+let capacityAlerts: CapacityAlert[] = [];
+let apiConfigured = !!API_URL;
 let fetchError = false;
+let errorMessage = '';
 
-try {
-  // Al build time, prova a fetchare i dati
-  // In produzione, il client aggiornerà con JavaScript
-  const response = await fetch(csvUrl);
-  if (response.ok) {
-    const csvText = await response.text();
-    const allData = parseCSV(csvText);
-    capacityAlerts = filterByTipo(allData, tipo);
+// Fetch dati al build time (SSR)
+if (apiConfigured && fullApiUrl) {
+  try {
+    const response = await fetch(fullApiUrl);
+    if (response.ok) {
+      const data: ApiResponse = await response.json();
+      if (data.error) {
+        fetchError = true;
+        errorMessage = data.error;
+      } else {
+        capacityAlerts = data.alerts || [];
+      }
+    } else {
+      fetchError = true;
+      errorMessage = `HTTP ${response.status}`;
+    }
+  } catch (error) {
+    fetchError = true;
+    errorMessage = String(error);
   }
-} catch (error) {
-  console.error('Errore fetch ControlloCapacita:', error);
-  fetchError = true;
 }
 
-// Determina il messaggio in base al tipo
-const tipoLabel = tipo === 'prenotazioni' ? 'Prenotazioni tavoli' : 
-                  tipo === 'asporto' ? 'Ordini d\'asporto' : 
-                  'Prenotazioni';
+// Helper per il label del tipo
+const getTipoLabel = (t: string) => {
+  if (t === 'prenotazioni') return 'Prenotazioni tavoli';
+  if (t === 'asporto') return 'Ordini d\'asporto';
+  return 'Prenotazioni';
+};
+
+const tipoLabel = getTipoLabel(tipo);
 ---
 
-<!-- Banner Container - visibile solo se ci sono alert -->
+<!-- Banner Container -->
 <div 
   class="capacity-banner-container" 
   id="capacity-banner"
   data-tipo={tipo}
-  data-sheet-id={sheetId}
-  data-gid={gid}
+  data-api-url={API_URL}
   style={capacityAlerts.length === 0 ? 'display: none;' : ''}
 >
-  <div class="capacity-banner">
-    <div class="capacity-banner-icon">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 9V13M12 17H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </div>
-    <div class="capacity-banner-content">
-      <strong class="capacity-banner-title">
-        {tipo === 'asporto' ? '📦 Servizio Asporto' : tipo === 'prenotazioni' ? '🍽️ Prenotazioni Tavoli' : '⚠️ Disponibilità Limitata'}
-      </strong>
-      <p class="capacity-banner-text" id="capacity-banner-text">
-        {capacityAlerts.length > 0 ? (
-          capacityAlerts.length === 1 ? (
+  {capacityAlerts.length > 0 && (
+    <div class="capacity-banner">
+      <div class="capacity-banner-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 9V13M12 17H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="capacity-banner-content">
+        <strong class="capacity-banner-title" id="capacity-banner-title">
+          {tipo === 'asporto' ? '📦 Servizio Asporto' : tipo === 'prenotazioni' ? '🍽️ Prenotazioni Tavoli' : '⚠️ Disponibilità Limitata'}
+        </strong>
+        <p class="capacity-banner-text" id="capacity-banner-text">
+          {capacityAlerts.length === 1 ? (
             `${tipoLabel} per ${capacityAlerts[0].giorno} ${capacityAlerts[0].data} esaurite. Altri giorni ancora disponibili.`
           ) : (
             `${tipoLabel} esaurite per: ${capacityAlerts.map(a => `${a.giorno} ${a.data}`).join(', ')}. Altri giorni ancora disponibili.`
-          )
-        ) : (
-          'Verifica disponibilità in corso...'
-        )}
-      </p>
+          )}
+        </p>
+      </div>
+      <button class="capacity-banner-close" id="capacity-banner-close" aria-label="Chiudi avviso">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
     </div>
-    <button class="capacity-banner-close" id="capacity-banner-close" aria-label="Chiudi avviso">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
-  </div>
+  )}
 </div>
 
 <style>
@@ -238,7 +183,6 @@ const tipoLabel = tipo === 'prenotazioni' ? 'Prenotazioni tavoli' :
     color: #F4773A;
   }
 
-  /* Animazione entrata */
   .capacity-banner-container.animate-in .capacity-banner {
     animation: slideDown 0.3s ease-out;
   }
@@ -254,7 +198,6 @@ const tipoLabel = tipo === 'prenotazioni' ? 'Prenotazioni tavoli' :
     }
   }
 
-  /* Responsive */
   @media (max-width: 768px) {
     .capacity-banner {
       flex-wrap: wrap;
@@ -280,96 +223,100 @@ const tipoLabel = tipo === 'prenotazioni' ? 'Prenotazioni tavoli' :
   }
 </style>
 
-<script define:vars={{ csvUrl, tipo }}>
-  // Client-side: aggiorna i dati in tempo reale
+<script>
   document.addEventListener('DOMContentLoaded', () => {
     const banner = document.getElementById('capacity-banner');
+    const bannerTitle = document.getElementById('capacity-banner-title');
     const bannerText = document.getElementById('capacity-banner-text');
     const closeBtn = document.getElementById('capacity-banner-close');
     
-    if (!banner || !bannerText) return;
+    if (!banner) return;
+    
+    const apiUrl = banner.dataset.apiUrl || '';
+    const tipo = banner.dataset.tipo || 'entrambi';
     
     // Chiudi banner
     if (closeBtn) {
       closeBtn.addEventListener('click', () => {
         banner.style.display = 'none';
-        // Salva in sessionStorage per non mostrarlo di nuovo nella sessione
-        sessionStorage.setItem('capacity-banner-closed', 'true');
+        sessionStorage.setItem(`capacity-banner-closed-${tipo}`, 'true');
       });
     }
     
-    // Se già chiuso in questa sessione, non mostrare
-    if (sessionStorage.getItem('capacity-banner-closed') === 'true') {
+    // Se già chiuso in questa sessione, nascondi
+    if (sessionStorage.getItem(`capacity-banner-closed-${tipo}`) === 'true') {
       banner.style.display = 'none';
       return;
     }
     
-    // Funzione per aggiornare il banner
+    // Se API non configurata, esci
+    if (!apiUrl) {
+      console.warn('CapacityBanner: PUBLIC_CAPACITY_API_URL non configurato');
+      return;
+    }
+    
+    // Funzione per aggiornare il banner (client-side refresh)
     async function updateBanner() {
       try {
-        const response = await fetch(csvUrl);
-        if (!response.ok) return;
+        const fullUrl = `${apiUrl}?action=capacity&tipo=${tipo}&_=${Date.now()}`;
+        const response = await fetch(fullUrl);
         
-        const csvText = await response.text();
-        const lines = csvText.split('\n').filter(line => line.trim());
-        
-        if (lines.length <= 1) {
-          banner.style.display = 'none';
+        if (!response.ok) {
+          console.error('CapacityBanner: Errore API', response.status);
           return;
         }
         
-        const alerts = [];
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
+        const data = await response.json();
         
-        for (let i = 1; i < lines.length; i++) {
-          const values = lines[i].match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || [];
-          const cleanValues = values.map(v => v.replace(/^"|"$/g, '').trim());
-          
-          if (cleanValues.length >= 8) {
-            const dataStr = cleanValues[0];
-            const giorno = cleanValues[1];
-            const tipoRiga = cleanValues[2];
-            const stato = cleanValues[6];
-            const gestito = cleanValues[7]?.toUpperCase() === 'TRUE';
-            
-            // Parse data
-            const parts = dataStr.split('/');
-            if (parts.length === 3) {
-              const date = new Date(parseInt(parts[2]), parseInt(parts[1]) - 1, parseInt(parts[0]));
-              
-              // Filtra: non gestito, FULL, data valida, tipo corretto
-              if (!gestito && stato === '🔴 FULL' && date >= today) {
-                if (tipo === 'entrambi' || 
-                    (tipo === 'prenotazioni' && tipoRiga === 'Prenotazioni') ||
-                    (tipo === 'asporto' && tipoRiga === 'Asporto')) {
-                  alerts.push({ data: dataStr, giorno, tipo: tipoRiga });
-                }
-              }
-            }
-          }
+        if (data.error) {
+          console.error('CapacityBanner: API error', data.error);
+          return;
         }
         
-        // Aggiorna UI
+        const alerts = data.alerts || [];
+        
         if (alerts.length === 0) {
           banner.style.display = 'none';
         } else {
           banner.style.display = '';
           banner.classList.add('animate-in');
           
-          const tipoLabel = tipo === 'prenotazioni' ? 'Prenotazioni tavoli' : 
-                           tipo === 'asporto' ? 'Ordini d\'asporto' : 
-                           'Prenotazioni';
+          // Aggiorna titolo
+          if (bannerTitle) {
+            if (tipo === 'asporto') {
+              bannerTitle.textContent = '📦 Servizio Asporto';
+            } else if (tipo === 'prenotazioni') {
+              bannerTitle.textContent = '🍽️ Prenotazioni Tavoli';
+            } else {
+              const hasPrenotazioni = alerts.some(a => a.tipo === 'Prenotazioni');
+              const hasAsporto = alerts.some(a => a.tipo === 'Asporto');
+              
+              if (hasPrenotazioni && hasAsporto) {
+                bannerTitle.textContent = '⚠️ Disponibilità Limitata';
+              } else if (hasPrenotazioni) {
+                bannerTitle.textContent = '🍽️ Prenotazioni Tavoli';
+              } else {
+                bannerTitle.textContent = '📦 Servizio Asporto';
+              }
+            }
+          }
           
-          if (alerts.length === 1) {
-            bannerText.textContent = `${tipoLabel} per ${alerts[0].giorno} ${alerts[0].data} esaurite. Altri giorni ancora disponibili.`;
-          } else {
-            const dateList = alerts.map(a => `${a.giorno} ${a.data}`).join(', ');
-            bannerText.textContent = `${tipoLabel} esaurite per: ${dateList}. Altri giorni ancora disponibili.`;
+          // Aggiorna testo
+          if (bannerText) {
+            const tipoLabel = tipo === 'prenotazioni' ? 'Prenotazioni tavoli' : 
+                             tipo === 'asporto' ? 'Ordini d\'asporto' : 
+                             'Prenotazioni';
+            
+            if (alerts.length === 1) {
+              bannerText.textContent = `${tipoLabel} per ${alerts[0].giorno} ${alerts[0].data} esaurite. Altri giorni ancora disponibili.`;
+            } else {
+              const dateList = alerts.map(a => `${a.giorno} ${a.data}`).join(', ');
+              bannerText.textContent = `${tipoLabel} esaurite per: ${dateList}. Altri giorni ancora disponibili.`;
+            }
           }
         }
       } catch (error) {
-        console.error('Errore aggiornamento banner capacità:', error);
+        console.error('CapacityBanner: Errore fetch', error);
       }
     }
     
