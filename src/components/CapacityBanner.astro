@@ -1,9 +1,10 @@
 ---
 /**
- * CapacityBanner.astro - v3.0 (Web App API)
+ * CapacityBanner.astro - v3.1 (Multi-banner support)
  * 
  * Banner dinamico che mostra le date con capacità esaurita.
  * Usa il Web App di Google Apps Script come API (niente problemi CORS!)
+ * Supporta più banner nella stessa pagina (prenotazioni + asporto)
  * 
  * Props:
  * - tipo: "prenotazioni" | "asporto" | "entrambi" (default: "entrambi")
@@ -81,7 +82,7 @@ const tipoLabel = getTipoLabel(tipo);
 <!-- Banner Container -->
 <div 
   class="capacity-banner-container" 
-  id="capacity-banner"
+  id={`capacity-banner-${tipo}`}
   data-tipo={tipo}
   data-api-url={API_URL}
   style={capacityAlerts.length === 0 ? 'display: none;' : ''}
@@ -94,10 +95,10 @@ const tipoLabel = getTipoLabel(tipo);
         </svg>
       </div>
       <div class="capacity-banner-content">
-        <strong class="capacity-banner-title" id="capacity-banner-title">
+        <strong class="capacity-banner-title">
           {tipo === 'asporto' ? '📦 Servizio Asporto' : tipo === 'prenotazioni' ? '🍽️ Prenotazioni Tavoli' : '⚠️ Disponibilità Limitata'}
         </strong>
-        <p class="capacity-banner-text" id="capacity-banner-text">
+        <p class="capacity-banner-text">
           {capacityAlerts.length === 1 ? (
             `${tipoLabel} per ${capacityAlerts[0].giorno} ${capacityAlerts[0].data} esaurite. Prova a contattarci telefonicamente o tramite WhatsApp. Altri giorni ancora disponibili.`
           ) : (
@@ -105,7 +106,7 @@ const tipoLabel = getTipoLabel(tipo);
           )}
         </p>
       </div>
-      <button class="capacity-banner-close" id="capacity-banner-close" aria-label="Chiudi avviso">
+      <button class="capacity-banner-close" aria-label="Chiudi avviso">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
@@ -225,105 +226,109 @@ const tipoLabel = getTipoLabel(tipo);
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const banner = document.getElementById('capacity-banner');
-    const bannerTitle = document.getElementById('capacity-banner-title');
-    const bannerText = document.getElementById('capacity-banner-text');
-    const closeBtn = document.getElementById('capacity-banner-close');
+    // Trova tutti i banner nella pagina
+    const banners = document.querySelectorAll('.capacity-banner-container');
     
-    if (!banner) return;
-    
-    const apiUrl = banner.dataset.apiUrl || '';
-    const tipo = banner.dataset.tipo || 'entrambi';
-    
-    // Chiudi banner
-    if (closeBtn) {
-      closeBtn.addEventListener('click', () => {
-        banner.style.display = 'none';
-        sessionStorage.setItem(`capacity-banner-closed-${tipo}`, 'true');
-      });
-    }
-    
-    // Se già chiuso in questa sessione, nascondi
-    if (sessionStorage.getItem(`capacity-banner-closed-${tipo}`) === 'true') {
-      banner.style.display = 'none';
-      return;
-    }
-    
-    // Se API non configurata, esci
-    if (!apiUrl) {
-      console.warn('CapacityBanner: PUBLIC_CAPACITY_API_URL non configurato');
-      return;
-    }
-    
-    // Funzione per aggiornare il banner (client-side refresh)
-    async function updateBanner() {
-      try {
-        const fullUrl = `${apiUrl}?action=capacity&tipo=${tipo}&_=${Date.now()}`;
-        const response = await fetch(fullUrl);
-        
-        if (!response.ok) {
-          console.error('CapacityBanner: Errore API', response.status);
-          return;
-        }
-        
-        const data = await response.json();
-        
-        if (data.error) {
-          console.error('CapacityBanner: API error', data.error);
-          return;
-        }
-        
-        const alerts = data.alerts || [];
-        
-        if (alerts.length === 0) {
-          banner.style.display = 'none';
-        } else {
-          banner.style.display = '';
-          banner.classList.add('animate-in');
+    banners.forEach((banner) => {
+      const bannerTitle = banner.querySelector('.capacity-banner-title');
+      const bannerText = banner.querySelector('.capacity-banner-text');
+      const closeBtn = banner.querySelector('.capacity-banner-close');
+      
+      if (!banner) return;
+      
+      const apiUrl = (banner as HTMLElement).dataset.apiUrl || '';
+      const tipo = (banner as HTMLElement).dataset.tipo || 'entrambi';
+      
+      // Chiudi banner
+      if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+          (banner as HTMLElement).style.display = 'none';
+          sessionStorage.setItem(`capacity-banner-closed-${tipo}`, 'true');
+        });
+      }
+      
+      // Se già chiuso in questa sessione, nascondi
+      if (sessionStorage.getItem(`capacity-banner-closed-${tipo}`) === 'true') {
+        (banner as HTMLElement).style.display = 'none';
+        return;
+      }
+      
+      // Se API non configurata, esci
+      if (!apiUrl) {
+        console.warn('CapacityBanner: PUBLIC_CAPACITY_API_URL non configurato');
+        return;
+      }
+      
+      // Funzione per aggiornare il banner (client-side refresh)
+      async function updateBanner() {
+        try {
+          const fullUrl = `${apiUrl}?action=capacity&tipo=${tipo}&_=${Date.now()}`;
+          const response = await fetch(fullUrl);
           
-          // Aggiorna titolo
-          if (bannerTitle) {
-            if (tipo === 'asporto') {
-              bannerTitle.textContent = '📦 Servizio Asporto';
-            } else if (tipo === 'prenotazioni') {
-              bannerTitle.textContent = '🍽️ Prenotazioni Tavoli';
-            } else {
-              const hasPrenotazioni = alerts.some(a => a.tipo === 'Prenotazioni');
-              const hasAsporto = alerts.some(a => a.tipo === 'Asporto');
-              
-              if (hasPrenotazioni && hasAsporto) {
-                bannerTitle.textContent = '⚠️ Disponibilità Limitata';
-              } else if (hasPrenotazioni) {
+          if (!response.ok) {
+            console.error('CapacityBanner: Errore API', response.status);
+            return;
+          }
+          
+          const data = await response.json();
+          
+          if (data.error) {
+            console.error('CapacityBanner: API error', data.error);
+            return;
+          }
+          
+          const alerts = data.alerts || [];
+          
+          if (alerts.length === 0) {
+            (banner as HTMLElement).style.display = 'none';
+          } else {
+            (banner as HTMLElement).style.display = '';
+            banner.classList.add('animate-in');
+            
+            // Aggiorna titolo
+            if (bannerTitle) {
+              if (tipo === 'asporto') {
+                bannerTitle.textContent = '📦 Servizio Asporto';
+              } else if (tipo === 'prenotazioni') {
                 bannerTitle.textContent = '🍽️ Prenotazioni Tavoli';
               } else {
-                bannerTitle.textContent = '📦 Servizio Asporto';
+                const hasPrenotazioni = alerts.some((a: any) => a.tipo === 'Prenotazioni');
+                const hasAsporto = alerts.some((a: any) => a.tipo === 'Asporto');
+                
+                if (hasPrenotazioni && hasAsporto) {
+                  bannerTitle.textContent = '⚠️ Disponibilità Limitata';
+                } else if (hasPrenotazioni) {
+                  bannerTitle.textContent = '🍽️ Prenotazioni Tavoli';
+                } else {
+                  bannerTitle.textContent = '📦 Servizio Asporto';
+                }
+              }
+            }
+            
+            // Aggiorna testo
+            if (bannerText) {
+              const tipoLabel = tipo === 'prenotazioni' ? 'Prenotazioni tavoli' : 
+                               tipo === 'asporto' ? 'Ordini d\'asporto' : 
+                               'Prenotazioni';
+              
+              if (alerts.length === 1) {
+                bannerText.textContent = `${tipoLabel} per ${alerts[0].giorno} ${alerts[0].data} esaurite. Prova a contattarci telefonicamente o tramite WhatsApp. Altri giorni ancora disponibili.`;
+              } else {
+                const dateList = alerts.map((a: any) => `${a.giorno} ${a.data}`).join(', ');
+                bannerText.textContent = `${tipoLabel} esaurite per: ${dateList}. Prova a contattarci telefonicamente o tramite WhatsApp. Altri giorni ancora disponibili.`;
               }
             }
           }
-          
-          // Aggiorna testo
-          if (bannerText) {
-            const tipoLabel = tipo === 'prenotazioni' ? 'Prenotazioni tavoli' : 
-                             tipo === 'asporto' ? 'Ordini d\'asporto' : 
-                             'Prenotazioni';
-            
-            if (alerts.length === 1) {
-              bannerText.textContent = `${tipoLabel} per ${alerts[0].giorno} ${alerts[0].data} esaurite. Prova a contattarci telefonicamente o tramite WhatsApp. Altri giorni ancora disponibili.`;
-            } else {
-              const dateList = alerts.map(a => `${a.giorno} ${a.data}`).join(', ');
-              bannerText.textContent = `${tipoLabel} esaurite per: ${dateList}. Prova a contattarci telefonicamente o tramite WhatsApp. Altri giorni ancora disponibili.`;
-            }
-          }
+        } catch (error) {
+          console.error('CapacityBanner: Errore fetch', error);
         }
-      } catch (error) {
-        console.error('CapacityBanner: Errore fetch', error);
       }
-    }
-    
-    // Aggiorna subito
-    updateBanner();
-    
-    // Aggiorna ogni 2 minuti
-    setInterval(updateBanner, 2 * 60 * 1000);
+      
+      // Aggiorna subito
+      updateBanner();
+      
+      // Aggiorna ogni 2 minuti
+      setInterval(updateBanner, 2 * 60 * 1000);
+    });
   });
 </script>
