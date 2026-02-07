@@ -9,7 +9,104 @@ const seoData = {
   robots: "index, follow",
 };
 
-// Struttura del sito organizzata per sezioni
+// ============================================
+// RECUPERA CONTENUTI BLOG AUTOMATICAMENTE
+// ============================================
+async function getBlogContent() {
+  try {
+    const blogFiles = import.meta.glob('../tradizione/**/*.{astro,md}');
+    
+    const content = {
+      landing: null,
+      categories: {},
+      articles: []
+    };
+    
+    // Nomi leggibili categorie
+    const categoryNames = {
+      'ingredienti': 'Ingredienti & Materie Prime',
+      'impasti': 'Impasti & Tecniche',
+      'ricette': 'Ricette della Tradizione',
+      'territorio': 'Territorio & Cultura',
+      'chef': 'Consigli dello Chef'
+    };
+    
+    for (const path in blogFiles) {
+      const urlPath = path
+        .replace('../tradizione', '/tradizione')
+        .replace('/index.astro', '/')
+        .replace('/index.md', '/')
+        .replace('.astro', '/')
+        .replace('.md', '/');
+      
+      const segments = urlPath.split('/').filter(p => p);
+      const depth = segments.length;
+      
+      if (urlPath === '/tradizione/') {
+        content.landing = {
+          name: "La Tradizione",
+          url: urlPath,
+          description: "Storie di cucina, ingredienti e territorio"
+        };
+      } else if (depth === 2) {
+        // Category page
+        const categorySlug = segments[1];
+        const categoryName = categoryNames[categorySlug] || categorySlug;
+        
+        if (!content.categories[categorySlug]) {
+          content.categories[categorySlug] = {
+            name: categoryName,
+            url: urlPath,
+            description: `Tutti gli articoli su ${categoryName.toLowerCase()}`,
+            articles: []
+          };
+        }
+      } else if (depth >= 3) {
+        // Articolo
+        const categorySlug = segments[1];
+        const articleSlug = segments[2];
+        
+        // Genera titolo leggibile
+        const title = articleSlug
+          .split('-')
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(' ');
+        
+        const article = {
+          name: title,
+          url: urlPath,
+          category: categorySlug,
+          description: `Articolo: ${title}`
+        };
+        
+        content.articles.push(article);
+        
+        // Aggiungi alla categoria
+        if (!content.categories[categorySlug]) {
+          const categoryName = categoryNames[categorySlug] || categorySlug;
+          content.categories[categorySlug] = {
+            name: categoryName,
+            url: `/tradizione/${categorySlug}/`,
+            description: `Tutti gli articoli su ${categoryName.toLowerCase()}`,
+            articles: []
+          };
+        }
+        content.categories[categorySlug].articles.push(article);
+      }
+    }
+    
+    return content;
+  } catch (error) {
+    console.error('Errore recupero contenuti blog:', error);
+    return { landing: null, categories: {}, articles: [] };
+  }
+}
+
+const blogContent = await getBlogContent();
+
+// ============================================
+// STRUTTURA SITO STATICA
+// ============================================
 const siteStructure = [
   {
     title: "Menù",
@@ -59,7 +156,53 @@ const siteStructure = [
   }
 ];
 
-// Schema.org BreadcrumbList
+// ============================================
+// AGGIUNGI SEZIONE BLOG (se disponibile)
+// ============================================
+if (blogContent.landing) {
+  const blogSection = {
+    title: "La Tradizione",
+    icon: "📰",
+    links: []
+  };
+  
+  // Landing blog
+  blogSection.links.push(blogContent.landing);
+  
+  // Category pages + primi 5 articoli per categoria
+  for (const [slug, category] of Object.entries(blogContent.categories)) {
+    // Link alla category page
+    blogSection.links.push({
+      name: `${category.name}`,
+      url: category.url,
+      description: category.description,
+      isCategory: true
+    });
+    
+    // Primi 5 articoli della categoria (indentati)
+    const displayArticles = category.articles.slice(0, 5);
+    displayArticles.forEach(article => {
+      blogSection.links.push({
+        ...article,
+        isArticle: true
+      });
+    });
+    
+    // "Vedi tutti" se ci sono più di 5
+    if (category.articles.length > 5) {
+      blogSection.links.push({
+        name: `→ Vedi tutti i ${category.articles.length} articoli`,
+        url: category.url,
+        description: '',
+        isViewAll: true
+      });
+    }
+  }
+  
+  siteStructure.push(blogSection);
+}
+
+// Schema.org
 const schemaOrg = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
@@ -123,10 +266,16 @@ const schemaOrg = {
             </div>
             <ul class="sitemap-links">
               {section.links.map((link) => (
-                <li>
+                <li class:list={{ 
+                  'category-link': link.isCategory,
+                  'article-link': link.isArticle,
+                  'view-all': link.isViewAll
+                }}>
                   <a href={link.url}>
                     <span class="link-name">{link.name}</span>
-                    <span class="link-description">{link.description}</span>
+                    {link.description && (
+                      <span class="link-description">{link.description}</span>
+                    )}
                   </a>
                 </li>
               ))}
@@ -266,6 +415,50 @@ const schemaOrg = {
     background: rgba(244, 119, 58, 0.1);
   }
 
+  /* Category Link (hub page) */
+  .category-link a {
+    background: rgba(244, 119, 58, 0.05);
+    border-left: 3px solid var(--primary-color);
+  }
+
+  .category-link .link-name {
+    font-weight: 700;
+    color: var(--primary-color);
+  }
+
+  /* Article Link (indented) */
+  .article-link {
+    margin-left: 1rem;
+  }
+
+  .article-link a {
+    padding: 0.5rem 0.75rem;
+    background: transparent;
+  }
+
+  .article-link .link-name {
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .article-link .link-description {
+    font-size: 0.8rem;
+  }
+
+  /* View All Link */
+  .view-all a {
+    background: transparent;
+    padding: 0.5rem 0.75rem;
+    font-style: italic;
+  }
+
+  .view-all .link-name {
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  /* Link Text */
   .sitemap-links .link-name {
     display: block;
     color: var(--primary-color);
@@ -305,6 +498,10 @@ const schemaOrg = {
 
     .sitemap-icon {
       font-size: 1.75rem;
+    }
+
+    .article-link {
+      margin-left: 0.5rem;
     }
   }
 </style>
