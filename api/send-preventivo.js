@@ -188,6 +188,10 @@ Richiesta inviata dal sito web ristorantepizzeriatre.it
         {
           email: 'info@ristorantepizzeriatre.it',
           name: 'Ristorante Pizzeria TRE'
+        },
+        {
+          email: 'michelecogliati1@gmail.com',  // ⚠️ Metti la tua email qui
+          name: 'Test Michele'
         }
       ],
       replyTo: {
