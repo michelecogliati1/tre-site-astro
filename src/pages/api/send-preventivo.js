@@ -1,18 +1,37 @@
-// src/pages/api/send-preventivo.js
-// API endpoint per invio email preventivi tramite Brevo
+/**
+ * Vercel Serverless Function - Invio Preventivi TRE
+ * API endpoint per invio email preventivi tramite Brevo
+ * 
+ * Endpoint: POST /api/send-preventivo
+ */
 
-export const prerender = false;
+export default async function handler(req, res) {
+  // Solo POST
+  if (req.method !== 'POST') {
+    return res.status(405).json({ 
+      error: 'Metodo non consentito. Usa POST.' 
+    });
+  }
 
-export async function POST({ request }) {
   try {
-    const data = await request.json();
+    const data = req.body;
 
     // Validazione campi obbligatori
     if (!data.evento || !data.servizio || !data.nome || !data.cognome || !data.email) {
-      return new Response(
-        JSON.stringify({ success: false, error: 'Campi obbligatori mancanti' }),
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
-      );
+      return res.status(400).json({ 
+        success: false, 
+        error: 'Campi obbligatori mancanti' 
+      });
+    }
+
+    // Verifica presenza API key
+    const apiKey = process.env.BREVO_API_KEY;
+    if (!apiKey) {
+      console.error('BREVO_API_KEY non trovata nelle env variables');
+      return res.status(500).json({ 
+        success: false, 
+        error: 'Configurazione server non completa' 
+      });
     }
 
     // Formatta la data
@@ -159,79 +178,76 @@ Richiesta inviata dal sito web ristorantepizzeriatre.it
 ═══════════════════════════════════════════════════
 `;
 
+    // Prepara payload Brevo
+    const brevoPayload = {
+      sender: {
+        name: 'Sito Web TRE',
+        email: 'info@ristorantepizzeriatre.it'
+      },
+      to: [
+        {
+          email: 'info@ristorantepizzeriatre.it',
+          name: 'Ristorante Pizzeria TRE'
+        }
+      ],
+      replyTo: {
+        email: data.email,
+        name: `${data.nome} ${data.cognome}`
+      },
+      subject: oggetto,
+      htmlContent: htmlContent,
+      textContent: textContent
+    };
+
+    console.log('📤 Invio email a Brevo...');
+
     // Invia email tramite Brevo API
     const brevoResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
       method: 'POST',
       headers: {
         'accept': 'application/json',
-        'api-key': import.meta.env.BREVO_API_KEY,
+        'api-key': apiKey,
         'content-type': 'application/json'
       },
-      body: JSON.stringify({
-        sender: {
-          name: 'Sito Web TRE',
-          email: 'info@ristorantepizzeriatre.it'
-        },
-        to: [
-          {
-            email: 'info@ristorantepizzeriatre.it',
-            name: 'Ristorante Pizzeria TRE'
-          },
-          //{
-            //email: 'residencepassone@gmail.com',
-            //name: 'Test TRE'
-          //}
-        ],
-        replyTo: {
-          email: data.email,
-          name: `${data.nome} ${data.cognome}`
-        },
-        subject: oggetto,
-        htmlContent: htmlContent,
-        textContent: textContent
-      })
+      body: JSON.stringify(brevoPayload)
     });
 
     if (brevoResponse.ok) {
       const result = await brevoResponse.json();
-      return new Response(
-        JSON.stringify({ 
-          success: true, 
-          messageId: result.messageId,
-          evento: data.evento 
-        }),
-        { status: 200, headers: { 'Content-Type': 'application/json' } }
-      );
+      console.log('✅ Email inviata con successo! MessageId:', result.messageId);
+      
+      return res.status(200).json({ 
+        success: true, 
+        messageId: result.messageId,
+        evento: data.evento 
+      });
     } else {
       const errorData = await brevoResponse.json();
-      console.error('Brevo API Error:', errorData);
-      return new Response(
-        JSON.stringify({ 
-          success: false, 
-          error: 'Errore nell\'invio dell\'email',
-          details: errorData 
-        }),
-        { status: 500, headers: { 'Content-Type': 'application/json' } }
-      );
+      console.error('❌ Errore risposta Brevo:', errorData);
+      
+      return res.status(500).json({ 
+        success: false, 
+        error: 'Errore nell\'invio dell\'email',
+        details: errorData 
+      });
     }
 
   } catch (error) {
-    console.error('Server Error:', error);
-    return new Response(
-      JSON.stringify({ 
-        success: false, 
-        error: 'Errore del server',
-        details: error.message 
-      }),
-      { status: 500, headers: { 'Content-Type': 'application/json' } }
-    );
+    console.error('❌ Errore generale:', error);
+    
+    return res.status(500).json({ 
+      success: false, 
+      error: 'Errore del server',
+      details: error.message 
+    });
   }
 }
 
-// Gestisci altri metodi HTTP
-export async function GET() {
-  return new Response(
-    JSON.stringify({ error: 'Metodo non consentito. Usa POST.' }),
-    { status: 405, headers: { 'Content-Type': 'application/json' } }
-  );
-}
+/**
+ * Configurazione Vercel
+ */
+export const config = {
+  api: {
+    bodyParser: true,
+  },
+};
