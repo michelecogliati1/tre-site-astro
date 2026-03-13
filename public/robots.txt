@@ -1,6 +1,29 @@
-User-agent: *
-Sitemap: https://www.ristorantepizzeriatre.it/sitemap.xml
+# Crawler AI - consentiti per visibilità nelle risposte AI
+User-agent: GPTBot
+Allow: /
 
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+# Tutti gli altri bot
+User-agent: *
+Allow: /
 Disallow: /test/
 Disallow: /staging/
 Disallow: /draft/
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://www.ristorantepizzeriatre.it/sitemap.xml
