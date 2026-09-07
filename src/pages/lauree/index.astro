@@ -311,6 +311,9 @@ const schemaOrg = {
         <p>
           La soluzione perfetta per una festa conviviale a base di pizza! Scegli tra il Menù Pizza, con una pizza a scelta, o il Giro Pizza, per assaggiare più gusti in compagnia.
         </p>
+        <p class="pizza-party-note">
+          Il Menù Pizza non è disponibile il sabato e la domenica a pranzo
+        </p>
       </div>
 
       <!-- Pizza Party Cards Grid -->
@@ -917,6 +920,21 @@ const schemaOrg = {
 
   .section-header-left p {
     max-width: 800px;
+  }
+
+  /* Pizza Party Note */
+  .pizza-party-note {
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--primary-color);
+    font-weight: 600;
+    margin: 1rem 0 0;
+    padding: 0.75rem 1rem;
+    background-color: var(--bg-light-orange);
+    border-radius: 6px;
+    border-left: 3px solid var(--primary-color);
+    text-align: left;
+    max-width: 640px;
   }
 
   /* Pizza Party Grid */
