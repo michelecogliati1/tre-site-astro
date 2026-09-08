@@ -1,0 +1,462 @@
+---
+/**
+ * Template per le pagine delle Cene Passate
+ * 
+ * Questo template fetcha i dati da Google Sheets usando lo slug della pagina.
+ * Per creare una nuova cena passata:
+ * 1. Aggiungi i dati nel foglio Google Sheet "CenePassate" con lo slug corretto
+ * 2. Crea una nuova pagina in /src/pages/cene-a-tema/[slug]/index.astro
+ * 3. Oppure duplica questo file nella cartella corretta
+ * 
+ * IMPORTANTE: Lo slug della cartella deve corrispondere allo slug nel Google Sheet
+ */
+
+import Layout from "../../../layouts/Layout.astro";
+import { 
+  getCenaPassataBySlug, 
+  generateCenaPassataSchemaOrg,
+  type CenaPassataCompleta 
+} from "../../../utils/googleSheets";
+
+// Ottieni lo slug dalla URL della pagina
+// Se stai usando questo come template statico, definisci lo slug qui:
+const SLUG = "sapori-mare"; // <-- Cambia questo per ogni cena
+
+// Fetch dei dati da Google Sheets
+const cena = await getCenaPassataBySlug(SLUG);
+
+// Fallback se i dati non sono disponibiliii
+if (!cena) {
+  console.error(`Errore: Nessun dato trovato per la cena "${SLUG}"`);
+}
+
+// Usa i dati dal Google Sheet o fallback vuoti
+const seoData = cena?.seo || {
+  title: "Cena a Tema | TRE Grill + Pizzeria",
+  description: "Scopri le nostre cene a tema al Ristorante TRE Merate",
+  canonical: `https://www.ristorantepizzeriatre.it/cene-a-tema/${SLUG}/`,
+  ogImage: `/img/cene-tema/${SLUG}/hero.webp`,
+  preloadImage: `/img/cene-tema/${SLUG}/hero.webp`,
+};
+
+const cenaInfo = cena?.info || {
+  titolo: "Cena a Tema",
+  data: "",
+  ora: "",
+  prezzo: "0",
+};
+
+const cenaImages = cena?.images || {
+  heroImage: `/img/cene-tema/${SLUG}/hero.webp`,
+  ctaImage: `/img/cene-tema/${SLUG}/cta.webp`,
+};
+
+const portate = cena?.portate || [];
+
+// Genera Schema.org
+const schemaOrg = cena ? generateCenaPassataSchemaOrg(cena) : null;
+---
+
+<Layout 
+  title={seoData.title}
+  description={seoData.description}
+  canonical={seoData.canonical}
+  ogImage={seoData.ogImage}
+  preloadImage={seoData.preloadImage}
+>
+  <!-- Schema.org JSON-LD -->
+  {schemaOrg && (
+    <Fragment slot="schema">
+      <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
+    </Fragment>
+  )}
+
+  <!-- Hero Section -->
+  <section class="hero hero-cena-passata" style={`background-image: linear-gradient(rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.62)), url('${cenaImages.heroImage}');`}>
+    <div class="container hero-content">
+      <h1>{cenaInfo.titolo}</h1>
+      <p class="hero-data">{cenaInfo.data}, {cenaInfo.ora}</p>
+      <span class="hero-badge">(evento passato)</span>
+      <div class="hero-buttons">
+        <a href="/cene-a-tema/" class="btn btn-primary">Prossima Cena</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li><a href="/cene-a-tema/">Cene a Tema</a></li>
+        <li aria-current="page">{cenaInfo.titolo}</li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- Menù della Cena Passata -->
+  <section class="menu-cena-passata-section">
+    <div class="container">
+      <div class="menu-cena-passata-header">
+        <span class="menu-label">Menù della Cena Passata</span>
+        <p class="menu-data">{cenaInfo.data}, {cenaInfo.ora}</p>
+      </div>
+
+      <div class="menu-degustazione">
+        <h2 class="menu-degustazione-titolo">" {cenaInfo.titolo} "</h2>
+
+        <div class="portate-list">
+          {portate.map((portata) => (
+            <div class="portata-item">
+              <h3 class="portata-tipo">{portata.tipo}</h3>
+              {portata.piatto && (
+                <>
+                  <p class="portata-piatto">{portata.piatto}</p>
+                  {portata.abbinamento && (
+                    <p class="portata-abbinamento">{portata.abbinamento}</p>
+                  )}
+                </>
+              )}
+              <div class="portata-divider">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div class="menu-prezzo">
+          <span class="prezzo-label">€ {cenaInfo.prezzo}</span>
+          <span class="prezzo-suffix">a persona</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Scopri la Cena in Programma CTA -->
+  <section class="cta-section cta-section-cena-passata" style={`background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url('${cenaImages.ctaImage}');`}>
+    <div class="container">
+      <h2>Scopri la Cena in Programma</h2>
+      <p>
+        Consulta online il menù della prossima cena in programma e prenota il tuo tavolo
+      </p>
+      <a href="/cene-a-tema/" class="btn btn-primary">Prossima Cena</a>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Sticky CTA Bottom -->
+  <div class="sticky-cta-bottom" id="sticky-cta">
+    <div class="sticky-cta-container">
+      <div class="sticky-cta-logo">
+        <img src="/img/brand/tre-logo.svg" alt="TRE" width="50" height="50" />
+      </div>
+      <div class="sticky-cta-content">
+        <span class="sticky-cta-title">Cene a Tema</span>
+        <span class="sticky-cta-subtitle">Scopri la prossima</span>
+      </div>
+      <a href="/cene-a-tema/" class="btn btn-primary sticky-cta-btn">Prossima Cena</a>
+    </div>
+  </div>
+</Layout>
+
+<style define:vars={{ heroImage: cenaImages.heroImage, ctaImage: cenaImages.ctaImage }}>
+  /* Hero Cena Passata - ora usa variabili CSS dinamiche */
+  .hero-cena-passata {
+    background-size: cover;
+    background-position: center;
+  }
+
+  .hero-cena-passata .hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-data {
+    font-size: 20px;
+    color: var(--text-gray);
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    font-size: 16px;
+    color: var(--text-white);
+    opacity: 0.8;
+    font-style: italic;
+    margin-bottom: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .hero-data {
+      font-size: 18px;
+    }
+    .hero-badge {
+      font-size: 14px;
+    }
+  }
+
+  /* CTA Cena Passata - ora usa variabili CSS dinamiche */
+  .cta-section-cena-passata {
+    background-size: cover;
+    background-position: center;
+  }
+
+  /* ===== MENU CENA PASSATA SECTION ===== */
+  .menu-cena-passata-section {
+    padding: 4rem 0;
+    background-color: var(--bg-white);
+  }
+
+  @media (min-width: 768px) {
+    .menu-cena-passata-section {
+      padding: 5rem 0;
+    }
+  }
+
+  .menu-cena-passata-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .menu-label {
+    display: inline-block;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text-dark);
+    opacity: 0.7;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+
+  .menu-data {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .menu-label {
+      font-size: 16px;
+    }
+    .menu-data {
+      font-size: 18px;
+    }
+  }
+
+  /* Menu Degustazione */
+  .menu-degustazione {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .menu-degustazione-titolo {
+    font-size: 48px;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 3rem;
+    font-style: italic;
+  }
+
+  @media (max-width: 768px) {
+    .menu-degustazione-titolo {
+      font-size: 35px;
+      margin-bottom: 2rem;
+    }
+  }
+
+  .portate-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .portata-item {
+    text-align: center;
+  }
+
+  .portata-tipo {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 0.75rem;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .portata-piatto {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+  }
+
+  .portata-abbinamento {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--text-dark);
+    opacity: 0.7;
+    font-style: italic;
+    margin-bottom: 0.75rem;
+  }
+
+  @media (max-width: 768px) {
+    .portata-tipo {
+      font-size: 24px;
+    }
+    .portata-piatto {
+      font-size: 18px;
+    }
+    .portata-abbinamento {
+      font-size: 14px;
+    }
+  }
+
+  .portata-divider {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 1rem;
+  }
+
+  .portata-divider .dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+  }
+
+  .menu-prezzo {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 2px solid var(--primary-pale);
+  }
+
+  .prezzo-label {
+    display: block;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--primary-color);
+  }
+
+  .prezzo-suffix {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text-dark);
+    opacity: 0.7;
+  }
+
+  @media (max-width: 768px) {
+    .prezzo-label {
+      font-size: 28px;
+    }
+    .prezzo-suffix {
+      font-size: 16px;
+    }
+  }
+
+  /* ===== CTA INLINE SECTION ===== */
+  .cta-inline-section {
+    padding: 2rem 0;
+    background-color: var(--bg-light);
+  }
+
+  .cta-inline-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 1.5rem 2rem;
+    background-color: var(--bg-white);
+    border-radius: 12px;
+    border: 2px solid var(--primary-color);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  }
+
+  .cta-inline-logo {
+    flex-shrink: 0;
+  }
+
+  .cta-inline-logo img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+  }
+
+  .cta-inline-content {
+    flex: 1;
+  }
+
+  .cta-inline-content h3 {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 0.25rem;
+  }
+
+  .cta-inline-content p {
+    font-size: 16px;
+    color: var(--text-dark);
+    opacity: 0.75;
+    margin: 0;
+  }
+
+  .cta-inline-btn {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 768px) {
+    .cta-inline-box {
+      flex-direction: column;
+      text-align: center;
+      padding: 1.5rem;
+      gap: 1rem;
+    }
+
+    .cta-inline-content h3 {
+      font-size: 20px;
+    }
+
+    .cta-inline-btn {
+      width: 100%;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Sticky CTA
+    const stickyCta = document.getElementById('sticky-cta');
+    const heroSection = document.querySelector('.hero');
+    const ctaSection = document.querySelector('.cta-section');
+
+    if (!stickyCta || !heroSection || !ctaSection) return;
+
+    const handleScroll = () => {
+      const heroBottom = heroSection.getBoundingClientRect().bottom;
+      const ctaTop = ctaSection.getBoundingClientRect().top;
+      const windowHeight = window.innerHeight;
+
+      const shouldShow = heroBottom < 0 && ctaTop > windowHeight - 100;
+
+      if (shouldShow) {
+        stickyCta.classList.add('visible');
+      } else {
+        stickyCta.classList.remove('visible');
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+  });
+</script>
