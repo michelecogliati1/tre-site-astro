@@ -1,0 +1,231 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+// SEO Data
+const seoData = {
+  title: "Cucina Tradizionale Italiana a Merate | Ristorante TRE",
+  description: "Cucina italiana autentica a Merate: piatti della tradizione lombarda e nazionale preparati con ingredienti di qualità. Scopri il menù del Ristorante TRE dal 1953.",
+  canonical: "https://www.ristorantepizzeriatre.it/cucina-tradizionale/",
+  ogImage: "https://www.ristorantepizzeriatre.it/img/cucina-tradizionale/tradizione-ristorante-tre-merate-storia.webp",
+  preloadImage: "/img/cucina-tradizionale/tradizione-ristorante-tre-merate-storia.webp",
+};
+
+// Schema.org
+const schemaOrg = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "Cucina Tradizionale Italiana a Merate: Autenticità e Qualità dal 1953",
+      "description": seoData.description,
+      "image": seoData.ogImage,
+      "author": { "@type": "Organization", "name": "Ristorante Pizzeria TRE" },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Ristorante Pizzeria TRE",
+        "logo": { "@type": "ImageObject", "url": "https://www.ristorantepizzeriatre.it/img/brand/tre-logo.svg" }
+      },
+      "mainEntityOfPage": seoData.canonical
+    },
+    {
+      "@type": "LocalBusiness",
+      "name": "Ristorante Pizzeria TRE",
+      "image": seoData.ogImage,
+      "address": { "@type": "PostalAddress", "streetAddress": "Via Statale, 44", "addressLocality": "Merate", "addressRegion": "LC", "postalCode": "23807", "addressCountry": "IT" },
+      "geo": { "@type": "GeoCoordinates", "latitude": 45.6983, "longitude": 9.4183 },
+      "telephone": "+390399909913",
+      "url": "https://www.ristorantepizzeriatre.it/"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.ristorantepizzeriatre.it/" },
+        { "@type": "ListItem", "position": 2, "name": "Cucina Tradizionale", "item": "https://www.ristorantepizzeriatre.it/cucina-tradizionale/" }
+      ]
+    }
+  ]
+};
+---
+
+<Layout 
+  title={seoData.title}
+  description={seoData.description}
+  canonical={seoData.canonical}
+  ogImage={seoData.ogImage}
+  preloadImage={seoData.preloadImage}
+>
+  <Fragment slot="schema">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
+  </Fragment>
+
+  <!-- Hero Section -->
+  <section class="hero hero-cucina-tradizionale">
+    <div class="container hero-content">
+      <h1>Cucina Tradizionale Italiana a Merate: Autenticità e Qualità dal 1953</h1>
+      <p>Piatti della tradizione lombarda e italiana preparati con ingredienti di qualità,<br />ricette autentiche e la passione di chi cucina con il cuore</p>
+      <div class="hero-buttons">
+        <a href="/menu-alla-carta/" class="btn btn-primary">Scopri il Menù alla Carta</a>
+        <a href="/contatti/" class="btn btn-outline">Prenota un Tavolo</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li aria-current="page">Cucina Tradizionale</li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- La Nostra Tradizione dal 1953 -->
+  <section class="landing-section">
+    <div class="container">
+      <div class="landing-content-block">
+        <div class="landing-text">
+          <h2>La Nostra Tradizione dal 1953</h2>
+          <p>La storia della cucina del TRE inizia nel 1953, quando il Ristorante Passone aprì le sue porte a Merate. Da allora, la passione per la cucina italiana autentica si è tramandata di generazione in generazione, diventando nel 2003 il Ristorante Pizzeria TRE che conoscete oggi.</p>
+          <p>La nostra filosofia è semplice: ingredienti di qualità, ricette della tradizione e preparazioni artigianali. Ogni piatto che arriva al tavolo racconta una storia di territorio, stagionalità e rispetto per le materie prime. Non inseguiamo le mode, ma coltiviamo la tradizione con la cura di chi sa che i sapori autentici non hanno bisogno di artifici.</p>
+          <p>Scopri la nostra <a href="/chi-siamo/">storia completa</a> e come la tradizione culinaria si è evoluta nel corso dei decenni.</p>
+        </div>
+        <div class="landing-image">
+          <img src="/img/cucina-tradizionale/tradizione-ristorante-tre-merate-storia.webp" alt="Cucina tradizionale italiana al Ristorante TRE Merate dal 1953" loading="lazy" decoding="async" width="600" height="450" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- I Piatti della Tradizione -->
+  <section class="landing-section bg-light-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>I Piatti della Tradizione</h2>
+        <p>I grandi classici della cucina italiana e lombarda, preparati come una volta</p>
+      </div>
+      <div class="piatti-highlight-grid">
+        <div class="piatto-highlight-card">
+          <div class="piatto-highlight-image">
+            <img src="/img/cucina-tradizionale/piatto-primo-tradizionale-ristorante-tre.webp" alt="Primi piatti della tradizione al Ristorante TRE" loading="lazy" decoding="async" width="400" height="300" />
+          </div>
+          <div class="piatto-highlight-content">
+            <h3>Primi Piatti</h3>
+            <p>Risotti, paste fresche e zuppe della tradizione lombarda e italiana. Dal risotto alla milanese alla pasta fatta in casa, ogni primo piatto è preparato con ingredienti selezionati.</p>
+          </div>
+        </div>
+        <div class="piatto-highlight-card">
+          <div class="piatto-highlight-image">
+            <img src="/img/cucina-tradizionale/piatto-secondo-tradizionale-ristorante-tre.webp" alt="Secondi piatti di carne alla griglia al TRE" loading="lazy" decoding="async" width="400" height="300" />
+          </div>
+          <div class="piatto-highlight-content">
+            <h3>Secondi e Grill</h3>
+            <p>Carni selezionate alla griglia, arrosti e piatti della tradizione lombarda. La nostra griglia è un punto di riferimento per gli amanti della carne di qualità a Merate.</p>
+          </div>
+        </div>
+        <div class="piatto-highlight-card">
+          <div class="piatto-highlight-image">
+            <img src="/img/cucina-tradizionale/piatto-contorno-stagionale-ristorante-tre.webp" alt="Contorni e verdure di stagione" loading="lazy" decoding="async" width="400" height="300" />
+          </div>
+          <div class="piatto-highlight-content">
+            <h3>Contorni di Stagione</h3>
+            <p>Verdure fresche e preparazioni stagionali che accompagnano i nostri piatti principali. Il menù cambia seguendo le stagioni e la disponibilità del territorio.</p>
+          </div>
+        </div>
+      </div>
+      <div class="section-cta">
+        <a href="/menu-alla-carta/" class="btn btn-primary">Scopri il Menù alla Carta Completo</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Ingredienti di Qualità -->
+  <section class="landing-section">
+    <div class="container">
+      <div class="landing-content-block reverse">
+        <div class="landing-text">
+          <h2>Ingredienti di Qualità</h2>
+          <p>Alla base della nostra cucina ci sono ingredienti selezionati con cura: farine macinate a pietra, mozzarella di bufala DOP, pomodori San Marzano, olio extravergine d'oliva italiano e carni provenienti da allevamenti controllati.</p>
+          <p>Lavoriamo con fornitori locali e nazionali che condividono la nostra stessa filosofia: qualità prima di tutto. Dove possibile, privilegiamo prodotti a km zero e ingredienti del territorio della Brianza lecchese, per portare in tavola il meglio della nostra terra.</p>
+          <p>La stagionalità guida le nostre scelte: il <a href="/menu-del-giorno/">menù del giorno</a> cambia regolarmente per offrirti sempre piatti preparati con ingredienti al massimo della freschezza.</p>
+        </div>
+        <div class="landing-image">
+          <img src="/img/cucina-tradizionale/ingredienti-qualita-ristorante-tre-merate.webp" alt="Ingredienti di qualità selezionati per la cucina del TRE" loading="lazy" decoding="async" width="600" height="450" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- La Cucina Lombarda -->
+  <section class="landing-section bg-light-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>La Cucina Lombarda al TRE</h2>
+        <p>Il territorio della Brianza come fonte di ispirazione per i nostri piatti</p>
+      </div>
+      <div class="landing-content-block">
+        <div class="landing-text">
+          <p>Merate e la Brianza lecchese sono terre ricche di tradizioni gastronomiche. La nostra cucina trae ispirazione da questa tradizione: piatti robusti e saporiti, preparazioni che scaldano il cuore, sapori che raccontano il territorio.</p>
+          <p>Dai classici lombardi come il risotto alla milanese e l'ossobuco, fino alle preparazioni più stagionali, la nostra carta è un viaggio nella cucina regionale italiana con un'attenzione particolare alla tradizione del nostro territorio.</p>
+          <p>Vuoi approfondire le ricette e le tradizioni della cucina italiana? <a href="/tradizione/ricette/">Visita la sezione Ricette</a> del nostro blog per scoprire storie e segreti dei piatti che portiamo in tavola.</p>
+        </div>
+        <div class="landing-image">
+          <img src="/img/cucina-tradizionale/cassoeula-lombarda-ristorante-tre-merate.webp" alt="Piatti della tradizione lombarda al Ristorante TRE" loading="lazy" decoding="async" width="600" height="450" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Gallery -->
+  <section class="landing-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>I Nostri Piatti</h2>
+        <p>Una selezione dei piatti della nostra cucina tradizionale</p>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <img src="/img/cucina-tradizionale/pannacotta-salsa-frutti-di-bosco-ristorante-pizzeria-tre-merate.webp" alt="Pannacotta con salsa ai frutti di bosco del Ristorante TRE" loading="lazy" decoding="async" width="400" height="530" />
+        </div>
+        <div class="gallery-item">
+          <img src="/img/cucina-tradizionale/scialatielli-frutti-di-mare-ristorante-pizzeria-tre-merate.webp" alt="Scialatielli ai frutti di mare ristorante pizzeria tre merate" loading="lazy" decoding="async" width="400" height="530" />
+        </div>
+        <div class="gallery-item">
+          <img src="/img/cucina-tradizionale/calamari-in-umido-ristorante-pizzeria-tre-merate.webp" alt="Calamari in umido  ristorante pizzeria tre merate" loading="lazy" decoding="async" width="400" height="530" />
+        </div>
+        <div class="gallery-item">
+          <img src="/img/cucina-tradizionale/antipasto-affettati-misti-ristorante-pizzeria-tre-merate.webp" alt="antipasto di affettati misti ristorante pizzeria tre merate" loading="lazy" decoding="async" width="400" height="530" />
+        </div>
+        <div class="gallery-item">
+          <img src="/img/cucina-tradizionale/fiorentina-alla-piastra-ristorante-pizzeria-tre-merate.webp" alt="fiorentina alla piastra ristorante pizzeria tre merate" loading="lazy" decoding="async" width="400" height="530" />
+        </div>
+        <div class="gallery-item">
+          <img src="/img/cucina-tradizionale/insalatona-bresaola-mozzarella-noci-scaglie-di-grana-ristorante-pizzeria-tre-merate.webp" alt="insalatona con bresaola mozzarella noci scaglie di grana ristorante pizzeria tre merate" loading="lazy" decoding="async" width="400" height="530" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Finale -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Assapora la Tradizione Italiana</h2>
+        <p>Sfoglia il menù alla carta completo e prenota il tuo tavolo per un'esperienza di cucina autentica</p>
+        <div class="cta-buttons">
+          <a href="/menu-alla-carta/" class="btn btn-primary">Menù alla Carta</a>
+          <a href="/contatti/" class="btn btn-outline-white">Prenota un Tavolo</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</Layout>

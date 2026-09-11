@@ -1,0 +1,259 @@
+---
+import Layout from "../../../../layouts/Layout.astro";
+
+const seoData = {
+  title: "Impasto Pizza: Lievitazione, Idratazione e Temperature Perfette",
+  description: "Guida completa all'impasto pizza perfetto: tempi di lievitazione, percentuali di idratazione e temperature ideali. Scopri i segreti della pizza artigianale.",
+  canonical: "https://www.ristorantepizzeriatre.it/tradizione/impasti/lievitazione-idratazione-temperatura/",
+  ogImage: "https://www.ristorantepizzeriatre.it/img/tradizione/impasti/art-impasto-pizza-lievitazione-og.webp",
+  preloadImage: "/img/tradizione/impasti/art-impasto-pizza-lievitazione.webp",
+  ogType: "article",
+};
+
+const schemaOrg = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "Impasto Pizza: Lievitazione, Idratazione e Temperature per una Pizza Perfetta",
+      "description": seoData.description,
+      "image": seoData.ogImage,
+      "datePublished": "2025-04-15",
+      "dateModified": "2025-04-15",
+      "author": { "@type": "Organization", "name": "Ristorante Pizzeria TRE" },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Ristorante Pizzeria TRE",
+        "logo": { "@type": "ImageObject", "url": "https://www.ristorantepizzeriatre.it/img/brand/tre-logo.svg" }
+      },
+      "mainEntityOfPage": seoData.canonical
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.ristorantepizzeriatre.it/" },
+        { "@type": "ListItem", "position": 2, "name": "Tradizione", "item": "https://www.ristorantepizzeriatre.it/tradizione/" },
+        { "@type": "ListItem", "position": 3, "name": "Impasti", "item": "https://www.ristorantepizzeriatre.it/tradizione/impasti/" },
+        { "@type": "ListItem", "position": 4, "name": "Lievitazione, Idratazione e Temperature", "item": seoData.canonical }
+      ]
+    }
+  ]
+};
+---
+
+<Layout title={seoData.title} description={seoData.description} canonical={seoData.canonical} ogImage={seoData.ogImage} preloadImage={seoData.preloadImage} ogType={seoData.ogType}>
+  <Fragment slot="schema">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
+  </Fragment>
+
+  <!-- Featured Image Hero -->
+  <section class="hero hero-blog-article">
+    <div class="container hero-content">
+      <span class="blog-category-label"><a href="/tradizione/impasti/">Impasti</a></span>
+      <h1>Impasto Pizza: Lievitazione, Idratazione e Temperature per una Pizza Perfetta</h1>
+    </div>
+  </section>
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li><a href="/tradizione/">Tradizione</a></li>
+        <li><a href="/tradizione/impasti/">Impasti</a></li>
+        <li aria-current="page">Lievitazione, Idratazione e Temperature</li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- Article Content -->
+  <section class="blog-articles-section">
+    <div class="container">
+      <div class="blog-layout">
+        <article class="blog-article-body">
+
+          <!-- Intro -->
+          <p class="article-lead">La pizza perfetta inizia molto prima del forno: tutto parte dall'impasto. Lievitazione, idratazione e temperatura sono i tre pilastri che determinano la qualità finale della pizza, dal cornicione alveolato alla digeribilità. In questa guida scoprirai come funzionano questi processi e come ottenere risultati straordinari anche a casa.</p>
+
+          <img src="/img/tradizione/impasti/art-impasto-pizza-lievitazione.webp" alt="Impasto pizza in fase di lievitazione" class="article-featured-image" loading="eager" decoding="async" width="800" height="500" />
+
+          <!-- Cos'è la Lievitazione -->
+          <h2>Cos'è la Lievitazione e Perché è Fondamentale</h2>
+
+          <p>La lievitazione è un processo biologico naturale in cui il lievito (Saccharomyces cerevisiae) si nutre degli zuccheri presenti nella farina, producendo anidride carbonica e alcol etilico. È l'anidride carbonica a creare le bollicine nell'impasto, formando quella struttura alveolata che rende la pizza soffice e leggera.</p>
+
+          <p>Esistono due approcci principali alla lievitazione della pizza: la lievitazione corta (2-4 ore a temperatura ambiente) e la lievitazione lunga (12-72 ore, spesso in frigorifero). La differenza non è solo nei tempi, ma nel risultato finale.</p>
+
+          <p>Una lievitazione lunga porta vantaggi significativi: maggiore digeribilità perché il glutine ha più tempo per svilupparsi e poi rilassarsi, un'alveolatura più pronunciata e regolare, e un sapore più complesso grazie alla fermentazione prolungata che sviluppa aromi più ricchi e sfumature di gusto impossibili da ottenere con tempi brevi.</p>
+
+          <div class="article-callout">
+            <strong>Al Ristorante TRE</strong> lasciamo lievitare i nostri impasti per almeno 24 ore, utilizzando una combinazione di lievitazione a temperatura ambiente e maturazione in frigorifero. Questo processo garantisce una pizza estremamente digeribile e dal sapore ricco.
+          </div>
+
+          <!-- Idratazione -->
+          <h2>L'Idratazione dell'Impasto: Il Rapporto Acqua-Farina</h2>
+
+          <p>L'idratazione indica la percentuale di acqua rispetto alla farina nell'impasto. Si calcola dividendo il peso dell'acqua per il peso della farina e moltiplicando per 100. Per esempio, se usi 700 ml di acqua con 1 kg di farina, l'idratazione è del 70%.</p>
+
+          <p>Questo parametro influenza profondamente la texture della pizza: un'idratazione più alta produce un impasto più morbido, con alveolatura ampia e una crosta più leggera, ma è anche più difficile da lavorare.</p>
+
+          <div class="article-table-wrapper">
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>Tipo di Pizza</th>
+                  <th>Idratazione</th>
+                  <th>Caratteristiche</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Pizza Romana (tonda)</td>
+                  <td>55-60%</td>
+                  <td>Croccante, sottile, facile da lavorare</td>
+                </tr>
+                <tr>
+                  <td>Pizza Napoletana</td>
+                  <td>65-70%</td>
+                  <td>Cornicione soffice, morbida, alveolata</td>
+                </tr>
+                <tr>
+                  <td>Pizza in Teglia</td>
+                  <td>75-80%</td>
+                  <td>Molto soffice, alveolatura ampia, crosta leggera</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Temperature -->
+          <h2>Le Temperature Ideali per la Lievitazione</h2>
+
+          <p>La temperatura è il terzo elemento chiave: controlla la velocità di lievitazione e influenza lo sviluppo del sapore. Il lievito lavora in un range specifico, e piccole variazioni possono cambiare drasticamente il risultato.</p>
+
+          <p>A temperatura ambiente (20-25°C), la lievitazione è attiva e l'impasto raddoppia il suo volume in poche ore. In frigorifero (4-6°C), il processo rallenta enormemente ma non si ferma: il lievito continua a lavorare lentamente, sviluppando aromi complessi durante una fase chiamata "maturazione".</p>
+
+          <p>La combinazione ideale prevede una prima fase a temperatura ambiente per attivare il lievito (1-2 ore), seguita da una lunga maturazione in frigorifero (12-48 ore). Prima di stendere la pizza, l'impasto va riportato a temperatura ambiente per circa 2 ore.</p>
+
+          <div class="article-callout">
+            <strong>Il Consiglio dello Chef</strong> — In estate, quando la temperatura in casa supera i 28°C, riduci leggermente la quantità di lievito e accorcia la fase a temperatura ambiente. In inverno, al contrario, potresti allungare leggermente i tempi. L'impasto perfetto si adatta alle stagioni.
+          </div>
+
+          <!-- Ricetta Base -->
+          <h2>Ricetta Base: Impasto per 4 Pizze</h2>
+
+          <p>Ecco una ricetta semplice per iniziare a fare pizza in casa con un impasto a lunga lievitazione.</p>
+
+          <p><strong>Ingredienti:</strong> 500g di farina tipo 0 o 00, 325 ml di acqua fredda (idratazione 65%), 10g di sale, 3g di lievito di birra fresco (o 1g di lievito secco), 10 ml di olio extravergine d'oliva.</p>
+
+          <p><strong>Procedimento:</strong> Sciogli il lievito nell'acqua fredda, poi aggiungi la farina gradualmente mescolando con una forchetta. Quando l'impasto prende forma, aggiungi il sale e impasta per 10-15 minuti fino a ottenere una massa liscia e elastica. Aggiungi l'olio negli ultimi minuti. Copri e lascia riposare 1 ora a temperatura ambiente, poi trasferisci in frigorifero per 24 ore. Estrai 2 ore prima dell'uso, dividi in 4 panetti da circa 210g e lascia lievitare a temperatura ambiente coperto.</p>
+
+          <!-- Errori Comuni -->
+          <h2>I 5 Errori Più Comuni con l'Impasto Pizza</h2>
+
+          <p><strong>1. Troppo lievito:</strong> L'errore più frequente. Un eccesso di lievito accelera la lievitazione ma produce un impasto con sapore "di lievito" e meno digeribile. Meno lievito e più tempo è la formula vincente.</p>
+
+          <p><strong>2. Acqua troppo calda:</strong> L'acqua calda attiva il lievito troppo velocemente e può danneggiare la struttura del glutine. Usa sempre acqua fredda o a temperatura ambiente.</p>
+
+          <p><strong>3. Sale a contatto con il lievito:</strong> Il sale inibisce l'azione del lievito. Non metterli mai a diretto contatto: sciogli prima il lievito nell'acqua, aggiungi la farina e poi il sale.</p>
+
+          <p><strong>4. Impasto insufficiente:</strong> L'impastamento sviluppa il glutine, che dà struttura alla pizza. Un impasto poco lavorato sarà fragile e difficile da stendere.</p>
+
+          <p><strong>5. Non rispettare i tempi di riposo:</strong> La fretta è il nemico della buona pizza. L'impasto ha bisogno di tempo per maturare: rispetta i tempi di lievitazione indicati nella ricetta.</p>
+
+          <!-- Varianti -->
+          <h2>Varianti dell'Impasto</h2>
+
+          <p>Una volta padroneggiata la ricetta base, puoi sperimentare con varianti interessanti: l'impasto integrale (sostituendo il 30-50% della farina con farina integrale per un sapore più rustico), l'impasto con poolish o biga (pre-fermenti che aggiungono complessità al sapore), oppure impasti con farine alternative per chi ha esigenze alimentari particolari.</p>
+
+          <!-- Cottura -->
+          <h2>La Cottura: Dove il Forno a Legna Fa la Differenza</h2>
+
+          <p>Un impasto perfetto merita una cottura all'altezza. Il forno di casa, che raggiunge al massimo 250-300°C, può dare buoni risultati con pizze in teglia o stile romano. Ma per la vera pizza napoletana, servono le temperature elevate che solo un <a href="/forno-a-legna/">forno a legna tradizionale</a> può raggiungere: 400-450°C per una cottura di 60-90 secondi che trasforma l'impasto in qualcosa di straordinario.</p>
+
+          <p>È proprio questa la magia del nostro forno a legna al TRE: la cottura fulminea sigilla l'umidità all'interno, crea il caratteristico leopardato sulla base e gonfia il cornicione in un'alveolatura perfetta.</p>
+
+          <div class="article-callout article-callout-cta">
+            <strong>Vuoi assaggiare il risultato?</strong> Sfoglia il nostro <a href="/menu-pizze/">menù pizze</a> e scopri le creazioni che nascono dalla combinazione di impasti a lunga lievitazione e cottura nel forno a legna tradizionale.
+          </div>
+
+          <!-- Conclusione -->
+          <h2>Conclusione</h2>
+
+          <p>La pizza perfetta non è un segreto riservato ai professionisti: conoscendo i principi di lievitazione, idratazione e temperatura, chiunque può ottenere risultati eccellenti. Ricorda: meno lievito e più tempo, l'idratazione giusta per lo stile che preferisci, e il controllo della temperatura durante tutto il processo.</p>
+
+          <p>E se vuoi provare una pizza preparata con tutti questi accorgimenti e cotta nel forno a legna tradizionale, <a href="/contatti/">vieni a trovarci al TRE</a>: saremo felici di farti assaporare la differenza.</p>
+
+          <!-- Related Articles -->
+          <div class="article-related">
+            <h3>Articoli Correlati</h3>
+            <div class="related-articles-grid">
+              <a href="/forno-a-legna/" class="blog-article-card">
+                <div class="blog-article-image">
+                  <img src="/img/forno-legna/forno-a-legna-ristorante-pizzeria-tre-merate-hero.webp" alt="Forno a legna TRE" loading="lazy" decoding="async" width="400" height="250" />
+                </div>
+                <div class="blog-article-content">
+                  <h4>Il Nostro Forno a Legna</h4>
+                  <p>Scopri la tecnica di cottura tradizionale e cosa rende unico il nostro forno</p>
+                </div>
+              </a>
+              <a href="/tradizione/ingredienti/mozzarella-bufala-dop-qualita/" class="blog-article-card">
+                <div class="blog-article-image">
+                  <img src="/img/tradizione/ingredienti/art-mozzarella-bufala-dop.webp" alt="Mozzarella di Bufala DOP" loading="lazy" decoding="async" width="400" height="250" />
+                </div>
+                <div class="blog-article-content">
+                  <h4>Mozzarella di Bufala DOP</h4>
+                  <p>Come riconoscere la qualità e gli abbinamenti perfetti con la pizza</p>
+                </div>
+              </a>
+            </div>
+          </div>
+
+        </article>
+
+        <!-- Sidebar -->
+        <aside class="blog-sidebar">
+          <div class="sidebar-block">
+            <h4>In Questo Articolo</h4>
+            <ul class="sidebar-toc">
+              <li><a href="#cos-e-la-lievitazione">Cos'è la Lievitazione</a></li>
+              <li><a href="#idratazione">L'Idratazione</a></li>
+              <li><a href="#temperature">Le Temperature Ideali</a></li>
+              <li><a href="#ricetta-base">Ricetta Base</a></li>
+              <li><a href="#errori-comuni">Errori Comuni</a></li>
+              <li><a href="#cottura">La Cottura</a></li>
+            </ul>
+          </div>
+          <div class="sidebar-block">
+            <h4>Categoria</h4>
+            <a href="/tradizione/impasti/" class="btn btn-outline btn-sidebar">🍕 Impasti</a>
+          </div>
+          <div class="sidebar-block sidebar-cta">
+            <h4>Assaggia le Nostre Pizze</h4>
+            <p>Impasti a lunga lievitazione cotti nel forno a legna</p>
+            <a href="/menu-pizze/" class="btn btn-primary btn-sidebar">Menù Pizze</a>
+          </div>
+          <div class="sidebar-block sidebar-cta">
+            <h4>Prenota un Tavolo</h4>
+            <a href="/contatti/" class="btn btn-primary btn-sidebar">Prenota Ora</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Finale -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Prenota un Tavolo per Assaggiare le Nostre Pizze</h2>
+        <p>Impasto a lunga lievitazione, ingredienti di qualità e cottura nel forno a legna tradizionale</p>
+        <div class="cta-buttons">
+          <a href="/menu-pizze/" class="btn btn-primary">Menù Pizze</a>
+          <a href="/contatti/" class="btn btn-outline-white">Prenota un Tavolo</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</Layout>

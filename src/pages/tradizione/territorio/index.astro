@@ -1,0 +1,123 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+
+const seoData = {
+  title: "Merate e Brianza: Territorio e Tradizioni | Blog TRE",
+  description: "Scopri Merate e la Brianza: luoghi da visitare, tradizioni locali, eventi e cultura del territorio. Guida al turismo in Brianza lecchese.",
+  canonical: "https://www.ristorantepizzeriatre.it/tradizione/territorio/",
+  ogImage: "https://www.ristorantepizzeriatre.it/img/tradizione/cat-territorio-hero.webp",
+  preloadImage: "/img/tradizione/cat-territorio-hero.webp",
+};
+
+const articoli = [
+  {
+    titolo: "Cosa Fare a Merate: Guida ai Luoghi da Visitare",
+    excerpt: "Scopri cosa fare a Merate e dintorni: luoghi da visitare, escursioni, cultura e dove mangiare in Brianza lecchese.",
+    url: "/tradizione/territorio/cosa-fare-merate-guida/",
+    immagine: "/img/tradizione/territorio/art-cosa-fare-merate.webp",
+    data: "2025"
+  }
+];
+
+const altreCategorie = [
+  { titolo: "Ingredienti", url: "/tradizione/ingredienti/", icona: "🫒" },
+  { titolo: "Impasti", url: "/tradizione/impasti/", icona: "🍕" },
+  { titolo: "Ricette", url: "/tradizione/ricette/", icona: "📖" },
+  { titolo: "Chef", url: "/tradizione/chef/", icona: "👨‍🍳" }
+];
+
+const schemaOrg = {
+  "@context": "https://schema.org",
+  "@graph": [
+    { "@type": "CollectionPage", "name": "Merate e Brianza: Territorio e Tradizioni", "description": seoData.description, "url": seoData.canonical },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.ristorantepizzeriatre.it/" },
+        { "@type": "ListItem", "position": 2, "name": "Tradizione", "item": "https://www.ristorantepizzeriatre.it/tradizione/" },
+        { "@type": "ListItem", "position": 3, "name": "Territorio", "item": seoData.canonical }
+      ]
+    }
+  ]
+};
+---
+
+<Layout title={seoData.title} description={seoData.description} canonical={seoData.canonical} ogImage={seoData.ogImage} preloadImage={seoData.preloadImage}>
+  <Fragment slot="schema">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
+  </Fragment>
+
+  <section class="hero hero-blog-category hero-cat-territorio">
+    <div class="container hero-content">
+      <span class="blog-category-label">La Tradizione</span>
+      <h1>Territorio: Merate, Brianza e le Sue Tradizioni</h1>
+      <p>Luoghi da scoprire, tradizioni locali, eventi culturali e gastronomici della nostra terra</p>
+    </div>
+  </section>
+
+  <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li><a href="/tradizione/">Tradizione</a></li>
+        <li aria-current="page">Territorio</li>
+      </ol>
+    </div>
+  </nav>
+
+  <section class="blog-intro-section">
+    <div class="container">
+      <div class="blog-intro">
+        <p>Viaggio nel territorio di Merate e della Brianza: luoghi da scoprire, tradizioni locali, eventi culturali e gastronomici. Tutto quello che c'è da sapere sulla nostra terra, tra paesaggi, storia e sapori che rendono unico questo angolo di Lombardia.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="blog-articles-section">
+    <div class="container">
+      <div class="blog-layout">
+        <div class="blog-main">
+          <div class="blog-articles-grid">
+            {articoli.map((articolo) => (
+              <a href={articolo.url} class="blog-article-card">
+                <div class="blog-article-image">
+                  <img src={articolo.immagine} alt={articolo.titolo} loading="lazy" decoding="async" width="400" height="250" />
+                </div>
+                <div class="blog-article-content">
+                  <h3>{articolo.titolo}</h3>
+                  <p>{articolo.excerpt}</p>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+        <aside class="blog-sidebar">
+          <div class="sidebar-block">
+            <h4>Altre Categorie</h4>
+            <ul class="sidebar-categories">
+              {altreCategorie.map((cat) => (
+                <li><a href={cat.url}>{cat.icona} {cat.titolo}</a></li>
+              ))}
+            </ul>
+          </div>
+          <div class="sidebar-block"><a href="/tradizione/" class="btn btn-outline btn-sidebar">← Torna al Blog</a></div>
+          <div class="sidebar-block sidebar-cta">
+            <h4>Vieni a Trovarci</h4>
+            <p>Scopri il territorio e fermati a pranzo o cena da noi</p>
+            <a href="/contatti/" class="btn btn-primary btn-sidebar">Come Raggiungerci</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="blog-newsletter-section blog-newsletter-territorio">
+    <div class="container">
+      <div class="blog-newsletter-content">
+        <h2>Scopri il Territorio con Noi</h2>
+        <p>Iscriviti per ricevere guide, curiosità e itinerari nella Brianza lecchese</p>
+        <a href="/cene-a-tema/#newsletter-cene" class="btn btn-primary">Iscriviti alla Newsletter</a>
+      </div>
+    </div>
+  </section>
+</Layout>

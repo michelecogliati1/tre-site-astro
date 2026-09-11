@@ -1,0 +1,305 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+// SEO Data
+const seoData = {
+  title: "Pizzeria con Forno a Legna a Merate | TRE Grill + Pizzeria",
+  description: "Pizza cotta nel forno a legna tradizionale a Merate. Scopri la tecnica artigianale e gli ingredienti di qualità del Ristorante TRE dal 1953.",
+  canonical: "https://www.ristorantepizzeriatre.it/forno-a-legna/",
+  ogImage: "https://www.ristorantepizzeriatre.it/img/forno-legna/forno-a-legna-ristorante-pizzeria-tre-merate-hero.webp",
+  preloadImage: "/img/forno-legna/forno-a-legna-ristorante-pizzeria-tre-merate-hero.webp",
+};
+
+// Schema.org
+const schemaOrg = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "Pizzeria con Forno a Legna a Merate: Tradizione e Cottura Artigianale",
+      "description": seoData.description,
+      "image": seoData.ogImage,
+      "author": {
+        "@type": "Organization",
+        "name": "Ristorante Pizzeria TRE"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Ristorante Pizzeria TRE",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.ristorantepizzeriatre.it/img/brand/tre-logo.svg"
+        }
+      },
+      "mainEntityOfPage": seoData.canonical
+    },
+    {
+      "@type": "LocalBusiness",
+      "name": "Ristorante Pizzeria TRE",
+      "image": seoData.ogImage,
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Via Statale, 44",
+        "addressLocality": "Merate",
+        "addressRegion": "LC",
+        "postalCode": "23807",
+        "addressCountry": "IT"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 45.6983,
+        "longitude": 9.4183
+      },
+      "telephone": "+390399909913",
+      "url": "https://www.ristorantepizzeriatre.it/"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.ristorantepizzeriatre.it/" },
+        { "@type": "ListItem", "position": 2, "name": "Forno a Legna", "item": "https://www.ristorantepizzeriatre.it/forno-a-legna/" }
+      ]
+    }
+  ]
+};
+---
+
+<Layout 
+  title={seoData.title}
+  description={seoData.description}
+  canonical={seoData.canonical}
+  ogImage={seoData.ogImage}
+  preloadImage={seoData.preloadImage}
+>
+  <Fragment slot="schema">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
+  </Fragment>
+
+  <!-- Hero Section -->
+  <section class="hero hero-forno-legna">
+    <div class="container hero-content">
+      <h1>Pizzeria con Forno a Legna a Merate: Tradizione e Cottura Artigianale</h1>
+      <p>Dal 1953 coltiviamo l'arte della pizza cotta nel forno a legna tradizionale, dove il fuoco e la passione si fondono in ogni impasto</p>
+      <div class="hero-buttons">
+        <a href="/menu-pizze/" class="btn btn-primary">Scopri il Menù Pizze</a>
+        <a href="/contatti/" class="btn btn-outline">Prenota un Tavolo</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li aria-current="page">Forno a Legna</li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- Il Nostro Forno: Storia e Caratteristiche -->
+  <section class="landing-section">
+    <div class="container">
+      <div class="landing-content-block">
+        <div class="landing-text">
+          <h2>Il Nostro Forno: Storia e Caratteristiche</h2>
+          <p>Il cuore pulsante della nostra pizzeria è il forno a legna tradizionale, un elemento che ci accompagna fin dalle origini del ristorante. Costruito secondo la tradizione, il nostro forno in mattoni refrattari raggiunge temperature elevate che permettono una cottura rapida e uniforme, regalando alla pizza quella consistenza inconfondibile che solo il fuoco vivo può dare.</p>
+          <p>La cupola in muratura trattiene il calore e lo distribuisce in modo omogeneo, creando l'ambiente perfetto per una cottura che esalta ogni ingrediente. La bocca del forno, dimensionata con cura, consente al nostro pizzaiolo di gestire più pizze contemporaneamente senza mai perdere il controllo della fiamma.</p>
+        </div>
+        <div class="landing-image">
+          <img src="/img/forno-legna/forno-a-legna-ristorante-pizzeria-tre-merate-storia.webp" alt="Forno a legna tradizionale del Ristorante Pizzeria TRE a Merate" loading="lazy" decoding="async" width="600" height="450" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- La Tecnica di Cottura Tradizionale -->
+  <section class="landing-section bg-light-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>La Tecnica di Cottura Tradizionale</h2>
+        <p>Ogni pizza che esce dal nostro forno è il risultato di una tecnica perfezionata negli anni</p>
+      </div>
+      <div class="landing-content-block reverse">
+        <div class="landing-text">
+          <p>La cottura nel forno a legna richiede esperienza e sensibilità: il pizzaiolo deve saper leggere la fiamma, gestire le temperature e conoscere il momento esatto in cui la pizza è pronta. Al TRE, questa competenza si tramanda da generazioni.</p>
+          <p>Il processo inizia con l'accensione del forno diverse ore prima del servizio, utilizzando legna di faggio e quercia selezionata, che garantisce una combustione pulita e un aroma delicato. Quando il forno raggiunge la temperatura ideale tra 400°C e 450°C, la pizza viene infornata direttamente sulla platea in mattoni.</p>
+          <p>In soli 60-90 secondi la magia si compie: il cornicione si gonfia creando la caratteristica alveolatura, la base diventa croccante senza seccarsi, e gli ingredienti si fondono in un equilibrio perfetto di sapori e consistenze.</p>
+        </div>
+        <div class="landing-image">
+          <img src="/img/forno-legna/cottura-pizza-forno-legna-ristorante-tre-merate.webp" alt="Cottura pizza nel forno a legna al Ristorante TRE Merate" loading="lazy" decoding="async" width="600" height="450" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Forno a Legna vs Altri Forni -->
+  <section class="landing-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Forno a Legna vs Forno Elettrico e a Gas</h2>
+        <p>Perché la cottura nel forno a legna fa davvero la differenza</p>
+      </div>
+
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Caratteristica</th>
+              <th class="highlight-col">Forno a Legna</th>
+              <th>Forno Elettrico</th>
+              <th>Forno a Gas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Temperatura massima</td>
+              <td class="highlight-col"><strong>400-450°C</strong></td>
+              <td>300-350°C</td>
+              <td>350-400°C</td>
+            </tr>
+            <tr>
+              <td>Tempo di cottura</td>
+              <td class="highlight-col"><strong>60-90 secondi</strong></td>
+              <td>5-8 minuti</td>
+              <td>3-5 minuti</td>
+            </tr>
+            <tr>
+              <td>Aroma e sapore</td>
+              <td class="highlight-col"><strong>Affumicatura naturale</strong></td>
+              <td>Neutro</td>
+              <td>Neutro</td>
+            </tr>
+            <tr>
+              <td>Cornicione</td>
+              <td class="highlight-col"><strong>Alveolato e soffice</strong></td>
+              <td>Compatto</td>
+              <td>Mediamente alveolato</td>
+            </tr>
+            <tr>
+              <td>Base della pizza</td>
+              <td class="highlight-col"><strong>Croccante e leggera</strong></td>
+              <td>Uniforme, meno croccante</td>
+              <td>Croccante ma secca</td>
+            </tr>
+            <tr>
+              <td>Digeribilità</td>
+              <td class="highlight-col"><strong>Elevata</strong></td>
+              <td>Buona</td>
+              <td>Buona</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="table-note">La cottura rapida ad alta temperatura nel forno a legna preserva l'umidità degli ingredienti, mantiene intatte le proprietà nutritive e crea quel caratteristico contrasto tra la base croccante e il condimento morbido che rende ogni pizza unica.</p>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Temperature e Tempi Perfetti -->
+  <section class="landing-section bg-light-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Temperature e Tempi Perfetti</h2>
+        <p>I numeri dietro la pizza perfetta</p>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-number">400-450°C</span>
+          <span class="stat-label">Temperatura del forno</span>
+          <p class="stat-desc">Il range ideale per una cottura rapida e uniforme che esalta ogni ingrediente</p>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">60-90 sec</span>
+          <span class="stat-label">Tempo di cottura</span>
+          <p class="stat-desc">Il tempo necessario per ottenere una pizza dal cornicione perfettamente alveolato</p>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">3+ ore</span>
+          <span class="stat-label">Preriscaldamento</span>
+          <p class="stat-desc">Il forno viene acceso ore prima del servizio per raggiungere la temperatura ottimale</p>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">Faggio e Quercia</span>
+          <span class="stat-label">Legna selezionata</span>
+          <p class="stat-desc">Legna di alta qualità per una combustione pulita e un aroma delicato</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Gallery -->
+  <section class="landing-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Il Forno a Legna in Azione</h2>
+        <p>Immagini dal cuore della nostra pizzeria</p>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <img src="/img/forno-legna/gallery-forno-legna-01.webp" alt="Stesura impasto pizza Ristorante TRE Merate" loading="lazy" decoding="async" width="400" height="530" />
+        </div>
+        <div class="gallery-item">
+          <img src="/img/forno-legna/gallery-forno-legna-02.webp" alt="Pizza in cottura nel forno a legna" loading="lazy" decoding="async" width="400" height="530" />
+        </div>
+        <div class="gallery-item">
+          <img src="/img/forno-legna/gallery-forno-legna-03.webp" alt="Pizzaiolo al lavoro davanti al forno a legna" loading="lazy" decoding="async" width="400" height="530" />
+        </div>
+        <div class="gallery-item">
+          <img src="/img/forno-legna/gallery-forno-legna-04.webp" alt="Dettaglio cottura pizza con fiamma viva" loading="lazy" decoding="async" width="400" height="530" />
+        </div>
+        <div class="gallery-item">
+          <img src="/img/forno-legna/gallery-forno-legna-05.webp" alt="Pizza margherita appena sfornata dal forno a legna" loading="lazy" decoding="async" width="400" height="530" />
+        </div>
+        <div class="gallery-item">
+          <img src="/img/forno-legna/gallery-forno-legna-06.webp" alt="Il forno a legna tradizionale del Ristorante TRE" loading="lazy" decoding="async" width="400" height="530" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Approfondisci -->
+  <section class="landing-section bg-light-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Approfondisci la Nostra Tradizione</h2>
+        <p>Scopri di più sulle tecniche e gli ingredienti che rendono speciale ogni nostra pizza</p>
+      </div>
+      <div class="link-cards-grid">
+        <a href="/tradizione/impasti/" class="link-card">
+          <h4>Tecniche di Impasto</h4>
+          <p>Lievitazione, idratazione e i segreti per un impasto perfetto</p>
+        </a>
+        <a href="/chi-siamo/" class="link-card">
+          <h4>La Nostra Storia</h4>
+          <p>Dal 1953 una tradizione di famiglia nel cuore di Merate</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Finale -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Scopri le Nostre Pizze al Forno a Legna</h2>
+        <p>Sfoglia il menù completo e prenota il tuo tavolo per assaporare la differenza della cottura tradizionale</p>
+        <div class="cta-buttons">
+          <a href="/menu-pizze/" class="btn btn-primary">Menù Pizze</a>
+          <a href="/contatti/" class="btn btn-outline-white">Prenota un Tavolo</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</Layout>

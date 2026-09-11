@@ -1,0 +1,245 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+// SEO Data
+const seoData = {
+  title: "La Tradizione del TRE: Ricette, Ingredienti e Cultura Italiana",
+  description: "Scopri i segreti della cucina tradizionale italiana: ricette, tecniche di preparazione, ingredienti di qualità e la cultura gastronomica del Ristorante TRE.",
+  canonical: "https://www.ristorantepizzeriatre.it/tradizione/",
+  ogImage: "https://www.ristorantepizzeriatre.it/img/tradizione/tradizione-blog-ristorante-tre-merate-hero.webp",
+  preloadImage: "/img/tradizione/tradizione-blog-ristorante-tre-merate-hero.webp",
+};
+
+// Categorie Blog
+const categorie = [
+  {
+    titolo: "Ingredienti",
+    descrizione: "La qualità delle materie prime che fanno la differenza",
+    url: "/tradizione/ingredienti/",
+    immagine: "/img/tradizione/cat-ingredienti.webp"
+  },
+  {
+    titolo: "Impasti",
+    descrizione: "Tecniche e segreti per la pizza perfetta",
+    url: "/tradizione/impasti/",
+    immagine: "/img/tradizione/cat-impasti.webp"
+  },
+  {
+    titolo: "Ricette",
+    descrizione: "I grandi classici della tradizione italiana",
+    url: "/tradizione/ricette/",
+    immagine: "/img/tradizione/cat-ricette.webp"
+  },
+  {
+    titolo: "Territorio",
+    descrizione: "Merate, Brianza e le sue tradizioni",
+    url: "/tradizione/territorio/",
+    immagine: "/img/tradizione/cat-territorio.webp"
+  },
+  {
+    titolo: "Chef",
+    descrizione: "Consigli, tecniche e dietro le quinte",
+    url: "/tradizione/chef/",
+    immagine: "/img/tradizione/cat-chef.webp"
+  }
+];
+
+// Ultimi Articoli (placeholder - in futuro possono essere dinamici)
+const ultimiArticoli = [
+  {
+    titolo: "Impasto Pizza: Lievitazione, Idratazione e Temperature Perfette",
+    excerpt: "Guida completa all'impasto pizza perfetto: tempi di lievitazione, percentuali di idratazione e temperature ideali.",
+    categoria: "Impasti",
+    url: "/tradizione/impasti/lievitazione-idratazione-temperatura/",
+    immagine: "/img/tradizione/impasti/art-impasto-pizza-lievitazione.webp",
+    data: "2025"
+  },
+  {
+    titolo: "Mozzarella di Bufala DOP: Come Riconoscere la Qualità",
+    excerpt: "Guida alla mozzarella di bufala DOP: come riconoscere la qualità, differenze con il fiordilatte e conservazione.",
+    categoria: "Ingredienti",
+    url: "/tradizione/ingredienti/mozzarella-bufala-dop-qualita/",
+    immagine: "/img/tradizione/ingredienti/art-mozzarella-bufala-dop.webp",
+    data: "2025"
+  },
+  {
+    titolo: "Risotto alla Milanese: La Ricetta Originale dello Chef",
+    excerpt: "Storia, ingredienti tradizionali e ricetta passo-passo del piatto simbolo della cucina lombarda.",
+    categoria: "Ricette",
+    url: "/tradizione/ricette/risotto-milanese-ricetta-originale/",
+    immagine: "/img/tradizione/ricette/art-risotto-milanese.webp",
+    data: "2025"
+  },
+  {
+    titolo: "Cosa Fare a Merate: Guida ai Luoghi da Visitare",
+    excerpt: "Scopri cosa fare a Merate e dintorni: luoghi da visitare, escursioni, cultura e dove mangiare in Brianza.",
+    categoria: "Territorio",
+    url: "/tradizione/territorio/cosa-fare-merate-guida/",
+    immagine: "/img/tradizione/territorio/art-cosa-fare-merate.webp",
+    data: "2025"
+  },
+  {
+    titolo: "Come Scegliere il Vino Giusto per la Pizza",
+    excerpt: "Abbinamento vino e pizza: guida completa per scegliere il vino perfetto dal rosso alle bollicine.",
+    categoria: "Chef",
+    url: "/tradizione/chef/vino-giusto-per-pizza/",
+    immagine: "/img/tradizione/chef/art-vino-pizza-abbinamento.webp",
+    data: "2025"
+  }
+];
+
+// Schema.org
+const schemaOrg = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Blog",
+      "name": "La Tradizione - Blog del Ristorante Pizzeria TRE",
+      "description": seoData.description,
+      "url": seoData.canonical,
+      "publisher": {
+        "@type": "Organization",
+        "name": "Ristorante Pizzeria TRE",
+        "logo": { "@type": "ImageObject", "url": "https://www.ristorantepizzeriatre.it/img/brand/tre-logo.svg" }
+      }
+    },
+    {
+      "@type": "CollectionPage",
+      "name": "La Tradizione",
+      "url": seoData.canonical
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.ristorantepizzeriatre.it/" },
+        { "@type": "ListItem", "position": 2, "name": "Tradizione", "item": "https://www.ristorantepizzeriatre.it/tradizione/" }
+      ]
+    }
+  ]
+};
+---
+
+<Layout 
+  title={seoData.title}
+  description={seoData.description}
+  canonical={seoData.canonical}
+  ogImage={seoData.ogImage}
+  preloadImage={seoData.preloadImage}
+>
+  <Fragment slot="schema">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
+  </Fragment>
+
+  <!-- Hero Section -->
+  <section class="hero hero-tradizione">
+    <div class="container hero-content">
+      <h1>La Tradizione: Storie di Cucina, Ingredienti e Territorio</h1>
+      <p>Condividiamo la passione per la cucina italiana attraverso storie, ricette, consigli e le tradizioni del nostro territorio</p>
+    </div>
+  </section>
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li aria-current="page">Tradizione</li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- Intro Editoriale -->
+  <section class="blog-intro-section">
+    <div class="container">
+      <div class="blog-intro">
+        <p>Benvenuti ne <strong>La Tradizione</strong>, lo spazio in cui raccontiamo il mondo della cucina italiana attraverso gli occhi del Ristorante Pizzeria TRE. Qui troverai guide sugli ingredienti, tecniche di impasto, ricette della tradizione, storie del territorio di Merate e della Brianza, e i consigli dei nostri chef.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categorie Grid -->
+  <section class="blog-categories-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Esplora per Categoria</h2>
+      </div>
+      <div class="blog-categories-grid">
+        {categorie.map((cat) => (
+          <a href={cat.url} class="blog-category-card">
+            <div class="blog-category-image">
+              <img src={cat.immagine} alt={cat.titolo} loading="lazy" decoding="async" width="400" height="250" />
+            </div>
+            <div class="blog-category-content">
+              <h3>{cat.titolo}</h3>
+              <p>{cat.descrizione}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Ultimi Articoli -->
+  <section class="blog-articles-section">
+    <div class="container">
+      <div class="blog-layout">
+        <div class="blog-main">
+          <div class="section-header" style="text-align:left;">
+            <h2>Ultimi Articoli</h2>
+          </div>
+          <div class="blog-articles-grid">
+            {ultimiArticoli.map((articolo) => (
+              <a href={articolo.url} class="blog-article-card">
+                <div class="blog-article-image">
+                  <img src={articolo.immagine} alt={articolo.titolo} loading="lazy" decoding="async" width="400" height="250" />
+                  <span class="blog-article-category">{articolo.categoria}</span>
+                </div>
+                <div class="blog-article-content">
+                  <h3>{articolo.titolo}</h3>
+                  <p>{articolo.excerpt}</p>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="blog-sidebar">
+          <div class="sidebar-block">
+            <h4>Categorie</h4>
+            <ul class="sidebar-categories">
+              {categorie.map((cat) => (
+                <li><a href={cat.url}>{cat.titolo}</a></li>
+              ))}
+            </ul>
+          </div>
+          <div class="sidebar-block sidebar-cta">
+            <h4>Scopri il Menù</h4>
+            <p>Dai un'occhiata ai nostri menù e trova il piatto che fa per te</p>
+            <a href="/menu-pizze/" class="btn btn-primary btn-sidebar">Menù Pizze</a>
+            <a href="/menu-alla-carta/" class="btn btn-outline btn-sidebar">Menù alla Carta</a>
+          </div>
+          <div class="sidebar-block sidebar-cta">
+            <h4>Prenota un Tavolo</h4>
+            <p>Vieni a trovarci e assapora la tradizione</p>
+            <a href="/contatti/" class="btn btn-primary btn-sidebar">Prenota Ora</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Newsletter -->
+  <section class="blog-newsletter-section">
+    <div class="container">
+      <div class="blog-newsletter-content">
+        <h2>Ricevi i Nuovi Articoli</h2>
+        <p>Iscriviti alla newsletter per ricevere in anteprima nuovi articoli, ricette e consigli dallo chef</p>
+        <a href="/cene-a-tema/#newsletter-cene" class="btn btn-primary">Iscriviti alla Newsletter</a>
+      </div>
+    </div>
+  </section>
+
+</Layout>

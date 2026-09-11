@@ -1,0 +1,127 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+
+const seoData = {
+  title: "Ricette della Tradizione Italiana | Blog TRE",
+  description: "Ricette tradizionali italiane: piatti regionali, preparazioni classiche e segreti degli chef. Scopri la cucina italiana autentica.",
+  canonical: "https://www.ristorantepizzeriatre.it/tradizione/ricette/",
+  ogImage: "https://www.ristorantepizzeriatre.it/img/tradizione/cat-ricette-hero.webp",
+  preloadImage: "/img/tradizione/cat-ricette-hero.webp",
+};
+
+const articoli = [
+  {
+    titolo: "Risotto alla Milanese: La Ricetta Originale dello Chef",
+    excerpt: "Storia, ingredienti tradizionali e ricetta passo-passo del piatto simbolo della cucina lombarda.",
+    url: "/tradizione/ricette/risotto-milanese-ricetta-originale/",
+    immagine: "/img/tradizione/ricette/art-risotto-milanese.webp",
+    data: "2025"
+  }
+];
+
+const altreCategorie = [
+  { titolo: "Ingredienti", url: "/tradizione/ingredienti/", icona: "🫒" },
+  { titolo: "Impasti", url: "/tradizione/impasti/", icona: "🍕" },
+  { titolo: "Territorio", url: "/tradizione/territorio/", icona: "🏔️" },
+  { titolo: "Chef", url: "/tradizione/chef/", icona: "👨‍🍳" }
+];
+
+const schemaOrg = {
+  "@context": "https://schema.org",
+  "@graph": [
+    { "@type": "CollectionPage", "name": "Ricette della Tradizione Italiana", "description": seoData.description, "url": seoData.canonical },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.ristorantepizzeriatre.it/" },
+        { "@type": "ListItem", "position": 2, "name": "Tradizione", "item": "https://www.ristorantepizzeriatre.it/tradizione/" },
+        { "@type": "ListItem", "position": 3, "name": "Ricette", "item": seoData.canonical }
+      ]
+    }
+  ]
+};
+---
+
+<Layout title={seoData.title} description={seoData.description} canonical={seoData.canonical} ogImage={seoData.ogImage} preloadImage={seoData.preloadImage}>
+  <Fragment slot="schema">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
+  </Fragment>
+
+  <section class="hero hero-blog-category hero-cat-ricette">
+    <div class="container hero-content">
+      <span class="blog-category-label">La Tradizione</span>
+      <h1>Ricette: La Tradizione Italiana in Cucina</h1>
+      <p>Dai grandi classici regionali alle preparazioni di famiglia, storie e segreti della cucina italiana</p>
+    </div>
+  </section>
+
+  <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li><a href="/tradizione/">Tradizione</a></li>
+        <li aria-current="page">Ricette</li>
+      </ol>
+    </div>
+  </nav>
+
+  <section class="blog-intro-section">
+    <div class="container">
+      <div class="blog-intro">
+        <p>Ricette della tradizione italiana: dai grandi classici regionali alle preparazioni di famiglia. Storie, tecniche e segreti dei piatti che hanno fatto la storia della <a href="/cucina-tradizionale/">cucina italiana</a>, raccontati con la passione di chi li prepara ogni giorno.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="blog-articles-section">
+    <div class="container">
+      <div class="blog-layout">
+        <div class="blog-main">
+          <div class="blog-articles-grid">
+            {articoli.map((articolo) => (
+              <a href={articolo.url} class="blog-article-card">
+                <div class="blog-article-image">
+                  <img src={articolo.immagine} alt={articolo.titolo} loading="lazy" decoding="async" width="400" height="250" />
+                </div>
+                <div class="blog-article-content">
+                  <h3>{articolo.titolo}</h3>
+                  <p>{articolo.excerpt}</p>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+        <aside class="blog-sidebar">
+          <div class="sidebar-block">
+            <h4>Altre Categorie</h4>
+            <ul class="sidebar-categories">
+              {altreCategorie.map((cat) => (
+                <li><a href={cat.url}>{cat.icona} {cat.titolo}</a></li>
+              ))}
+            </ul>
+          </div>
+          <div class="sidebar-block"><a href="/tradizione/" class="btn btn-outline btn-sidebar">← Torna al Blog</a></div>
+          <div class="sidebar-block sidebar-cta">
+            <h4>Scopri il Menù alla Carta</h4>
+            <p>Assaggia i piatti della tradizione preparati dai nostri chef</p>
+            <a href="/menu-alla-carta/" class="btn btn-primary btn-sidebar">Menù alla Carta</a>
+          </div>
+          <div class="sidebar-block sidebar-cta">
+            <h4>Prenota un Tavolo</h4>
+            <a href="/contatti/" class="btn btn-primary btn-sidebar">Prenota Ora</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="blog-newsletter-section blog-newsletter-ricette">
+    <div class="container">
+      <div class="blog-newsletter-content">
+        <h2>Ricevi le Nuove Ricette</h2>
+        <p>Iscriviti per scoprire ricette, storie e segreti della cucina italiana tradizionale</p>
+        <a href="/cene-a-tema/#newsletter-cene" class="btn btn-primary">Iscriviti alla Newsletter</a>
+      </div>
+    </div>
+  </section>
+</Layout>

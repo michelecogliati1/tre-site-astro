@@ -24,11 +24,11 @@ async function getBlogContent() {
     
     // Nomi leggibili categorie
     const categoryNames = {
-      'ingredienti': 'Ingredienti & Materie Prime',
-      'impasti': 'Impasti & Tecniche',
-      'ricette': 'Ricette della Tradizione',
-      'territorio': 'Territorio & Cultura',
-      'chef': 'Consigli dello Chef'
+      'ingredienti': { name: 'Materie Prime', icon: '🫒', description: 'Articoli su ingredienti, materie prime e qualità' },
+      'impasti': { name: 'Impasti & Tecniche', icon: '🍕', description: 'Articoli su impasti, lievitazione e tecniche di cottura' },
+      'ricette': { name: 'Ricette della Tradizione', icon: '📖', description: 'Articoli su ricette tradizionali italiane e lombarde' },
+      'territorio': { name: 'Territorio & Cultura', icon: '🏔️', description: 'Articoli su Merate, Brianza e il territorio' },
+      'chef': { name: 'Consigli dello Chef', icon: '👨‍🍳', description: 'Articoli con consigli, abbinamenti e segreti dello chef' }
     };
     
     for (const path in blogFiles) {
@@ -49,24 +49,22 @@ async function getBlogContent() {
           description: "Storie di cucina, ingredienti e territorio"
         };
       } else if (depth === 2) {
-        // Category page
         const categorySlug = segments[1];
-        const categoryName = categoryNames[categorySlug] || categorySlug;
+        const catInfo = categoryNames[categorySlug] || { name: categorySlug, icon: '📄', description: '' };
         
         if (!content.categories[categorySlug]) {
           content.categories[categorySlug] = {
-            name: categoryName,
+            name: catInfo.name,
+            icon: catInfo.icon,
             url: urlPath,
-            description: `Tutti gli articoli su ${categoryName.toLowerCase()}`,
+            description: catInfo.description,
             articles: []
           };
         }
       } else if (depth >= 3) {
-        // Articolo
         const categorySlug = segments[1];
         const articleSlug = segments[2];
         
-        // Genera titolo leggibile
         const title = articleSlug
           .split('-')
           .map(word => word.charAt(0).toUpperCase() + word.slice(1))
@@ -81,13 +79,13 @@ async function getBlogContent() {
         
         content.articles.push(article);
         
-        // Aggiungi alla categoria
         if (!content.categories[categorySlug]) {
-          const categoryName = categoryNames[categorySlug] || categorySlug;
+          const catInfo = categoryNames[categorySlug] || { name: categorySlug, icon: '📄', description: '' };
           content.categories[categorySlug] = {
-            name: categoryName,
+            name: catInfo.name,
+            icon: catInfo.icon,
             url: `/tradizione/${categorySlug}/`,
-            description: `Tutti gli articoli su ${categoryName.toLowerCase()}`,
+            description: catInfo.description,
             articles: []
           };
         }
@@ -145,6 +143,8 @@ const siteStructure = [
     links: [
       { name: "Chi Siamo", url: "/chi-siamo/", description: "La nostra storia dal 1953" },
       { name: "Contatti", url: "/contatti/", description: "Prenota un tavolo o contattaci" },
+      { name: "Il Nostro Forno a Legna", url: "/forno-a-legna/", description: "La nostra pizza cotta nel forno a legna tradizionale" },
+      { name: "Cucina Tradizionale", url: "/cucina-tradizionale/", description: "La tradizione culinaria italiana dal 1953" },
     ]
   },
   {
@@ -158,49 +158,48 @@ const siteStructure = [
 ];
 
 // ============================================
-// AGGIUNGI SEZIONE BLOG (se disponibile)
+// SEZIONE BLOG: solo landing + categorie
 // ============================================
 if (blogContent.landing) {
-  const blogSection = {
+  const blogOverviewSection = {
     title: "La Tradizione",
     icon: "📰",
-    links: []
+    links: [blogContent.landing]
   };
   
-  // Landing blog
-  blogSection.links.push(blogContent.landing);
-  
-  // Category pages + primi 5 articoli per categoria
+  // Solo le category pages (no articoli)
   for (const [slug, category] of Object.entries(blogContent.categories)) {
-    // Link alla category page
-    blogSection.links.push({
-      name: `${category.name}`,
+    blogOverviewSection.links.push({
+      name: category.name,
       url: category.url,
-      description: category.description,
-      isCategory: true
+      description: category.description
     });
-    
-    // Primi 5 articoli della categoria (indentati)
-    const displayArticles = category.articles.slice(0, 5);
-    displayArticles.forEach(article => {
-      blogSection.links.push({
-        ...article,
-        isArticle: true
-      });
-    });
-    
-    // "Vedi tutti" se ci sono più di 5
-    if (category.articles.length > 5) {
-      blogSection.links.push({
-        name: `→ Vedi tutti i ${category.articles.length} articoli`,
-        url: category.url,
-        description: '',
-        isViewAll: true
-      });
-    }
   }
   
-  siteStructure.push(blogSection);
+  siteStructure.push(blogOverviewSection);
+}
+
+// ============================================
+// SEZIONI PER CATEGORIA (con articoli)
+// ============================================
+const categorySections = [];
+
+if (blogContent.categories) {
+  for (const [slug, category] of Object.entries(blogContent.categories)) {
+    if (category.articles.length > 0) {
+      const catSection = {
+        title: category.name,
+        icon: category.icon,
+        parentUrl: category.url,
+        links: category.articles.map(article => ({
+          name: article.name,
+          url: article.url,
+          description: article.description
+        }))
+      };
+      categorySections.push(catSection);
+    }
+  }
 }
 
 // Schema.org
@@ -267,11 +266,7 @@ const schemaOrg = {
             </div>
             <ul class="sitemap-links">
               {section.links.map((link) => (
-                <li class:list={{ 
-                  'category-link': link.isCategory,
-                  'article-link': link.isArticle,
-                  'view-all': link.isViewAll
-                }}>
+                <li>
                   <a href={link.url}>
                     <span class="link-name">{link.name}</span>
                     {link.description && (
@@ -284,6 +279,43 @@ const schemaOrg = {
           </div>
         ))}
       </div>
+
+      <!-- Blog Category Detail Sections -->
+      {categorySections.length > 0 && (
+        <div class="sitemap-blog-detail">
+          <div class="sitemap-blog-detail-header">
+            <h2>Articoli del Blog</h2>
+            <p>Tutti gli articoli suddivisi per categoria</p>
+          </div>
+          <div class="sitemap-grid">
+            {categorySections.map((catSection) => (
+              <div class="sitemap-category sitemap-category-blog">
+                <div class="sitemap-category-header">
+                  <span class="sitemap-icon">{catSection.icon}</span>
+                  <h2>{catSection.title}</h2>
+                </div>
+                <ul class="sitemap-links">
+                  <li class="category-hub-link">
+                    <a href={catSection.parentUrl}>
+                      <span class="link-name">→ Tutti gli articoli di {catSection.title}</span>
+                    </a>
+                  </li>
+                  {catSection.links.map((link) => (
+                    <li class="article-link">
+                      <a href={link.url}>
+                        <span class="link-name">{link.name}</span>
+                        {link.description && (
+                          <span class="link-description">{link.description}</span>
+                        )}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
     </div>
   </section>
@@ -416,49 +448,6 @@ const schemaOrg = {
     background: rgba(244, 119, 58, 0.1);
   }
 
-  /* Category Link (hub page) */
-  .category-link a {
-    background: rgba(244, 119, 58, 0.05);
-    border-left: 3px solid var(--primary-color);
-  }
-
-  .category-link .link-name {
-    font-weight: 700;
-    color: var(--primary-color);
-  }
-
-  /* Article Link (indented) */
-  .article-link {
-    margin-left: 1rem;
-  }
-
-  .article-link a {
-    padding: 0.5rem 0.75rem;
-    background: transparent;
-  }
-
-  .article-link .link-name {
-    font-size: 0.9rem;
-    font-weight: 500;
-  }
-
-  .article-link .link-description {
-    font-size: 0.8rem;
-  }
-
-  /* View All Link */
-  .view-all a {
-    background: transparent;
-    padding: 0.5rem 0.75rem;
-    font-style: italic;
-  }
-
-  .view-all .link-name {
-    color: var(--primary-color);
-    font-weight: 600;
-    font-size: 0.9rem;
-  }
-
   /* Link Text */
   .sitemap-links .link-name {
     display: block;
@@ -473,6 +462,59 @@ const schemaOrg = {
     color: var(--text-muted, #666);
     font-size: 0.85rem;
     line-height: 1.4;
+  }
+
+  /* ===== BLOG DETAIL SECTIONS ===== */
+  .sitemap-blog-detail {
+    margin-top: 4.5rem;
+  }
+
+  .sitemap-blog-detail-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 2px solid #e8e8e8;
+  }
+
+  .sitemap-blog-detail-header h2 {
+    font-size: 1.75rem;
+    color: var(--text-dark, #1a1a1a);
+    margin-bottom: 0.5rem;
+  }
+
+  .sitemap-blog-detail-header p {
+    color: var(--text-muted, #666);
+    font-size: 1.05rem;
+    margin: 0;
+  }
+
+  /* Blog category card — subtle left accent */
+  .sitemap-category-blog {
+    border-left: 3px solid var(--primary-color);
+  }
+
+  /* Hub link (→ Tutti gli articoli di...) */
+  .category-hub-link a {
+    background: rgba(244, 119, 58, 0.06);
+  }
+
+  .category-hub-link .link-name {
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  /* Article links inside category detail */
+  .article-link a {
+    padding: 0.5rem 0.75rem;
+    background: transparent;
+  }
+
+  .article-link .link-name {
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .article-link .link-description {
+    font-size: 0.8rem;
   }
 
   /* Responsive */
@@ -501,8 +543,16 @@ const schemaOrg = {
       font-size: 1.75rem;
     }
 
-    .article-link {
-      margin-left: 0.5rem;
+    .sitemap-blog-detail {
+      margin-top: 3.5rem;
+    }
+
+    .sitemap-blog-detail-header {
+      margin-bottom: 2rem;
+    }
+
+    .sitemap-blog-detail-header h2 {
+      font-size: 1.5rem;
     }
   }
 </style>

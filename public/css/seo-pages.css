@@ -1,0 +1,1125 @@
+/* ============================================================
+   SEO PAGES – Landing, Blog & Article Styles
+   Ristorante Pizzeria TRE
+   
+   Da importare DOPO style.css:
+   <link rel="stylesheet" href="/css/seo-pages.css" />
+   ============================================================ */
+
+
+/* ===== HERO VARIANT BACKGROUNDS ===== */
+
+.hero-forno-legna {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.62)),
+    url('/img/forno-legna/forno-legna-hero.webp');
+}
+
+.hero-cucina-tradizionale {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.62)),
+    url('/img/cucina-tradizionale/hero-cucina-tradizionale-ristorante-tre-merate.webp');
+}
+
+.hero-tradizione {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.62)),
+    url('/img/tradizione/tradizione-blog-ristorante-tre-merate-hero.webp');
+}
+
+.hero-ristorante-lecco {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.62)),
+    url('/img/ristorante-lecco/ristorante-pizzeria-tre-merate-lecco-hero.webp');
+}
+
+/* Blog category heroes */
+.hero-blog-category {
+  min-height: clamp(420px, 55vh, 600px);
+  padding: 5rem 0;
+}
+@media (max-width: 768px) {
+  .hero-blog-category {
+    min-height: clamp(360px, 48vh, 520px);
+    padding: 4rem 0;
+  }
+}
+
+.hero-cat-ingredienti {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.62)),
+    url('/img/tradizione/cat-ingredienti.webp');
+}
+.hero-cat-impasti {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.62)),
+    url('/img/tradizione/cat-impasti.webp');
+}
+.hero-cat-ricette {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.62)),
+    url('/img/tradizione/cat-ricette.webp');
+}
+.hero-cat-territorio {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.62)),
+    url('/img/tradizione/cat-territorio.webp');
+}
+.hero-cat-chef {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.62)),
+    url('/img/tradizione/cat-chef.webp');
+}
+
+/* Blog article hero – più compatto */
+.hero-blog-article {
+  min-height: clamp(360px, 48vh, 540px);
+  padding: 4.5rem 0;
+}
+@media (max-width: 768px) {
+  .hero-blog-article {
+    min-height: clamp(320px, 42vh, 460px);
+    padding: 3.5rem 0;
+  }
+}
+
+
+/* ===== LANDING PAGE SECTIONS ===== */
+
+.landing-section {
+  padding: 4rem 0;
+}
+@media (min-width: 768px) {
+  .landing-section { padding: 6rem 0; }
+}
+
+.bg-light-section {
+  background-color: var(--bg-light);
+}
+
+/* Content block: image + text side by side */
+.landing-content-block {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+@media (min-width: 768px) {
+  .landing-content-block {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+}
+
+/* Reverse: image left, text right */
+@media (min-width: 768px) {
+  .landing-content-block.reverse .landing-image { order: -1; }
+}
+
+.landing-text h2 {
+  margin-bottom: 1.25rem;
+}
+.landing-text h3 {
+  margin-bottom: 1rem;
+}
+.landing-text p {
+  margin-bottom: 1.25rem;
+  line-height: 1.5;
+}
+.landing-text p:last-child {
+  margin-bottom: 0;
+}
+
+.landing-image {
+  border-radius: 8px;
+  overflow: hidden;
+}
+.landing-image img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+
+/* ===== COMPARISON TABLE ===== */
+
+.comparison-table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 2rem 0;
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 560px;
+  font-size: 18px;
+  line-height: 1.4;
+}
+@media (max-width: 768px) {
+  .comparison-table { font-size: 16px; }
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 0.85rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.comparison-table thead th {
+  background-color: var(--bg-dark);
+  color: var(--text-white);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+.comparison-table tbody tr:nth-child(even) {
+  background-color: var(--bg-light);
+}
+
+.comparison-table tbody tr:hover {
+  background-color: var(--primary-pale);
+}
+
+/* Highlighted column (e.g. "Forno a Legna") */
+.highlight-col {
+  background-color: var(--bg-light-orange) !important;
+  font-weight: 600;
+}
+
+.table-note {
+  font-size: 15px;
+  color: #777;
+  margin-top: 0.75rem;
+  font-style: italic;
+}
+
+
+/* ===== STATS GRID ===== */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+@media (min-width: 768px) {
+  .stats-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+.stat-card {
+  text-align: center;
+  padding: 2rem 1rem;
+  background: var(--bg-white);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.stat-number {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--primary-color);
+  line-height: 1.1;
+  margin-bottom: 0.35rem;
+}
+@media (max-width: 768px) {
+  .stat-number { font-size: 36px; }
+}
+
+.stat-label {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.stat-desc {
+  font-size: 15px;
+  color: #777;
+  line-height: 1.35;
+}
+
+
+/* ===== PIATTI HIGHLIGHT GRID ===== */
+
+.piatti-highlight-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+@media (min-width: 768px) {
+  .piatti-highlight-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.piatto-highlight-card {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  background: var(--bg-white);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.piatto-highlight-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.piatto-highlight-image {
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+}
+.piatto-highlight-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.piatto-highlight-card:hover .piatto-highlight-image img {
+  transform: scale(1.06);
+}
+
+.piatto-highlight-content {
+  padding: 1.5rem;
+}
+.piatto-highlight-content h3 {
+  font-size: 28px;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+}
+@media (max-width: 768px) {
+  .piatto-highlight-content h3 { font-size: 24px; }
+}
+.piatto-highlight-content p {
+  font-size: 17px;
+  line-height: 1.45;
+  color: #555;
+}
+
+.section-cta {
+  text-align: center;
+  margin-top: 2.5rem;
+}
+
+
+/* ===== LINK CARDS GRID ===== */
+
+.link-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+@media (min-width: 768px) {
+  .link-cards-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.link-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--bg-white);
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none;
+  color: var(--text-dark);
+}
+.link-card:hover {
+  border-color: var(--primary-color);
+  box-shadow: 0 4px 12px rgba(244, 119, 58, 0.15);
+}
+.link-card span:first-child {
+  font-size: 28px;
+  flex-shrink: 0;
+}
+.link-card strong {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+
+/* ===== SPECIALITÀ GRID (Ristorante Lecco) ===== */
+
+.specialita-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+@media (min-width: 768px) {
+  .specialita-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.specialita-card {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  background: var(--bg-white);
+  transition: transform 0.3s ease;
+}
+.specialita-card:hover {
+  transform: translateY(-3px);
+}
+.specialita-card img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+.specialita-card .specialita-content {
+  padding: 1.5rem;
+}
+.specialita-card h3 {
+  font-size: 28px;
+  margin-bottom: 0.5rem;
+}
+@media (max-width: 768px) {
+  .specialita-card h3 { font-size: 24px; }
+}
+.specialita-card p {
+  font-size: 17px;
+  line-height: 1.45;
+  color: #555;
+}
+
+
+/* ===== INFO GRID (Orari / Contatti) ===== */
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+@media (min-width: 768px) {
+  .info-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.info-card {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  background: var(--bg-white);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+.info-card h3 {
+  font-size: 24px;
+  margin-bottom: 0.75rem;
+}
+.info-card p {
+  font-size: 17px;
+  line-height: 1.5;
+  color: #555;
+}
+
+
+/* ===== CTA SECTION OVERRIDE (per landing senza bg-image) ===== */
+
+.cta-section .cta-content {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.cta-buttons .btn {
+  min-width: 220px;
+}
+
+
+/* =============================================================
+   BLOG STYLES
+   ============================================================= */
+
+/* ===== BLOG CATEGORY LABEL (sopra h1) ===== */
+
+.blog-category-label {
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--primary-color);
+  background: rgba(255, 255, 255, 0.15);
+  padding: 0.3rem 1rem;
+  border-radius: 4px;
+  margin-bottom: 0.75rem;
+}
+.hero .blog-category-label {
+  color: var(--primary-pale);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+
+/* ===== BLOG INTRO ===== */
+
+.blog-intro-section {
+  padding: 3rem 0 2rem;
+}
+.blog-intro {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+.blog-intro p {
+  font-size: 20px;
+  line-height: 1.55;
+  color: #555;
+}
+@media (max-width: 768px) {
+  .blog-intro p { font-size: 18px; }
+}
+.blog-intro p a {
+  color: var(--primary-color);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.blog-intro p a:hover {
+  color: var(--primary-hover);
+}
+
+
+/* ===== BLOG CATEGORIES SECTION ===== */
+
+.blog-categories-section {
+  padding: 3rem 0 4rem;
+}
+
+.blog-categories-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+@media (min-width: 600px) {
+  .blog-categories-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 900px) {
+  .blog-categories-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (min-width: 1100px) {
+  .blog-categories-grid { grid-template-columns: repeat(5, 1fr); }
+}
+
+.blog-category-card {
+  display: block;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  background: var(--bg-white);
+  text-decoration: none;
+  color: var(--text-dark);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.blog-category-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.blog-category-image {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 3 / 2;
+}
+.blog-category-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.blog-category-card:hover .blog-category-image img {
+  transform: scale(1.06);
+}
+
+.blog-category-icon {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  font-size: 28px;
+  background: rgba(255, 255, 255, 0.9);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.blog-category-content {
+  padding: 1.25rem;
+}
+.blog-category-content h3 {
+  font-size: 22px;
+  line-height: 1.2;
+  margin-bottom: 0.35rem;
+}
+.blog-category-content p {
+  font-size: 15px;
+  line-height: 1.4;
+  color: #666;
+}
+
+
+/* ===== BLOG LAYOUT (2 colonne: main + sidebar) ===== */
+
+.blog-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+}
+@media (min-width: 900px) {
+  .blog-layout {
+    grid-template-columns: 1fr 300px;
+    gap: 4rem;
+  }
+}
+
+.blog-main { min-width: 0; }
+
+
+/* ===== BLOG SIDEBAR ===== */
+
+.blog-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.sidebar-block {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid #e8e8e8;
+}
+.sidebar-block:first-child { padding-top: 0; }
+.sidebar-block:last-child { border-bottom: none; }
+
+.sidebar-block h4 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+/* Sidebar categories list */
+.sidebar-categories {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.sidebar-categories li {
+  margin-bottom: 0.35rem;
+}
+.sidebar-categories a {
+  display: block;
+  padding: 0.45rem 0;
+  font-size: 17px;
+  color: #555;
+  transition: color 0.2s ease;
+}
+.sidebar-categories a:hover {
+  color: var(--primary-color);
+}
+.sidebar-categories a.active {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+/* Sidebar TOC (table of contents) */
+.sidebar-toc {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.sidebar-toc li {
+  margin-bottom: 0.3rem;
+}
+.sidebar-toc a {
+  display: block;
+  padding: 0.35rem 0;
+  font-size: 16px;
+  color: #555;
+  border-left: 3px solid transparent;
+  padding-left: 0.75rem;
+  transition: all 0.2s ease;
+  line-height: 1.35;
+}
+.sidebar-toc a:hover {
+  color: var(--primary-color);
+  border-left-color: var(--primary-color);
+}
+
+/* Sidebar CTA block */
+.sidebar-block.sidebar-cta {
+  background: var(--bg-light-orange);
+  border-radius: 8px;
+  padding: 1.5rem;
+  border-bottom: none;
+  margin-bottom: 0.5rem;
+}
+.sidebar-cta p {
+  font-size: 16px;
+  line-height: 1.4;
+  color: #555;
+  margin-bottom: 0.75rem;
+}
+
+.btn-sidebar {
+  width: 100%;
+  text-align: center;
+  font-size: 17px !important;
+  padding: 0.6rem 1rem !important;
+}
+
+/* Sticky sidebar on desktop */
+@media (min-width: 900px) {
+  .blog-sidebar {
+    position: sticky;
+    top: 120px;
+    max-height: calc(100vh - 140px);
+    overflow-y: auto;
+  }
+}
+
+
+/* ===== BLOG ARTICLES GRID ===== */
+
+.blog-articles-section {
+  padding: 2rem 0 4rem;
+}
+
+.blog-articles-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+@media (min-width: 600px) {
+  .blog-articles-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1024px) {
+  .blog-articles-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+
+/* ===== BLOG ARTICLE CARD ===== */
+
+.blog-article-card {
+  display: block;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.07);
+  background: var(--bg-white);
+  text-decoration: none;
+  color: var(--text-dark);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.blog-article-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.blog-article-image {
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+}
+.blog-article-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.blog-article-card:hover .blog-article-image img {
+  transform: scale(1.06);
+}
+
+.blog-article-content {
+  padding: 1.25rem;
+}
+
+.blog-article-category {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--primary-color);
+  margin-bottom: 0.35rem;
+}
+
+.blog-article-content h3 {
+  font-size: 20px;
+  line-height: 1.25;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.blog-article-content p {
+  font-size: 15px;
+  line-height: 1.45;
+  color: #666;
+}
+
+/* Empty state */
+.blog-empty {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: var(--bg-light);
+  border-radius: 8px;
+}
+.blog-empty p {
+  font-size: 18px;
+  color: #777;
+}
+
+
+/* ===== BLOG NEWSLETTER SECTION ===== */
+
+.blog-newsletter-section {
+  background-color: var(--bg-dark);
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.72)),
+    url('/img/homepage/ristorante-pizzeria-tre-merate-prenota-homepage.webp');
+  background-size: cover;
+  background-position: center;
+  color: var(--text-white);
+  text-align: center;
+  padding: 4rem 0;
+}
+
+/* Sfondo dedicato per ogni categoria del blog */
+.blog-newsletter-ingredienti {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.72)),
+    url('/img/tradizione/cat-ingredienti-hero.webp');
+}
+.blog-newsletter-impasti {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.72)),
+    url('/img/tradizione/cat-impasti-hero.webp');
+}
+.blog-newsletter-ricette {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.72)),
+    url('/img/tradizione/cat-ricette-hero.webp');
+}
+.blog-newsletter-territorio {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.72)),
+    url('/img/tradizione/cat-territorio-hero.webp');
+}
+.blog-newsletter-chef {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.72)),
+    url('/img/tradizione/cat-chef-hero.webp');
+}
+@media (min-width: 768px) {
+  .blog-newsletter-section { padding: 5rem 0; }
+}
+
+.blog-newsletter-content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+.blog-newsletter-content h2 {
+  margin-bottom: 1rem;
+}
+.blog-newsletter-content p {
+  color: var(--text-gray);
+  margin-bottom: 2rem;
+  font-size: 19px;
+  line-height: 1.5;
+}
+
+
+/* =============================================================
+   ARTICLE BODY STYLES
+   ============================================================= */
+
+.blog-article-body {
+  max-width: 100%;
+}
+
+.blog-article-body h2 {
+  font-size: 36px;
+  line-height: 1.2;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+@media (max-width: 768px) {
+  .blog-article-body h2 { font-size: 28px; }
+}
+
+.blog-article-body h3 {
+  font-size: 28px;
+  line-height: 1.25;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+@media (max-width: 768px) {
+  .blog-article-body h3 { font-size: 24px; }
+}
+
+.blog-article-body p {
+  font-size: 18px;
+  line-height: 1.65;
+  margin-bottom: 1.25rem;
+  color: #444;
+}
+@media (max-width: 768px) {
+  .blog-article-body p { font-size: 17px; }
+}
+
+.blog-article-body ul,
+.blog-article-body ol {
+  margin: 1rem 0 1.5rem 1.5rem;
+  font-size: 18px;
+  line-height: 1.6;
+  color: #444;
+  list-style: disc;
+}
+.blog-article-body ol { list-style: decimal; }
+.blog-article-body li { margin-bottom: 0.5rem; }
+
+.blog-article-body a {
+  color: var(--primary-color);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 600;
+}
+.blog-article-body a:hover {
+  color: var(--primary-hover);
+}
+
+/* Article lead paragraph */
+.article-lead {
+  font-size: 21px !important;
+  line-height: 1.6 !important;
+  color: #333 !important;
+  font-weight: 500;
+}
+@media (max-width: 768px) {
+  .article-lead { font-size: 19px !important; }
+}
+
+/* Featured image */
+.article-featured-image {
+  margin: 2rem 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.article-featured-image img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+/* Callout box */
+.article-callout {
+  background: var(--bg-light-orange);
+  border-left: 4px solid var(--primary-color);
+  padding: 1.25rem 1.5rem;
+  border-radius: 0 8px 8px 0;
+  margin: 2rem 0;
+}
+.article-callout p {
+  font-size: 17px !important;
+  color: #555 !important;
+  margin-bottom: 0.5rem !important;
+}
+.article-callout p:last-child { margin-bottom: 0 !important; }
+.article-callout strong {
+  color: var(--text-dark);
+}
+
+/* CTA callout variant */
+.article-callout-cta {
+  background: var(--primary-color);
+  border-left-color: var(--primary-dark);
+}
+.article-callout-cta p {
+  color: var(--text-white) !important;
+}
+.article-callout-cta a {
+  color: var(--text-white) !important;
+  font-weight: 700;
+}
+
+/* Article table */
+.article-table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 1.5rem 0 2rem;
+}
+.blog-article-body .comparison-table {
+  font-size: 17px;
+}
+
+
+/* ===== RELATED ARTICLES ===== */
+
+.article-related {
+  margin-top: 3rem;
+  padding-top: 2.5rem;
+  border-top: 2px solid #e8e8e8;
+}
+.article-related h2 {
+  font-size: 28px;
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+}
+
+.related-articles-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+@media (min-width: 600px) {
+  .related-articles-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+
+/* =============================================================
+   FOOTER – SCOPRI SECTION
+   ============================================================= */
+
+.footer-scopri {
+  margin-top: 2.5rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid #eee;
+  text-align: center;
+}
+
+/* ===== LINK INLINE NEI CONTENUTI ===== */
+.landing-text p a,
+.blog-intro p a {
+  color: var(--primary-color);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: color 0.3s ease;
+}
+
+.landing-text p a:hover,
+.blog-intro p a:hover {
+  color: var(--primary-hover);
+}
+
+.footer-scopri h4 {
+  font-size: 24px;
+  margin-bottom: 1.25rem;
+  color: var(--text-dark);
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.footer-scopri-cards {
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.footer-scopri-card {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--bg-light);
+  border: 2px solid #e8e8e8;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--text-dark);
+  font-size: 18px;
+  font-weight: 500;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.footer-scopri-card:hover {
+  border-color: var(--primary-color);
+  box-shadow: 0 4px 12px rgba(244, 119, 58, 0.15);
+  transform: translateY(-2px);
+  color: var(--primary-color);
+}
+
+.footer-scopri-icon {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.footer-scopri-label {
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 768px) {
+  .footer-scopri-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer-scopri-card {
+    width: 100%;
+    max-width: 320px;
+    justify-content: center;
+  }
+}
+
+
+/* =============================================================
+   SITEMAP – BLOG DETAIL SPACING
+   ============================================================= */
+
+.sitemap-blog-detail {
+  margin-top: 4rem;
+}
+
+.sitemap-blog-detail-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 2px solid #e8e8e8;
+}
+
+.sitemap-blog-detail-header h2 {
+  font-size: 1.75rem;
+  color: var(--text-dark, #1a1a1a);
+  margin-bottom: 0.5rem;
+}
+
+.sitemap-blog-detail-header p {
+  color: var(--text-muted, #666);
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .sitemap-blog-detail {
+    margin-top: 3rem;
+  }
+  .sitemap-blog-detail-header h2 {
+    font-size: 1.5rem;
+  }
+}
+
+
+/* =============================================================
+   UTILITY / SHARED
+   ============================================================= */
+
+/* Smooth scroll for TOC anchors */
+html { scroll-behavior: smooth; }
+
+/* Anchor offset for sticky header */
+.blog-article-body [id] {
+  scroll-margin-top: 120px;
+}
+
+/* Print: hide sidebar, full width main */
+@media print {
+  .blog-sidebar { display: none; }
+  .blog-layout { grid-template-columns: 1fr; }
+}
+
+.hero-cucina-tradizionale {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.62)),
+    url('/img/cucina-tradizionale/hero-cucina-tradizionale-ristorante-tre-merate.webp');
+}

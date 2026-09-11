@@ -1,0 +1,177 @@
+---
+import Layout from "../../../../layouts/Layout.astro";
+
+const seoData = {
+  title: "Mozzarella di Bufala DOP: Come Riconoscere la Vera Qualità",
+  description: "Guida alla mozzarella di bufala DOP: come riconoscere la qualità, differenze con il fiordilatte, conservazione e abbinamenti perfetti con la pizza.",
+  canonical: "https://www.ristorantepizzeriatre.it/tradizione/ingredienti/mozzarella-bufala-dop-qualita/",
+  ogImage: "https://www.ristorantepizzeriatre.it/img/tradizione/ingredienti/art-mozzarella-bufala-dop-og.webp",
+  preloadImage: "/img/tradizione/ingredienti/art-mozzarella-bufala-dop.webp",
+  ogType: "article",
+};
+
+const schemaOrg = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "La Mozzarella di Bufala DOP: Come Riconoscere la Qualità",
+      "description": seoData.description,
+      "image": seoData.ogImage,
+      "datePublished": "2025-04-20",
+      "dateModified": "2025-04-20",
+      "author": { "@type": "Organization", "name": "Ristorante Pizzeria TRE" },
+      "publisher": { "@type": "Organization", "name": "Ristorante Pizzeria TRE", "logo": { "@type": "ImageObject", "url": "https://www.ristorantepizzeriatre.it/img/brand/tre-logo.svg" } },
+      "mainEntityOfPage": seoData.canonical
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.ristorantepizzeriatre.it/" },
+        { "@type": "ListItem", "position": 2, "name": "Tradizione", "item": "https://www.ristorantepizzeriatre.it/tradizione/" },
+        { "@type": "ListItem", "position": 3, "name": "Ingredienti", "item": "https://www.ristorantepizzeriatre.it/tradizione/ingredienti/" },
+        { "@type": "ListItem", "position": 4, "name": "Mozzarella di Bufala DOP", "item": seoData.canonical }
+      ]
+    }
+  ]
+};
+---
+
+<Layout title={seoData.title} description={seoData.description} canonical={seoData.canonical} ogImage={seoData.ogImage} preloadImage={seoData.preloadImage} ogType={seoData.ogType}>
+  <Fragment slot="schema">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
+  </Fragment>
+
+  <section class="hero hero-blog-article">
+    <div class="container hero-content">
+      <span class="blog-category-label"><a href="/tradizione/ingredienti/">Ingredienti</a></span>
+      <h1>La Mozzarella di Bufala DOP: Come Riconoscere la Qualità</h1>
+    </div>
+  </section>
+
+  <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li><a href="/tradizione/">Tradizione</a></li>
+        <li><a href="/tradizione/ingredienti/">Ingredienti</a></li>
+        <li aria-current="page">Mozzarella di Bufala DOP</li>
+      </ol>
+    </div>
+  </nav>
+
+  <section class="blog-articles-section">
+    <div class="container">
+      <div class="blog-layout">
+        <article class="blog-article-body">
+
+          <p class="article-lead">La mozzarella di bufala campana DOP è uno dei formaggi italiani più apprezzati al mondo, e un ingrediente che può trasformare una pizza da buona a indimenticabile. Ma come si riconosce una bufala di qualità? E qual è la differenza con il fiordilatte? In questa guida ti sveliamo tutto quello che devi sapere.</p>
+
+          <img src="/img/tradizione/ingredienti/art-mozzarella-bufala-dop.webp" alt="Mozzarella di bufala DOP tagliata" class="article-featured-image" loading="eager" decoding="async" width="800" height="500" />
+
+          <h2>Cos'è la DOP e Perché è Importante</h2>
+          <p>La sigla DOP (Denominazione di Origine Protetta) garantisce che la mozzarella di bufala sia prodotta secondo un disciplinare rigoroso, in zone geografiche specifiche e con metodi tradizionali. La DOP della mozzarella di bufala campana è stata riconosciuta dall'Unione Europea nel 1996 e tutela un prodotto con caratteristiche uniche legate al territorio di produzione.</p>
+          <p>Le zone di produzione principali si concentrano in Campania (Caserta e Salerno in primis), ma il disciplinare include anche alcune aree del Lazio, della Puglia e del Molise. Il latte deve provenire esclusivamente da bufale allevate in questi territori.</p>
+
+          <h2>Differenze tra Mozzarella di Bufala e Fiordilatte</h2>
+          <p>Spesso confusi, bufala e fiordilatte sono in realtà formaggi molto diversi per materia prima, sapore e utilizzo.</p>
+
+          <div class="article-table-wrapper">
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>Caratteristica</th>
+                  <th class="highlight-col">Mozzarella di Bufala</th>
+                  <th>Fiordilatte</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Latte</td><td class="highlight-col"><strong>Bufala</strong></td><td>Vaccino</td></tr>
+                <tr><td>Sapore</td><td class="highlight-col"><strong>Intenso, leggermente acidulo</strong></td><td>Delicato, dolce</td></tr>
+                <tr><td>Consistenza</td><td class="highlight-col"><strong>Morbida, succosa</strong></td><td>Compatta, elastica</td></tr>
+                <tr><td>Contenuto di grasso</td><td class="highlight-col"><strong>Più alto (24-25%)</strong></td><td>Più basso (18-20%)</td></tr>
+                <tr><td>Prezzo</td><td class="highlight-col"><strong>Più elevato</strong></td><td>Più accessibile</td></tr>
+                <tr><td>Su pizza</td><td class="highlight-col"><strong>Aggiunta dopo cottura o a fine cottura</strong></td><td>Cuoce in forno con la pizza</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>Come Riconoscere la Qualità: 5 Criteri</h2>
+          <p><strong>1. L'aspetto esterno:</strong> La superficie deve essere liscia, lucida, di colore bianco porcellana. Diffida delle mozzarelle ingiallite o con superficie ruvida.</p>
+          <p><strong>2. La consistenza al taglio:</strong> Tagliando la mozzarella, deve fuoriuscire un liquido lattiginoso (il "siero"). La struttura interna deve presentare una lieve sfogliatura, segno della lavorazione a pasta filata.</p>
+          <p><strong>3. Il profumo:</strong> Un leggero sentore di latte fresco e fermenti lattici, con note erbacee. Nessun odore acido forte o di ammoniaca.</p>
+          <p><strong>4. Il sapore:</strong> Leggermente acidulo ma mai aggressivo, con un retrogusto dolce di latte. Il sapore deve essere pieno e persistente.</p>
+          <p><strong>5. Il liquido di conservazione:</strong> La bufala autentica è venduta nel suo siero di filatura, mai in acqua semplice.</p>
+
+          <h2>Come Conservare la Mozzarella di Bufala</h2>
+          <p>La conservazione è fondamentale per mantenere la qualità della bufala. Conservala sempre nel suo liquido, a temperatura ambiente se la consumi entro poche ore dall'acquisto, oppure in frigorifero (non sotto i 4°C). Prima di gustarla, toglila dal frigorifero almeno 30 minuti prima: a temperatura ambiente sprigiona tutti i suoi aromi.</p>
+
+          <h2>La Bufala sulla Pizza: Prima o Dopo la Cottura?</h2>
+          <p>Questa è una delle domande più frequenti. La risposta dipende dal risultato che vuoi ottenere: aggiunta a crudo dopo la cottura, la bufala mantiene tutta la sua freschezza e il suo sapore intenso. Aggiunta in forno negli ultimi 20-30 secondi di cottura, si scioglie leggermente creando un effetto filante irresistibile senza perdere le sue caratteristiche.</p>
+
+          <div class="article-callout article-callout-cta">
+            <strong>Le nostre pizze con bufala</strong> — Al Ristorante TRE utilizziamo mozzarella di bufala DOP selezionata per le nostre pizze speciali. Scopri nel <a href="/menu-pizze/">menù pizze</a> le creazioni con bufala e prenota il tuo tavolo per assaggiarle.
+          </div>
+
+          <h2>Conclusione</h2>
+          <p>La mozzarella di bufala DOP è un prodotto straordinario che merita di essere scelto con consapevolezza. Riconoscere la qualità, conservarla correttamente e saperla utilizzare al meglio sono competenze che possono fare la differenza tra una pizza qualunque e un'esperienza gastronomica indimenticabile.</p>
+          <p>Se vuoi assaporare la differenza di una bufala di qualità sulla pizza cotta nel <a href="/forno-a-legna/">forno a legna tradizionale</a>, <a href="/contatti/">vieni a trovarci al TRE</a>.</p>
+
+          <div class="article-related">
+            <h3>Articoli Correlati</h3>
+            <div class="related-articles-grid">
+              <a href="/tradizione/impasti/lievitazione-idratazione-temperatura/" class="blog-article-card">
+                <div class="blog-article-image">
+                  <img src="/img/tradizione/impasti/art-impasto-pizza-lievitazione.webp" alt="Impasto Pizza" loading="lazy" decoding="async" width="400" height="250" />
+                </div>
+                <div class="blog-article-content">
+                  <h4>Impasto Pizza Perfetto</h4>
+                  <p>Lievitazione, idratazione e temperature per una pizza straordinaria</p>
+                </div>
+              </a>
+              <a href="/forno-a-legna/" class="blog-article-card">
+                <div class="blog-article-image">
+                  <img src="/img/forno-legna/forno-a-legna-ristorante-pizzeria-tre-merate-hero.webp" alt="Forno a Legna" loading="lazy" decoding="async" width="400" height="250" />
+                </div>
+                <div class="blog-article-content">
+                  <h4>Il Nostro Forno a Legna</h4>
+                  <p>La tecnica di cottura che rende unica ogni nostra pizza</p>
+                </div>
+              </a>
+            </div>
+          </div>
+
+        </article>
+
+        <aside class="blog-sidebar">
+          <div class="sidebar-block">
+            <h4>Categoria</h4>
+            <a href="/tradizione/ingredienti/" class="btn btn-outline btn-sidebar">🫒 Ingredienti</a>
+          </div>
+          <div class="sidebar-block sidebar-cta">
+            <h4>Scopri il Menù Pizze</h4>
+            <p>Le nostre pizze con mozzarella di bufala DOP</p>
+            <a href="/menu-pizze/" class="btn btn-primary btn-sidebar">Menù Pizze</a>
+          </div>
+          <div class="sidebar-block sidebar-cta">
+            <h4>Prenota un Tavolo</h4>
+            <a href="/contatti/" class="btn btn-primary btn-sidebar">Prenota Ora</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Scopri le Pizze con Mozzarella di Bufala</h2>
+        <p>Prenota il tuo tavolo e assaggia la differenza degli ingredienti di qualità</p>
+        <div class="cta-buttons">
+          <a href="/menu-pizze/" class="btn btn-primary">Menù Pizze</a>
+          <a href="/contatti/" class="btn btn-outline-white">Prenota un Tavolo</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

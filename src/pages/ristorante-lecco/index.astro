@@ -1,0 +1,276 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const seoData = {
+  title: "Ristorante Pizzeria in Provincia di Lecco | TRE Merate",
+  description: "Ristorante e pizzeria TRE a Merate, provincia di Lecco. Cucina tradizionale italiana, pizza al forno a legna e menu alla carta. Prenota il tuo tavolo.",
+  canonical: "https://www.ristorantepizzeriatre.it/ristorante-lecco/",
+  ogImage: "https://www.ristorantepizzeriatre.it/img/ristorante-lecco/ristorante-pizzeria-tre-merate-lecco-hero.webp",
+  preloadImage: "/img/ristorante-lecco/ristorante-pizzeria-tre-merate-lecco-hero.webp",
+};
+
+const schemaOrg = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Restaurant",
+      "name": "Ristorante Pizzeria TRE",
+      "description": "Ristorante e pizzeria con forno a legna a Merate, provincia di Lecco. Cucina tradizionale italiana dal 1953.",
+      "image": seoData.ogImage,
+      "address": { "@type": "PostalAddress", "streetAddress": "Via Statale, 44", "addressLocality": "Merate", "addressRegion": "LC", "postalCode": "23807", "addressCountry": "IT" },
+      "geo": { "@type": "GeoCoordinates", "latitude": 45.6983, "longitude": 9.4183 },
+      "telephone": "+390399909913",
+      "url": "https://www.ristorantepizzeriatre.it/",
+      "servesCuisine": ["Italiana", "Pizza", "Cucina Tradizionale Lombarda"],
+      "priceRange": "€€",
+      "openingHoursSpecification": [
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "12:00", "closes": "14:30" },
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "19:00", "closes": "23:00" },
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday","Sunday"], "opens": "19:00", "closes": "23:00" }
+      ]
+    },
+    {
+      "@type": "LocalBusiness",
+      "name": "Ristorante Pizzeria TRE",
+      "areaServed": [
+        { "@type": "City", "name": "Merate" },
+        { "@type": "AdministrativeArea", "name": "Provincia di Lecco" },
+        { "@type": "AdministrativeArea", "name": "Brianza Lecchese" }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.ristorantepizzeriatre.it/" },
+        { "@type": "ListItem", "position": 2, "name": "Ristorante Lecco", "item": seoData.canonical }
+      ]
+    }
+  ]
+};
+---
+
+<Layout title={seoData.title} description={seoData.description} canonical={seoData.canonical} ogImage={seoData.ogImage} preloadImage={seoData.preloadImage}>
+  <Fragment slot="schema">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
+  </Fragment>
+
+  <!-- Hero -->
+  <section class="hero hero-ristorante-lecco">
+    <div class="container hero-content">
+      <h1>Ristorante e Pizzeria in Provincia di Lecco: TRE a Merate</h1>
+      <p>Cucina tradizionale italiana e pizza al forno a legna<br />nel cuore della Brianza lecchese, dal 1953</p>
+      <div class="hero-buttons">
+        <a href="/contatti/" class="btn btn-primary">Prenota un Tavolo</a>
+        <a href="/menu-pizze/" class="btn btn-outline">Scopri il Menù</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li aria-current="page">Ristorante in Provincia di Lecco</li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- Chi Siamo - versione condensata -->
+  <section class="landing-section">
+    <div class="container">
+      <div class="landing-content-block">
+        <div class="landing-text">
+          <h2>Il Tuo Ristorante in Provincia di Lecco</h2>
+          <p>Il Ristorante Pizzeria TRE si trova a Merate, nel cuore della Brianza lecchese, in una posizione strategica facilmente raggiungibile da Lecco e da tutti i comuni della provincia. Dal 1953, prima come Ristorante Passone e poi come TRE dal 2003, siamo un punto di riferimento per chi cerca cucina tradizionale italiana e pizza cotta nel forno a legna.</p>
+          <p>La nostra è una storia di famiglia, passione e territorio. Una tradizione che si rinnova ogni giorno nei piatti che portiamo in tavola, mantenendo sempre la qualità degli ingredienti e l'autenticità delle preparazioni al primo posto. Scopri di più sulla nostra <a href="/chi-siamo/">storia</a>.</p>
+        </div>
+        <div class="landing-image">
+          <img src="/img/ristorante-lecco/ristorante-tre-merate-esterno.webp" alt="Esterno del Ristorante Pizzeria TRE a Merate, provincia di Lecco" loading="lazy" decoding="async" width="600" height="450" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Le Nostre Specialità -->
+  <section class="landing-section bg-light-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Le Nostre Specialità</h2>
+        <p>Due anime, una passione: pizza al forno a legna e cucina tradizionale italiana</p>
+      </div>
+      <div class="specialita-grid">
+        <div class="specialita-card">
+          <img src="/img/ristorante-lecco/pizza-forno-legna-ristorante-tre-lecco.webp" alt="Pizza cotta nel forno a legna al TRE" loading="lazy" decoding="async" width="500" height="350" />
+          <h3>Pizza al Forno a Legna</h3>
+          <p>Le nostre pizze sono cotte nel forno a legna tradizionale a temperature di 400-450°C, per una cottura rapida che esalta ogni ingrediente. Impasti a lunga lievitazione e ingredienti di qualità.</p>
+          <a href="/menu-pizze/" class="btn btn-primary">Menù Pizze</a>
+        </div>
+        <div class="specialita-card">
+          <img src="/img/ristorante-lecco/cucina-tradizionale-ristorante-tre-lecco.webp" alt="Piatti della cucina tradizionale al TRE" loading="lazy" decoding="async" width="500" height="350" />
+          <h3>Cucina Tradizionale e Grill</h3>
+          <p>Piatti della tradizione lombarda e italiana, carni selezionate alla griglia, pasta fresca e contorni di stagione. Un menù che cambia seguendo le stagioni e il territorio.</p>
+          <a href="/menu-alla-carta/" class="btn btn-primary">Menù alla Carta</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Perché Sceglierci -->
+  <section class="landing-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Perché Scegliere il TRE</h2>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-number">Dal 1953</span>
+          <span class="stat-label">Tradizione</span>
+          <p class="stat-desc">Oltre 70 anni di esperienza nella ristorazione meratese</p>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">Forno a Legna</span>
+          <span class="stat-label">Cottura Tradizionale</span>
+          <p class="stat-desc">Pizza cotta a 400-450°C per un risultato unico</p>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">Ingredienti</span>
+          <span class="stat-label">Qualità Selezionata</span>
+          <p class="stat-desc">Materie prime italiane e prodotti del territorio</p>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">Eventi</span>
+          <span class="stat-label">Occasioni Speciali</span>
+          <p class="stat-desc">Compleanni, lauree, cene aziendali e cerimonie</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Come Raggiungerci da Lecco -->
+  <section class="landing-section bg-light-section">
+    <div class="container">
+      <div class="landing-content-block">
+        <div class="landing-text">
+          <h2>Come Raggiungerci da Lecco</h2>
+          <p>Il Ristorante Pizzeria TRE si trova in Via Statale 44, Merate (LC), a soli 25 minuti di auto dal centro di Lecco. La posizione è facilmente raggiungibile anche dai principali comuni della provincia.</p>
+          <p><strong>In auto da Lecco:</strong> Percorrere la SS36 in direzione Milano, uscita Olginate/Calco, poi seguire le indicazioni per Merate. Parcheggio disponibile nelle vicinanze del ristorante.</p>
+          <p><strong>In auto da Milano:</strong> Tangenziale Est, uscita Usmate/Carnate, poi SP342 in direzione Merate.</p>
+          <p><strong>Da altri comuni della provincia:</strong> Merate è facilmente raggiungibile da Olgiate Molgora, Calco, Brivio, Imbersago, Cernusco Lombardone e tutti i comuni limitrofi della Brianza lecchese.</p>
+          <p><strong>In treno:</strong> Stazione di Merate-Cernusco sulla linea Milano-Lecco (Trenord).</p>
+        </div>
+        <div class="landing-image">
+          <img src="/img/ristorante-lecco/mappa-ristorante-tre-merate-lecco.webp" alt="Tavolo apparecchiato al Ristorante TRE di Merate, in provincia di Lecco" loading="lazy" decoding="async" width="600" height="450" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Eventi e Occasioni -->
+  <section class="landing-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Eventi e Occasioni Speciali</h2>
+        <p>Il TRE è il luogo ideale per celebrare i tuoi momenti importanti</p>
+      </div>
+      <div class="link-cards-grid">
+        <a href="/compleanni/" class="link-card">
+          <h4>Compleanni</h4>
+          <p>Festeggia il tuo compleanno con menù personalizzati</p>
+        </a>
+        <a href="/lauree/" class="link-card">
+          <h4>Lauree</h4>
+          <p>Celebra il traguardo con un pranzo o cena speciale</p>
+        </a>
+        <a href="/battesimi-comunioni-cresime/" class="link-card">
+          <h4>Battesimi e Cerimonie</h4>
+          <p>Menù dedicati per battesimi, comunioni e cresime</p>
+        </a>
+        <a href="/meeting-cene-aziendali/" class="link-card">
+          <h4>Cene Aziendali</h4>
+          <p>Meeting, team building e cene di lavoro</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Gallery -->
+  <section class="landing-section bg-light-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Il Nostro Ristorante</h2>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <img src="/img/ristorante-lecco/gallery-ristorante-01.webp" alt="Sala interna del Ristorante TRE Merate" loading="lazy" decoding="async" width="400" height="530" />
+        </div>
+        <div class="gallery-item">
+          <img src="/img/ristorante-lecco/gallery-ristorante-02.webp" alt="Tavoli apparecchiati al TRE" loading="lazy" decoding="async" width="400" height="530" />
+        </div>
+        <div class="gallery-item">
+          <img src="/img/ristorante-lecco/gallery-ristorante-03.webp" alt="Pizza al forno a legna" loading="lazy" decoding="async" width="400" height="530" />
+        </div>
+        <div class="gallery-item">
+          <img src="/img/ristorante-lecco/gallery-ristorante-04.webp" alt="Piatto della cucina tradizionale" loading="lazy" decoding="async" width="400" height="530" />
+        </div>
+        <div class="gallery-item">
+          <img src="/img/ristorante-lecco/gallery-ristorante-05.webp" alt="Esterno del ristorante" loading="lazy" decoding="async" width="400" height="530" />
+        </div>
+        <div class="gallery-item">
+          <img src="/img/ristorante-lecco/gallery-ristorante-06.webp" alt="Dettaglio forno a legna" loading="lazy" decoding="async" width="400" height="530" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Orari -->
+  <section class="landing-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Orari e Informazioni</h2>
+      </div>
+      <div class="info-grid">
+        <div class="info-card">
+          <h4>Orari di Apertura</h4>
+          <p><strong>Da Lunedì a Venerdì:</strong><br/>12:00 - 14:30 | 19:00 - 23:00</p>
+          <p><strong>Sabato e Domenica:</strong><br/>19:00 - 23:00</p>
+        </div>
+        <div class="info-card">
+          <h4>Contatti</h4>
+          <p><strong>Telefono:</strong> <a href="tel:+390399909913">039 990 9913</a></p>
+          <p><strong>Email:</strong> <a href="mailto:info@ristorantepizzeriatre.it">info@ristorantepizzeriatre.it</a></p>
+          <p><strong>WhatsApp:</strong> <a href="https://wa.me/393517701704">351 770 1704</a></p>
+        </div>
+        <div class="info-card">
+          <h4>Indirizzo</h4>
+          <p><strong>Via Statale, 44</strong><br/>23807 Merate (LC)</p>
+          <p>Parcheggio disponibile</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Finale -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Prenota il Tuo Tavolo</h2>
+        <p>Cucina tradizionale italiana e pizza al forno a legna a Merate, in provincia di Lecco</p>
+        <div class="cta-buttons">
+          <a href="/contatti/" class="btn btn-primary">Prenota Ora</a>
+          <a href="tel:+390399909913" class="btn btn-outline-white">Chiama per Info</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

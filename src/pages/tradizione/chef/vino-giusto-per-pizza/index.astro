@@ -1,0 +1,166 @@
+---
+import Layout from "../../../../layouts/Layout.astro";
+
+const seoData = {
+  title: "Come Scegliere il Vino Giusto per la Pizza: Guida agli Abbinamenti",
+  description: "Abbinamento vino e pizza: guida completa per scegliere il vino perfetto. Rosso, bianco o bollicine? Scopri i segreti degli abbinamenti con lo chef.",
+  canonical: "https://www.ristorantepizzeriatre.it/tradizione/chef/vino-giusto-per-pizza/",
+  ogImage: "https://www.ristorantepizzeriatre.it/img/tradizione/chef/art-vino-pizza-abbinamento-og.webp",
+  preloadImage: "/img/tradizione/chef/art-vino-pizza-abbinamento.webp",
+  ogType: "article",
+};
+
+const schemaOrg = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "Come Scegliere il Vino Giusto per la Pizza",
+      "description": seoData.description,
+      "image": seoData.ogImage,
+      "datePublished": "2025-05-05",
+      "dateModified": "2025-05-05",
+      "author": { "@type": "Organization", "name": "Ristorante Pizzeria TRE" },
+      "publisher": { "@type": "Organization", "name": "Ristorante Pizzeria TRE", "logo": { "@type": "ImageObject", "url": "https://www.ristorantepizzeriatre.it/img/brand/tre-logo.svg" } },
+      "mainEntityOfPage": seoData.canonical
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.ristorantepizzeriatre.it/" },
+        { "@type": "ListItem", "position": 2, "name": "Tradizione", "item": "https://www.ristorantepizzeriatre.it/tradizione/" },
+        { "@type": "ListItem", "position": 3, "name": "Chef", "item": "https://www.ristorantepizzeriatre.it/tradizione/chef/" },
+        { "@type": "ListItem", "position": 4, "name": "Vino per Pizza", "item": seoData.canonical }
+      ]
+    }
+  ]
+};
+---
+
+<Layout title={seoData.title} description={seoData.description} canonical={seoData.canonical} ogImage={seoData.ogImage} preloadImage={seoData.preloadImage} ogType={seoData.ogType}>
+  <Fragment slot="schema">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
+  </Fragment>
+
+  <section class="hero hero-blog-article">
+    <div class="container hero-content">
+      <span class="blog-category-label"><a href="/tradizione/chef/">Chef</a></span>
+      <h1>Come Scegliere il Vino Giusto per la Pizza</h1>
+    </div>
+  </section>
+
+  <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li><a href="/tradizione/">Tradizione</a></li>
+        <li><a href="/tradizione/chef/">Chef</a></li>
+        <li aria-current="page">Vino Giusto per la Pizza</li>
+      </ol>
+    </div>
+  </nav>
+
+  <section class="blog-articles-section">
+    <div class="container">
+      <div class="blog-layout">
+        <article class="blog-article-body">
+
+          <p class="article-lead">Per anni la birra è stata considerata l'unica compagna possibile per la pizza, ma il mondo del vino offre abbinamenti sorprendenti che possono elevare l'esperienza gastronomica. Rosso, bianco o bollicine? Ecco la guida pratica per scegliere il vino perfetto in base al tipo di pizza.</p>
+
+          <img src="/img/tradizione/chef/art-vino-pizza-abbinamento.webp" alt="Calice di vino e pizza" class="article-featured-image" loading="eager" decoding="async" width="800" height="500" />
+
+          <h2>Le Regole Base dell'Abbinamento</h2>
+          <p>L'abbinamento vino-pizza segue gli stessi principi dell'abbinamento vino-cibo tradizionale, con alcune specificità legate alla presenza costante dell'impasto (carboidrato) e del pomodoro (acidità). Due regole fondamentali da tenere a mente: il vino non deve sovrastare i sapori della pizza, ma nemmeno scomparire di fronte a condimenti intensi. La freschezza del vino (acidità) si sposa naturalmente con la pizza, perché bilancia la morbidezza dell'impasto.</p>
+
+          <h2>Pizza Margherita: L'Abbinamento Classico</h2>
+          <p>La margherita, nella sua semplicità, è il banco di prova perfetto. Il pomodoro porta acidità, la mozzarella cremosità, il basilico freschezza. L'abbinamento ideale è con un <strong>bianco fresco e aromatico</strong> come un Falanghina campana o un Vermentino ligure, che si integrano con l'acidità del pomodoro senza appesantire.</p>
+          <p>Se preferisci il rosso, un <strong>rosato pugliese</strong> o un <strong>Groppello del Garda</strong> leggero sono scelte eccellenti: abbastanza strutturati da reggere il pomodoro, ma non così tannici da coprire la delicatezza della mozzarella.</p>
+
+          <h2>Pizze Bianche: Spazio al Bianco</h2>
+          <p>Le pizze senza pomodoro aprono un mondo di possibilità. Una pizza con mozzarella di bufala e crudo si sposa magnificamente con un <strong>Prosecco Extra Dry</strong> o un <strong>Franciacorta Satèn</strong>: le bollicine tagliano la grassezza del formaggio e del salume, pulendo il palato ad ogni sorso.</p>
+          <p>Per le pizze con formaggi stagionati o gorgonzola, un bianco più strutturato come un <strong>Gewürztraminer</strong> altoatesino o un <strong>Trebbiano d'Abruzzo</strong> riserva bilancia la sapidità dei formaggi con aromaticità e corpo.</p>
+
+          <h2>Pizze Gourmet e Condimenti Elaborati</h2>
+          <p>Le pizze con condimenti più complessi — come tartufo, funghi porcini, salumi stagionati o verdure grigliate — richiedono vini con maggiore struttura. Un <strong>Barbera d'Asti</strong> con la sua acidità vivace e il frutto intenso è perfetto con pizze ai funghi. Un <strong>Chianti Classico</strong> giovane accompagna egregiamente pizze con salumi toscani o verdure mediterranee.</p>
+          <p>Per le pizze con pesce o frutti di mare, manteniamoci su bianchi minerali come il <strong>Verdicchio dei Castelli di Jesi</strong> o un <strong>Fiano di Avellino</strong>, che esaltano la sapidità del mare senza sovrastarla.</p>
+
+          <h2>Bollicine e Pizza: Un Abbinamento Vincente</h2>
+          <p>Se c'è un vino che funziona con quasi tutte le pizze, sono le bollicine. L'anidride carbonica svolge un ruolo fondamentale: pulisce il palato dalla grassezza dei formaggi, si integra con l'acidità del pomodoro e la sua freschezza si sposa naturalmente con l'impasto caldo.</p>
+          <p>Un <strong>Metodo Classico</strong> italiano (Franciacorta o Trento DOC) o uno <strong>Champagne</strong> base sono scelte che difficilmente deludono. Per un approccio più informale, un <strong>Lambrusco</strong> emiliano frizzante è l'abbinamento conviviale per eccellenza.</p>
+
+          <div class="article-callout">
+            <strong>Il consiglio dello chef</strong> — Non aver paura di sperimentare: l'abbinamento vino-pizza è un territorio ancora giovane e pieno di sorprese. L'unica regola davvero importante è che il vino ti piaccia e che ti faccia godere di più la pizza.
+          </div>
+
+          <h2>Errori Comuni da Evitare</h2>
+          <p><strong>Vini troppo tannici:</strong> I tannini si scontrano con l'acidità del pomodoro, creando una sensazione amara e sgradevole. Evita Barolo, Brunello e rossi molto strutturati con pizze al pomodoro.</p>
+          <p><strong>Vini troppo dolci:</strong> A meno che non sia una pizza dessert, i vini dolci cozzano con la sapidità del formaggio e la salatura dei condimenti.</p>
+          <p><strong>Vini troppo caldi (alcolici):</strong> Preferisci vini con gradazione moderata (12-13%) che accompagnano senza appesantire.</p>
+
+          <h2>La Nostra Carta Vini</h2>
+          <p>Al Ristorante Pizzeria TRE abbiamo selezionato una carta vini pensata anche per gli abbinamenti con le nostre <a href="/menu-pizze/">pizze al forno a legna</a>. Dalle bollicine ai bianchi freschi, dai rosati ai rossi leggeri, troverai proposte ideali per ogni tipo di pizza.</p>
+          <p>Se vuoi vivere un'esperienza di abbinamento guidata, scopri le nostre <a href="/cene-a-tema/">cene a tema</a> con menù degustazione e vini selezionati per ogni portata.</p>
+
+          <div class="article-related">
+            <h3>Articoli Correlati</h3>
+            <div class="related-articles-grid">
+              <a href="/tradizione/impasti/lievitazione-idratazione-temperatura/" class="blog-article-card">
+                <div class="blog-article-image">
+                  <img src="/img/tradizione/impasti/art-impasto-pizza-lievitazione.webp" alt="Impasto Pizza" loading="lazy" decoding="async" width="400" height="250" />
+                </div>
+                <div class="blog-article-content">
+                  <h4>Impasto Pizza Perfetto</h4>
+                  <p>Lievitazione, idratazione e temperature per una pizza straordinaria</p>
+                </div>
+              </a>
+              <a href="/forno-a-legna/" class="blog-article-card">
+                <div class="blog-article-image">
+                  <img src="/img/forno-legna/forno-a-legna-ristorante-pizzeria-tre-merate-hero.webp" alt="Forno a legna" loading="lazy" decoding="async" width="400" height="250" />
+                </div>
+                <div class="blog-article-content">
+                  <h4>Il Nostro Forno a Legna</h4>
+                  <p>La tecnica di cottura che rende unica ogni nostra pizza</p>
+                </div>
+              </a>
+            </div>
+          </div>
+
+        </article>
+
+        <aside class="blog-sidebar">
+          <div class="sidebar-block">
+            <h4>Categoria</h4>
+            <a href="/tradizione/chef/" class="btn btn-outline btn-sidebar">👨‍🍳 Chef</a>
+          </div>
+          <div class="sidebar-block sidebar-cta">
+            <h4>Menù Pizze</h4>
+            <p>Scopri le nostre pizze al forno a legna</p>
+            <a href="/menu-pizze/" class="btn btn-primary btn-sidebar">Menù Pizze</a>
+          </div>
+          <div class="sidebar-block sidebar-cta">
+            <h4>Cene a Tema</h4>
+            <p>Serate con menù degustazione e vini abbinati</p>
+            <a href="/cene-a-tema/" class="btn btn-primary btn-sidebar">Cene a Tema</a>
+          </div>
+          <div class="sidebar-block sidebar-cta">
+            <h4>Prenota un Tavolo</h4>
+            <a href="/contatti/" class="btn btn-primary btn-sidebar">Prenota Ora</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Scopri gli Abbinamenti sulla Nostra Carta Vini</h2>
+        <p>Pizza al forno a legna e vini selezionati: un'esperienza da non perdere</p>
+        <div class="cta-buttons">
+          <a href="/menu-pizze/" class="btn btn-primary">Menù Pizze</a>
+          <a href="/contatti/" class="btn btn-outline-white">Prenota un Tavolo</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

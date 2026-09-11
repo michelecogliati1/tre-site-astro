@@ -1,0 +1,142 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+
+const seoData = {
+  title: "Impasti e Tecniche per Pizza Perfetta | Blog TRE",
+  description: "Guide complete sugli impasti: lievitazione, idratazione, temperature. Scopri i segreti dell'impasto pizza professionale.",
+  canonical: "https://www.ristorantepizzeriatre.it/tradizione/impasti/",
+  ogImage: "https://www.ristorantepizzeriatre.it/img/tradizione/cat-impasti-hero.webp",
+  preloadImage: "/img/tradizione/cat-impasti-hero.webp",
+};
+
+const articoli = [
+  {
+    titolo: "Impasto Pizza: Lievitazione, Idratazione e Temperature Perfette",
+    excerpt: "Guida completa all'impasto pizza perfetto: tempi di lievitazione, percentuali di idratazione e temperature ideali per una pizza artigianale.",
+    url: "/tradizione/impasti/lievitazione-idratazione-temperatura/",
+    immagine: "/img/tradizione/impasti/art-impasto-pizza-lievitazione.webp",
+    data: "2025"
+  }
+];
+
+const altreCategorie = [
+  { titolo: "Ingredienti", url: "/tradizione/ingredienti/", icona: "🫒" },
+  { titolo: "Ricette", url: "/tradizione/ricette/", icona: "📖" },
+  { titolo: "Territorio", url: "/tradizione/territorio/", icona: "🏔️" },
+  { titolo: "Chef", url: "/tradizione/chef/", icona: "👨‍🍳" }
+];
+
+const schemaOrg = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "name": "Impasti e Tecniche per Pizza Perfetta",
+      "description": seoData.description,
+      "url": seoData.canonical
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.ristorantepizzeriatre.it/" },
+        { "@type": "ListItem", "position": 2, "name": "Tradizione", "item": "https://www.ristorantepizzeriatre.it/tradizione/" },
+        { "@type": "ListItem", "position": 3, "name": "Impasti", "item": seoData.canonical }
+      ]
+    }
+  ]
+};
+---
+
+<Layout 
+  title={seoData.title}
+  description={seoData.description}
+  canonical={seoData.canonical}
+  ogImage={seoData.ogImage}
+  preloadImage={seoData.preloadImage}
+>
+  <Fragment slot="schema">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
+  </Fragment>
+
+  <section class="hero hero-blog-category hero-cat-impasti">
+    <div class="container hero-content">
+      <span class="blog-category-label">La Tradizione</span>
+      <h1>Impasti: Tecniche e Segreti della Pizza Perfetta</h1>
+      <p>Approfondimenti su lievitazione, idratazione, temperature e metodi per ottenere un impasto eccezionale</p>
+    </div>
+  </section>
+
+  <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li><a href="/tradizione/">Tradizione</a></li>
+        <li aria-current="page">Impasti</li>
+      </ol>
+    </div>
+  </nav>
+
+  <section class="blog-intro-section">
+    <div class="container">
+      <div class="blog-intro">
+        <p>Approfondimenti sulle tecniche di impasto: dalla lievitazione all'idratazione, dalle temperature ai metodi tradizionali come poolish e biga. Guide passo-passo per ottenere una pizza perfetta, con i consigli che arrivano dalla nostra esperienza al <a href="/forno-a-legna/">forno a legna</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="blog-articles-section">
+    <div class="container">
+      <div class="blog-layout">
+        <div class="blog-main">
+          <div class="blog-articles-grid">
+            {articoli.map((articolo) => (
+              <a href={articolo.url} class="blog-article-card">
+                <div class="blog-article-image">
+                  <img src={articolo.immagine} alt={articolo.titolo} loading="lazy" decoding="async" width="400" height="250" />
+                </div>
+                <div class="blog-article-content">
+                  <h3>{articolo.titolo}</h3>
+                  <p>{articolo.excerpt}</p>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <aside class="blog-sidebar">
+          <div class="sidebar-block">
+            <h4>Altre Categorie</h4>
+            <ul class="sidebar-categories">
+              {altreCategorie.map((cat) => (
+                <li><a href={cat.url}>{cat.icona} {cat.titolo}</a></li>
+              ))}
+            </ul>
+          </div>
+          <div class="sidebar-block">
+            <a href="/tradizione/" class="btn btn-outline btn-sidebar">← Torna al Blog</a>
+          </div>
+          <div class="sidebar-block sidebar-cta">
+            <h4>Scopri il Menù Pizze</h4>
+            <p>Assaggia il risultato delle nostre tecniche di impasto</p>
+            <a href="/menu-pizze/" class="btn btn-primary btn-sidebar">Menù Pizze</a>
+          </div>
+          <div class="sidebar-block sidebar-cta">
+            <h4>Prenota un Tavolo</h4>
+            <a href="/contatti/" class="btn btn-primary btn-sidebar">Prenota Ora</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="blog-newsletter-section blog-newsletter-impasti">
+    <div class="container">
+      <div class="blog-newsletter-content">
+        <h2>Ricevi i Nuovi Articoli sugli Impasti</h2>
+        <p>Guide, tecniche e segreti del pizzaiolo direttamente nella tua casella email</p>
+        <a href="/cene-a-tema/#newsletter-cene" class="btn btn-primary">Iscriviti alla Newsletter</a>
+      </div>
+    </div>
+  </section>
+
+</Layout>

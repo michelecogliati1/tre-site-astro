@@ -1,0 +1,161 @@
+---
+import Layout from "../../../../layouts/Layout.astro";
+
+const seoData = {
+  title: "Risotto alla Milanese: La Ricetta Originale dello Chef",
+  description: "Risotto alla milanese: storia, ingredienti tradizionali e ricetta passo-passo. Scopri i segreti del piatto simbolo della cucina lombarda.",
+  canonical: "https://www.ristorantepizzeriatre.it/tradizione/ricette/risotto-milanese-ricetta-originale/",
+  ogImage: "https://www.ristorantepizzeriatre.it/img/tradizione/ricette/art-risotto-milanese-og.webp",
+  preloadImage: "/img/tradizione/ricette/art-risotto-milanese.webp",
+  ogType: "article",
+};
+
+const schemaOrg = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "Risotto alla Milanese: La Ricetta Originale dello Chef",
+      "description": seoData.description,
+      "image": seoData.ogImage,
+      "datePublished": "2025-04-25",
+      "dateModified": "2025-04-25",
+      "author": { "@type": "Organization", "name": "Ristorante Pizzeria TRE" },
+      "publisher": { "@type": "Organization", "name": "Ristorante Pizzeria TRE", "logo": { "@type": "ImageObject", "url": "https://www.ristorantepizzeriatre.it/img/brand/tre-logo.svg" } },
+      "mainEntityOfPage": seoData.canonical
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.ristorantepizzeriatre.it/" },
+        { "@type": "ListItem", "position": 2, "name": "Tradizione", "item": "https://www.ristorantepizzeriatre.it/tradizione/" },
+        { "@type": "ListItem", "position": 3, "name": "Ricette", "item": "https://www.ristorantepizzeriatre.it/tradizione/ricette/" },
+        { "@type": "ListItem", "position": 4, "name": "Risotto alla Milanese", "item": seoData.canonical }
+      ]
+    }
+  ]
+};
+---
+
+<Layout title={seoData.title} description={seoData.description} canonical={seoData.canonical} ogImage={seoData.ogImage} preloadImage={seoData.preloadImage} ogType={seoData.ogType}>
+  <Fragment slot="schema">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
+  </Fragment>
+
+  <section class="hero hero-blog-article">
+    <div class="container hero-content">
+      <span class="blog-category-label"><a href="/tradizione/ricette/">Ricette</a></span>
+      <h1>Risotto alla Milanese: La Ricetta Originale dello Chef</h1>
+    </div>
+  </section>
+
+  <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li><a href="/tradizione/">Tradizione</a></li>
+        <li><a href="/tradizione/ricette/">Ricette</a></li>
+        <li aria-current="page">Risotto alla Milanese</li>
+      </ol>
+    </div>
+  </nav>
+
+  <section class="blog-articles-section">
+    <div class="container">
+      <div class="blog-layout">
+        <article class="blog-article-body">
+
+          <p class="article-lead">Il risotto alla milanese è il piatto simbolo della cucina lombarda: pochi ingredienti semplici che, combinati con la giusta tecnica, creano un capolavoro di sapore e colore. Scopri la storia di questo piatto leggendario e i principi fondamentali per prepararlo a regola d'arte.</p>
+
+          <img src="/img/tradizione/ricette/art-risotto-milanese.webp" alt="Risotto alla milanese con zafferano" class="article-featured-image" loading="eager" decoding="async" width="800" height="500" />
+
+          <h2>La Storia del Risotto alla Milanese</h2>
+          <p>Le origini del risotto alla milanese si perdono tra storia e leggenda. La versione più affascinante racconta di un garzone vetraio della fabbrica del Duomo di Milano che, nel 1574, ebbe l'idea di aggiungere lo zafferano — che usava per colorare il vetro — al riso del suo pranzo di nozze. Il risultato fu così straordinario che il piatto divenne rapidamente uno dei simboli della città.</p>
+          <p>Al di là della leggenda, il risotto allo zafferano si diffuse nelle cucine milanesi tra il '500 e il '600, quando lo zafferano era una spezia preziosa e il riso era già un alimento fondamentale nella pianura padana. La versione che conosciamo oggi, con l'aggiunta di midollo di bue, si consolidò nell'Ottocento.</p>
+
+          <h2>Gli Ingredienti della Tradizione</h2>
+          <p>Il risotto alla milanese autentico si basa su ingredienti pochi ma di qualità assoluta. Il <strong>riso Carnaroli</strong> è la scelta tradizionale per la sua capacità di assorbire i condimenti mantenendo una perfetta cottura al dente. Lo <strong>zafferano in pistilli</strong> (mai in polvere) è l'anima del piatto: il suo aroma delicato e il colore dorato sono insostituibili.</p>
+          <p>Il <strong>midollo di bue</strong> è l'ingrediente che distingue la ricetta originale da tutte le varianti. Dona una cremosità unica e un sapore profondo. Il <strong>brodo di carne</strong>, preparato con manzo e verdure, è il veicolo che trasporta tutti i sapori. Burro e Parmigiano Reggiano completano la mantecatura finale.</p>
+
+          <div class="article-callout">
+            <strong>Il segreto dello chef</strong> — La qualità dello zafferano fa tutta la differenza. Lo zafferano in pistilli, messo in infusione nel brodo caldo per almeno 20 minuti prima dell'utilizzo, rilascia un aroma incomparabilmente superiore rispetto alla polvere.
+          </div>
+
+          <h2>I Principi della Preparazione</h2>
+          <p>Il risotto alla milanese segue i passaggi classici del risotto italiano, con alcune particolarità. La tostatura del riso è fondamentale: i chicchi devono diventare traslucidi e caldi prima di ricevere la prima aggiunta di brodo. Questa fase sigilla l'amido all'interno del chicco, garantendo una cottura uniforme.</p>
+          <p>Il midollo di bue va sciolto nel burro all'inizio della preparazione, prima della tostatura del riso. La cipolla, tagliata finissima, si aggiunge e si fa appassire dolcemente fino a diventare trasparente — mai dorata, per non alterare il colore finale del piatto.</p>
+          <p>Lo zafferano si aggiunge a metà cottura, diluito nel brodo caldo. Questo tempismo permette allo zafferano di diffondersi uniformemente nel riso senza perdere le sue proprietà aromatiche con una cottura troppo prolungata.</p>
+
+          <div class="article-callout article-callout-cta">
+            <strong>La mantecatura</strong> è il momento più critico: a fuoco spento, burro freddo a pezzetti e Parmigiano Reggiano vengono incorporati con movimenti vigorosi. Il risotto deve "ondeggiare" nel piatto — gli chef milanesi dicono che deve fare "l'onda". Per ottenere questo risultato serve pratica, pazienza e... i migliori ingredienti.
+          </div>
+
+          <h2>Gli Errori da Evitare</h2>
+          <p><strong>Usare zafferano in polvere</strong> è l'errore più comune: il sapore è piatto e metallico rispetto ai pistilli. <strong>Aggiungere brodo freddo</strong> interrompe la cottura del riso e crea una texture irregolare. <strong>Mescolare troppo o troppo poco:</strong> il risotto va mescolato con regolarità ma senza ossessione — il riso ha bisogno anche di momenti di riposo per assorbire il liquido.</p>
+
+          <h2>Varianti e Abbinamenti</h2>
+          <p>Il risotto alla milanese è tradizionalmente accompagnato dall'ossobuco — la "coppia perfetta" della cucina lombarda. Può essere servito anche come contorno di brasati e stufati. Sul fronte vino, un bianco strutturato come un Lugana o un Franciacorta DOCG si abbina perfettamente.</p>
+          <p>Se sei curioso di scoprire gli abbinamenti vino ideali, leggi la nostra guida sugli <a href="/tradizione/chef/vino-giusto-per-pizza/">abbinamenti vino</a>, valida anche oltre la pizza.</p>
+
+          <h2>Assaggia il Nostro Risotto</h2>
+          <p>Il risotto alla milanese preparato a regola d'arte richiede attenzione, tempo e ingredienti di prima qualità. Al Ristorante TRE prepariamo i nostri risotti seguendo la tradizione, con brodo fatto in casa, zafferano in pistilli e una mantecatura che è il risultato di anni di esperienza.</p>
+          <p>Scopri nel nostro <a href="/menu-alla-carta/">menù alla carta</a> i piatti della <a href="/cucina-tradizionale/">cucina tradizionale</a> lombarda e italiana, e <a href="/contatti/">prenota un tavolo</a> per assaggiare la differenza di un risotto preparato come si deve.</p>
+
+          <div class="article-related">
+            <h3>Articoli Correlati</h3>
+            <div class="related-articles-grid">
+              <a href="/cucina-tradizionale/" class="blog-article-card">
+                <div class="blog-article-image">
+                  <img src="/img/cucina-tradizionale/hero-cucina-tradizionale-ristorante-tre-merate.webp" alt="Cucina Tradizionale" loading="lazy" decoding="async" width="400" height="250" />
+                </div>
+                <div class="blog-article-content">
+                  <h4>Cucina Tradizionale Italiana</h4>
+                  <p>Scopri la nostra filosofia di cucina autentica dal 1953</p>
+                </div>
+              </a>
+              <a href="/tradizione/territorio/cosa-fare-merate-guida/" class="blog-article-card">
+                <div class="blog-article-image">
+                  <img src="/img/tradizione/territorio/art-cosa-fare-merate.webp" alt="Cosa Fare a Merate" loading="lazy" decoding="async" width="400" height="250" />
+                </div>
+                <div class="blog-article-content">
+                  <h4>Cosa Fare a Merate</h4>
+                  <p>Guida ai luoghi da visitare nella Brianza lecchese</p>
+                </div>
+              </a>
+            </div>
+          </div>
+
+        </article>
+
+        <aside class="blog-sidebar">
+          <div class="sidebar-block">
+            <h4>Categoria</h4>
+            <a href="/tradizione/ricette/" class="btn btn-outline btn-sidebar">📖 Ricette</a>
+          </div>
+          <div class="sidebar-block sidebar-cta">
+            <h4>Menù alla Carta</h4>
+            <p>Scopri i piatti della tradizione lombarda</p>
+            <a href="/menu-alla-carta/" class="btn btn-primary btn-sidebar">Menù alla Carta</a>
+          </div>
+          <div class="sidebar-block sidebar-cta">
+            <h4>Prenota un Tavolo</h4>
+            <a href="/contatti/" class="btn btn-primary btn-sidebar">Prenota Ora</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Prenota e Assaggia il Nostro Risotto alla Milanese</h2>
+        <p>Preparato con zafferano in pistilli, brodo fatto in casa e mantecatura tradizionale</p>
+        <div class="cta-buttons">
+          <a href="/menu-alla-carta/" class="btn btn-primary">Menù alla Carta</a>
+          <a href="/contatti/" class="btn btn-outline-white">Prenota un Tavolo</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,165 @@
+---
+import Layout from "../../../../layouts/Layout.astro";
+
+const seoData = {
+  title: "Cosa Fare a Merate: Guida ai Luoghi da Visitare in Brianza",
+  description: "Scopri cosa fare a Merate e dintorni: luoghi da visitare, escursioni, cultura e dove mangiare. Guida completa alla Brianza lecchese.",
+  canonical: "https://www.ristorantepizzeriatre.it/tradizione/territorio/cosa-fare-merate-guida/",
+  ogImage: "https://www.ristorantepizzeriatre.it/img/tradizione/territorio/art-cosa-fare-merate-og.webp",
+  preloadImage: "/img/tradizione/territorio/art-cosa-fare-merate.webp",
+  ogType: "article",
+};
+
+const schemaOrg = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "Cosa Fare a Merate: Guida ai Luoghi da Visitare",
+      "description": seoData.description,
+      "image": seoData.ogImage,
+      "datePublished": "2025-05-01",
+      "dateModified": "2025-05-01",
+      "author": { "@type": "Organization", "name": "Ristorante Pizzeria TRE" },
+      "publisher": { "@type": "Organization", "name": "Ristorante Pizzeria TRE", "logo": { "@type": "ImageObject", "url": "https://www.ristorantepizzeriatre.it/img/brand/tre-logo.svg" } },
+      "mainEntityOfPage": seoData.canonical
+    },
+    {
+      "@type": "Place",
+      "name": "Merate",
+      "address": { "@type": "PostalAddress", "addressLocality": "Merate", "addressRegion": "LC", "addressCountry": "IT" },
+      "geo": { "@type": "GeoCoordinates", "latitude": 45.6983, "longitude": 9.4183 }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.ristorantepizzeriatre.it/" },
+        { "@type": "ListItem", "position": 2, "name": "Tradizione", "item": "https://www.ristorantepizzeriatre.it/tradizione/" },
+        { "@type": "ListItem", "position": 3, "name": "Territorio", "item": "https://www.ristorantepizzeriatre.it/tradizione/territorio/" },
+        { "@type": "ListItem", "position": 4, "name": "Cosa Fare a Merate", "item": seoData.canonical }
+      ]
+    }
+  ]
+};
+---
+
+<Layout title={seoData.title} description={seoData.description} canonical={seoData.canonical} ogImage={seoData.ogImage} preloadImage={seoData.preloadImage} ogType={seoData.ogType}>
+  <Fragment slot="schema">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
+  </Fragment>
+
+  <section class="hero hero-blog-article">
+    <div class="container hero-content">
+      <span class="blog-category-label"><a href="/tradizione/territorio/">Territorio</a></span>
+      <h1>Cosa Fare a Merate: Guida ai Luoghi da Visitare</h1>
+    </div>
+  </section>
+
+  <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li><a href="/tradizione/">Tradizione</a></li>
+        <li><a href="/tradizione/territorio/">Territorio</a></li>
+        <li aria-current="page">Cosa Fare a Merate</li>
+      </ol>
+    </div>
+  </nav>
+
+  <section class="blog-articles-section">
+    <div class="container">
+      <div class="blog-layout">
+        <article class="blog-article-body">
+
+          <p class="article-lead">Merate è una cittadina nel cuore della Brianza lecchese che sorprende per la ricchezza di storia, natura e tradizioni. Che tu sia un visitatore di passaggio o un residente alla ricerca di nuove scoperte, questa guida ti accompagna tra i luoghi più belli e le esperienze da non perdere a Merate e nei suoi dintorni.</p>
+
+          <img src="/img/tradizione/territorio/art-cosa-fare-merate.webp" alt="Panorama di Merate e della Brianza lecchese" class="article-featured-image" loading="eager" decoding="async" width="800" height="500" />
+
+          <h2>Merate: Una Breve Introduzione</h2>
+          <p>Situata in provincia di Lecco, a circa 30 km da Milano e ai piedi delle Prealpi, Merate è il punto di incontro ideale tra la vivacità della Brianza e la tranquillità del paesaggio collinare. Con i suoi circa 15.000 abitanti, offre un centro storico raccolto e accogliente, ville storiche di grande fascino e una posizione strategica per esplorare tutta la Brianza lecchese.</p>
+
+          <h2>Il Centro Storico e i Monumenti</h2>
+          <p>Il cuore di Merate si sviluppa attorno a Piazza Prinetti, il salotto della città. Passeggiando per le vie del centro, si incontrano palazzi storici e la Chiesa dei Santi Ambrogio e Simpliciano, con la sua facciata settecentesca. Il Palazzo Prinetti, oggi sede del municipio, è un esempio di architettura nobiliare brianzola.</p>
+          <p>Da non perdere la visita alla Biblioteca Civica, ospitata in un edificio storico che racconta la tradizione culturale della città, e il mercato settimanale del sabato mattina, dove trovare prodotti locali freschi.</p>
+
+          <h2>L'Osservatorio Astronomico di Merate</h2>
+          <p>Una delle eccellenze di Merate è l'Osservatorio Astronomico di Brera, sede distaccata dell'omonimo osservatorio milanese. Immerso nel verde del parco di Villa San Rocco, l'osservatorio ospita telescopi storici e moderni, e organizza periodicamente visite guidate e serate di osservazione aperte al pubblico.</p>
+
+          <h2>Escursioni nella Natura</h2>
+          <p><strong>Parco Regionale di Montevecchia e Valle del Curone:</strong> A pochi chilometri da Merate, questo parco è un vero gioiello naturalistico. I terrazzamenti di Montevecchia, coltivati a vigneti e ulivi, offrono panorami mozzafiato sulla pianura fino alle Alpi. I sentieri sono adatti a tutti, dalle famiglie agli escursionisti esperti.</p>
+          <p><strong>Valle del Curone:</strong> Un paesaggio dolce di colline e boschi, ideale per passeggiate a piedi o in bicicletta. Il Santuario della Beata Vergine del Carmelo a Montevecchia è una tappa imperdibile, con la sua vista panoramica a 360 gradi.</p>
+          <p><strong>Lago di Annone e Lago di Pusiano:</strong> Per chi cerca relax in riva all'acqua, i laghi briantei sono facilmente raggiungibili e offrono percorsi ciclabili, aree picnic e possibilità di birdwatching.</p>
+
+          <h2>Eventi e Tradizioni Locali</h2>
+          <p>Merate e la Brianza lecchese sono ricche di eventi durante tutto l'anno: sagre paesane, mercatini, feste patronali e rassegne culturali animano le piazze e i borghi del territorio. La tradizione gastronomica locale si celebra in particolare durante le feste autunnali, con i prodotti tipici del territorio come castagne, vino e formaggi.</p>
+
+          <h2>Dove Mangiare a Merate</h2>
+          <p>Dopo una giornata di esplorazioni, Merate offre diverse opzioni per pranzo e cena. Per chi cerca cucina tradizionale italiana e pizza cotta nel forno a legna, il <strong><a href="/">Ristorante Pizzeria TRE</a></strong> in Via Statale 44 è un punto di riferimento dal 1953. Con il nostro <a href="/menu-alla-carta/">menù alla carta</a> di piatti della tradizione e le <a href="/menu-pizze/">pizze cotte nel forno a legna</a>, offriamo un'esperienza gastronomica autentica in un ambiente accogliente e familiare.</p>
+
+          <div class="article-callout">
+            <strong>La nostra storia</strong> — Il Ristorante Pizzeria TRE è radicato nel territorio di Merate dal 1953, quando aprì come Ristorante Passone. Scopri di più sulla nostra <a href="/chi-siamo/">storia e tradizione</a>.
+          </div>
+
+          <h2>Come Arrivare a Merate</h2>
+          <p><strong>In auto:</strong> Merate è facilmente raggiungibile dalla Tangenziale Est di Milano (uscita Usmate/Carnate) o dalla SS36 del Lago di Como. Ampio parcheggio disponibile in centro e nelle zone limitrofe.</p>
+          <p><strong>In treno:</strong> La stazione ferroviaria di Merate-Cernusco si trova sulla linea Milano-Lecco (Trenord), con frequenza di circa 30 minuti nelle ore di punta.</p>
+          <p><strong>In autobus:</strong> Diverse linee di autobus collegano Merate con Lecco, Milano e i comuni circostanti della Brianza.</p>
+
+          <h2>Dopo la Visita, Fermati al TRE</h2>
+          <p>Merate e la Brianza lecchese offrono un mix perfetto di cultura, natura e buona tavola. Qualunque sia il motivo della tua visita, il Ristorante Pizzeria TRE ti aspetta per un pranzo o una cena all'insegna della tradizione italiana. <a href="/contatti/">Scopri come raggiungerci</a> e prenota il tuo tavolo.</p>
+
+          <div class="article-related">
+            <h3>Articoli Correlati</h3>
+            <div class="related-articles-grid">
+              <a href="/chi-siamo/" class="blog-article-card">
+                <div class="blog-article-content">
+                  <h4>Chi Siamo</h4>
+                  <p>La storia del Ristorante TRE e il legame con il territorio di Merate</p>
+                </div>
+              </a>
+              <a href="/tradizione/ricette/risotto-milanese-ricetta-originale/" class="blog-article-card">
+                <div class="blog-article-image">
+                  <img src="/img/tradizione/ricette/art-risotto-milanese.webp" alt="Risotto Milanese" loading="lazy" decoding="async" width="400" height="250" />
+                </div>
+                <div class="blog-article-content">
+                  <h4>Risotto alla Milanese</h4>
+                  <p>La ricetta originale del piatto simbolo della cucina lombarda</p>
+                </div>
+              </a>
+            </div>
+          </div>
+
+        </article>
+
+        <aside class="blog-sidebar">
+          <div class="sidebar-block">
+            <h4>Categoria</h4>
+            <a href="/tradizione/territorio/" class="btn btn-outline btn-sidebar">🏔️ Territorio</a>
+          </div>
+          <div class="sidebar-block sidebar-cta">
+            <h4>Come Raggiungerci</h4>
+            <p>Mappa, orari e informazioni pratiche</p>
+            <a href="/contatti/" class="btn btn-primary btn-sidebar">Contatti e Mappa</a>
+          </div>
+          <div class="sidebar-block sidebar-cta">
+            <h4>Prenota un Tavolo</h4>
+            <a href="/contatti/" class="btn btn-primary btn-sidebar">Prenota Ora</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Dopo la Visita, Fermati al TRE per Pranzo o Cena</h2>
+        <p>Cucina tradizionale italiana e pizza al forno a legna nel cuore di Merate</p>
+        <div class="cta-buttons">
+          <a href="/menu-alla-carta/" class="btn btn-primary">Menù alla Carta</a>
+          <a href="/contatti/" class="btn btn-outline-white">Prenota un Tavolo</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
