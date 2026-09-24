@@ -1,0 +1,673 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+// SEO Data
+const seoData = {
+  title: "Eventi e Feste su Misura a Merate - TRE Grill + Pizzeria",
+  description: "Compleanni, cerimonie, lauree, anniversari, cene aziendali e cene a tema al Ristorante TRE di Merate. Scopri tutte le formule e richiedi un preventivo.",
+  canonical: "https://www.ristorantepizzeriatre.it/eventi/",
+  ogImage: "https://www.ristorantepizzeriatre.it/img/compleanni/compleanni-menu-ristorante-pizzeria-tre-merate-hero.webp",
+  preloadImage: "/img/compleanni/compleanni-menu-ristorante-pizzeria-tre-merate-hero.webp",
+};
+
+// Tipologie di evento — alimenta ItemList di Schema.org (il carosello ha markup inline)
+const tipologie = [
+  {
+    titolo: "Compleanni",
+    excerpt: "Tre formule su misura — Gran Festa Gourmet, Pizza Party e Buffet Dinamico — per festeggiare in un'atmosfera conviviale.",
+    url: "/eventi/compleanni/",
+  },
+  {
+    titolo: "Cerimonie",
+    excerpt: "Battesimi, comunioni e cresime con Festa in Famiglia Gourmet o Rinfresco in Famiglia, pensati per tutti gli ospiti.",
+    url: "/eventi/battesimi-comunioni-cresime/",
+  },
+  {
+    titolo: "Lauree",
+    excerpt: "Laurea Gourmet, Pizza Party o Rinfresco di Laurea: tre modi per celebrare il traguardo con famiglia e amici.",
+    url: "/eventi/lauree/",
+  },
+  {
+    titolo: "Anniversari",
+    excerpt: "Cena Romantica Gourmet per due o Rinfresco di Anniversario con gli amici, in un'atmosfera intima e curata.",
+    url: "/eventi/anniversari/",
+  },
+  {
+    titolo: "Cene Aziendali",
+    excerpt: "Cena Business Gourmet, sala riservata, proiettori, schermi e Wi-Fi per meeting, team building e cene di lavoro.",
+    url: "/eventi/meeting-cene-aziendali/",
+  },
+  {
+    titolo: "Cene a Tema",
+    excerpt: "Serate a calendario con menù degustazione a prezzo fisso e bevande abbinate: basta prenotare il tuo tavolo.",
+    url: "/cene-a-tema/",
+  },
+];
+
+// Le formule ricorrenti su tutte le tipologie di evento
+const formule = [
+  {
+    badge: "Gourmet",
+    titolo: "Menù Gourmet",
+    descrizione: "Antipasto, primo, secondo, dolce, caffè e bevande incluse: la formula completa per un evento elegante.",
+    immagine: "/img/cerimonie/menu-cerimonie-gourmet-ristorante-pizzeria-tre-merate.webp",
+    alt: "Menù gourmet per eventi al Ristorante TRE a Merate",
+  },
+  {
+    badge: "Pizza",
+    titolo: "Pizza Party",
+    descrizione: "Menù Pizza o Giro Pizza con 6/7 tipi a spicchi, patatine, torta e caffè: la formula più conviviale.",
+    immagine: "/img/compleanni/menu-pizza-compleanni-ristorante-pizzeria-tre-merate.webp",
+    alt: "Pizza party per eventi al Ristorante TRE a Merate",
+  },
+  {
+    badge: "Rinfresco",
+    titolo: "Rinfresco e Buffet",
+    descrizione: "Buffet dinamico con aperitivi, piatti di cucina, primo servito e dessert, per far circolare gli ospiti.",
+    immagine: "/img/compleanni/menu-buffet-compleanni-ristorante-pizzeria-tre-merate.webp",
+    alt: "Rinfresco e buffet per eventi al Ristorante TRE a Merate",
+  },
+];
+
+// Schema.org
+const schemaOrg = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": "https://www.ristorantepizzeriatre.it/eventi/#webpage",
+      "url": "https://www.ristorantepizzeriatre.it/eventi/",
+      "name": "Eventi e Feste su Misura | Ristorante Pizzeria TRE Merate",
+      "description": seoData.description,
+      "isPartOf": {
+        "@id": "https://www.ristorantepizzeriatre.it/#website"
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": seoData.ogImage
+      },
+      "breadcrumb": {
+        "@id": "https://www.ristorantepizzeriatre.it/eventi/#breadcrumb"
+      },
+      "mainEntity": {
+        "@id": "https://www.ristorantepizzeriatre.it/eventi/#itemlist"
+      },
+      "inLanguage": "it-IT"
+    },
+    {
+      "@type": "ItemList",
+      "@id": "https://www.ristorantepizzeriatre.it/eventi/#itemlist",
+      "name": "Tipologie di evento al Ristorante Pizzeria TRE",
+      "itemListElement": tipologie.map((t, i) => ({
+        "@type": "ListItem",
+        "position": i + 1,
+        "name": t.titolo,
+        "description": t.excerpt,
+        "url": `https://www.ristorantepizzeriatre.it${t.url}`
+      }))
+    },
+    {
+      "@type": "Service",
+      "@id": "https://www.ristorantepizzeriatre.it/eventi/#service",
+      "name": "Organizzazione Eventi - Ristorante Pizzeria TRE",
+      "description": "Organizzazione di compleanni, cerimonie, lauree, anniversari, meeting e cene aziendali al Ristorante Pizzeria TRE a Merate, con menù personalizzati e preventivi su misura.",
+      "url": "https://www.ristorantepizzeriatre.it/eventi/",
+      "serviceType": "Organizzazione Eventi e Feste",
+      "provider": {
+        "@id": "https://www.ristorantepizzeriatre.it/#restaurant"
+      },
+      "areaServed": {
+        "@type": "GeoCircle",
+        "geoMidpoint": {
+          "@type": "GeoCoordinates",
+          "latitude": 45.6983,
+          "longitude": 9.4183
+        },
+        "geoRadius": "20000"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Formule per Eventi",
+        "itemListElement": formule.map((f) => ({
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": f.titolo,
+            "description": f.descrizione
+          }
+        }))
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.ristorantepizzeriatre.it/eventi/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.ristorantepizzeriatre.it/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Eventi",
+          "item": "https://www.ristorantepizzeriatre.it/eventi/"
+        }
+      ]
+    }
+  ]
+};
+---
+
+<Layout
+  title={seoData.title}
+  description={seoData.description}
+  canonical={seoData.canonical}
+  ogImage={seoData.ogImage}
+  preloadImage={seoData.preloadImage}
+>
+  <!-- Schema.org JSON-LD -->
+  <Fragment slot="schema">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
+  </Fragment>
+
+  <!-- Hero Section -->
+  <section class="hero hero-eventi">
+    <div class="container hero-content">
+      <h1>Eventi e Feste su Misura<br />a Merate</h1>
+      <p>
+        Compleanni, cerimonie, lauree, anniversari e cene aziendali:<br />
+        menù personalizzati e sale riservate al Ristorante TRE.
+      </p>
+      <div class="hero-buttons">
+        <a href="#tipologie" class="btn btn-primary">Scopri gli Eventi</a>
+        <a href="/contatti/#preventivo" class="btn btn-outline">Richiedi Preventivo</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li aria-current="page">Eventi</li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- Menu Secondario Sticky -->
+  <nav class="submenu-sticky" id="submenu-sticky">
+    <div class="container">
+      <ul class="submenu-list">
+        <li><a href="#tipologie" class="submenu-link active">Tipologie</a></li>
+        <li><a href="#formule" class="submenu-link">Le Formule</a></li>
+        <li><a href="#come-funziona" class="submenu-link">Come Funziona</a></li>
+        <li><a href="#cene-a-tema" class="submenu-link">Cene a Tema</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Tipologie di Evento - carosello identico alla homepage -->
+  <section class="events-section eventi-tipologie-section" id="tipologie">
+    <div class="container">
+      <div class="section-header">
+        <h2>Organizza il tuo Evento su Misura</h2>
+        <p>
+          La location perfetta per organizzare compleanni, meeting aziendali,
+          battesimi, comunioni, cresime, lauree e anniversari. Servizio
+          personalizzato e cucina di alta qualità.
+        </p>
+      </div>
+
+      <div class="carousel-wrapper">
+        <button class="carousel-arrow carousel-arrow-left" data-carousel="events" aria-label="Precedente">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </button>
+
+        <div class="carousel-container" data-carousel="events">
+          <div class="cards-grid carousel-track">
+            <div class="event-card">
+              <div class="event-image">
+                <img
+                  src="/img/homepage/compleanni-ristorante-pizzeria-tre-merate-carosello-homepage.webp"
+                  alt="Compleanni al Ristorante TRE a Merate"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="300"
+                />
+              </div>
+              <div class="event-content">
+                <h3>Compleanni</h3>
+                <p>Festeggia in un'atmosfera unica e conviviale</p>
+                <a href="/eventi/compleanni/" class="btn btn-primary">Compleanni</a>
+              </div>
+            </div>
+
+            <div class="event-card">
+              <div class="event-image">
+                <img
+                  src="/img/homepage/cerimonie-ristorante-pizzeria-tre-merate-carosello-homepage.webp"
+                  alt="Cerimonie, battesimi e comunioni al Ristorante TRE a Merate"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="300"
+                />
+              </div>
+              <div class="event-content">
+                <h3>Cerimonie</h3>
+                <p>Battesimi, Comunioni, e Cresime</p>
+                <a href="/eventi/battesimi-comunioni-cresime/" class="btn btn-primary">Cerimonie</a>
+              </div>
+            </div>
+
+            <div class="event-card">
+              <div class="event-image">
+                <img
+                  src="/img/homepage/lauree-ristorante-pizzeria-tre-merate-carosello-homepage.webp"
+                  alt="Feste di laurea al Ristorante TRE a Merate"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="300"
+                />
+              </div>
+              <div class="event-content">
+                <h3>Lauree</h3>
+                <p>Rendi la tua serata con una festa su misura</p>
+                <a href="/eventi/lauree/" class="btn btn-primary">Lauree</a>
+              </div>
+            </div>
+
+            <div class="event-card">
+              <div class="event-image">
+                <img
+                  src="/img/homepage/anniversari-ristorante-pizzeria-tre-merate-carosello-homepage.webp"
+                  alt="Anniversari al Ristorante TRE a Merate"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="300"
+                />
+              </div>
+              <div class="event-content">
+                <h3>Anniversari</h3>
+                <p>Cena romantica o festa con amici per celebrare il vostro amore</p>
+                <a href="/eventi/anniversari/" class="btn btn-primary">Anniversari</a>
+              </div>
+            </div>
+
+            <div class="event-card">
+              <div class="event-image">
+                <img
+                  src="/img/homepage/meeting-cene-aziendali-ristorante-pizzeria-tre-merate-carosello-homepage.webp"
+                  alt="Cene aziendali e meeting al Ristorante TRE a Merate"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="300"
+                />
+              </div>
+              <div class="event-content">
+                <h3>Cene Aziendali</h3>
+                <p>Eventi professionali in un ambiente confortevole</p>
+                <a href="/eventi/meeting-cene-aziendali/" class="btn btn-primary">Cene Aziendali</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="carousel-arrow carousel-arrow-right" data-carousel="events" aria-label="Successivo">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="carousel-indicators" data-carousel="events"></div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Le Formule -->
+  <section class="formule-section" id="formule">
+    <div class="container">
+      <div class="section-header">
+        <h2>Tre Formule per Ogni Evento</h2>
+        <p>
+          Gourmet, pizza o rinfresco: le nostre proposte tornano su tutte le
+          tipologie di evento e si adattano al numero di ospiti e al tuo budget.
+        </p>
+      </div>
+
+      <div class="formula-preview-grid">
+        {formule.map((f) => (
+          <div class="formula-preview-card">
+            <div class="formula-preview-image">
+              <img
+                src={f.immagine}
+                alt={f.alt}
+                loading="lazy"
+                decoding="async"
+                width="400"
+                height="300"
+              />
+            </div>
+            <div class="formula-preview-content">
+              <span class="formula-preview-badge">{f.badge}</span>
+              <h3>{f.titolo}</h3>
+              <p>{f.descrizione}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Come Funziona -->
+  <section class="feature-section" id="come-funziona">
+    <div class="container">
+      <div class="feature-grid">
+        <div class="feature-content">
+          <h2>Come Organizziamo il tuo Evento</h2>
+          <p class="feature-intro">
+            Tre passaggi e il resto lo gestiamo noi: dalla scelta della formula alla
+            personalizzazione dei piatti, fino all'allestimento della sala.
+          </p>
+          <ul class="feature-steps-list">
+            <li>
+              <span class="step-circle">1</span>
+              <div class="step-content">
+                <strong>Richiedi un Preventivo</strong>
+                <p>Indica occasione, data e numero di ospiti: ti rispondiamo con una proposta</p>
+              </div>
+            </li>
+            <li>
+              <span class="step-circle">2</span>
+              <div class="step-content">
+                <strong>Scegli la Formula</strong>
+                <p>Gourmet, pizza o rinfresco, in base allo stile della tua festa</p>
+              </div>
+            </li>
+            <li>
+              <span class="step-circle">3</span>
+              <div class="step-content">
+                <strong>Personalizza il Menù</strong>
+                <p>Modifica i piatti secondo i tuoi gusti e le esigenze dei tuoi ospiti</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="feature-image">
+          <img
+            src="/img/compleanni/personalizza-compleanno-ristorante-pizzeria-tre-merate.webp"
+            alt="Personalizza il tuo evento al Ristorante TRE a Merate"
+            loading="lazy"
+            decoding="async"
+            width="600"
+            height="450"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Cene a Tema -->
+  <section class="landing-section bg-light-section" id="cene-a-tema">
+    <div class="container">
+      <div class="landing-content-block">
+        <div class="landing-text">
+          <h2>Le Cene a Tema del TRE</h2>
+          <p>
+            Oltre agli eventi privati, durante l'anno organizziamo le nostre
+            <strong>cene a tema</strong>: serate a calendario con un menù degustazione
+            a prezzo fisso e bevande abbinate a ogni portata, dall'Oktoberfest ai
+            Sapori di Mare.
+          </p>
+          <p>
+            Qui non serve un preventivo: scegli la serata, prenota il tavolo e pensiamo
+            noi al resto. Iscriviti alla newsletter per conoscere in anteprima le prossime date.
+          </p>
+          <div class="cta-buttons">
+            <a href="/cene-a-tema/" class="btn btn-primary">Scopri le Cene a Tema</a>
+            <a href="/cene-a-tema/#newsletter-cene" class="btn btn-outline">Ricevi le Anteprime</a>
+          </div>
+        </div>
+        <div class="landing-image">
+          <img
+            src="/img/homepage/cene-tema-ristorante-pizzeria-tre-merate-homepage.webp"
+            alt="Cena a tema con menù degustazione al Ristorante TRE a Merate"
+            loading="lazy"
+            decoding="async"
+            width="600"
+            height="450"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Richiedi un Preventivo - STILE HERO FULL WIDTH -->
+  <section class="cta-preventivo-hero">
+    <div class="container cta-preventivo-hero-content">
+      <h2>Richiedi un Preventivo Personalizzato</h2>
+      <p>
+        Compila il modulo indicando occasione, data e numero di ospiti:
+        ti prepariamo una proposta su misura per il tuo evento
+      </p>
+      <a href="/contatti/#preventivo" class="btn btn-primary">Richiedi Preventivo</a>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Sticky CTA Bottom -->
+  <div class="sticky-cta-bottom" id="sticky-cta">
+    <div class="sticky-cta-container">
+      <div class="sticky-cta-logo">
+        <img src="/img/brand/tre-logo.svg" alt="TRE" width="50" height="50" />
+      </div>
+      <div class="sticky-cta-content">
+        <span class="sticky-cta-title">Eventi su Misura</span>
+        <span class="sticky-cta-subtitle">Richiedi un preventivo personalizzato</span>
+      </div>
+      <a href="/contatti/#preventivo" class="btn btn-primary sticky-cta-btn">Richiedi Preventivo</a>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  /* Hero Eventi */
+  .hero-eventi {
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.62)),
+      url('/img/compleanni/compleanni-menu-ristorante-pizzeria-tre-merate-hero.webp');
+  }
+
+  /* Offset ancore sotto header + submenu sticky */
+  .eventi-tipologie-section,
+  .formule-section,
+  .feature-section,
+  .landing-section {
+    scroll-margin-top: 220px;
+  }
+
+  @media (min-width: 992px) {
+    .eventi-tipologie-section,
+    .formule-section,
+    .feature-section,
+    .landing-section {
+      scroll-margin-top: 240px;
+    }
+  }
+
+  /* Le card formule sono informative, non cliccabili: nessun hover interattivo */
+  .formula-preview-card:hover {
+    transform: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  }
+
+  .formula-preview-card:hover .formula-preview-image img {
+    transform: none;
+  }
+
+  /* CTA Preventivo Hero - STILE FULL WIDTH */
+  .cta-preventivo-hero {
+    color: var(--text-white);
+    text-align: center;
+
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)),
+      url('/img/cerimonie/richiedi-preventivo-cerimonie-ristorante-pizzeria-tre-merate.webp');
+    background-size: cover;
+    background-position: center;
+
+    min-height: clamp(420px, 50vh, 600px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 5rem 0;
+  }
+
+  @media (max-width: 768px) {
+    .cta-preventivo-hero {
+      min-height: clamp(380px, 45vh, 520px);
+      padding: 4rem 0;
+    }
+  }
+
+  .cta-preventivo-hero-content {
+    max-width: 800px;
+  }
+
+  .cta-preventivo-hero h2 {
+    margin-bottom: 1rem;
+    color: var(--text-white);
+  }
+
+  .cta-preventivo-hero p {
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    color: var(--text-gray);
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const header = document.getElementById('main-header');
+    const submenu = document.getElementById('submenu-sticky');
+    const submenuList = document.querySelector('.submenu-list');
+    const submenuLinks = document.querySelectorAll('.submenu-link');
+    const sections = document.querySelectorAll(
+      '.eventi-tipologie-section[id], .formule-section[id], .feature-section[id], .landing-section[id]'
+    );
+
+    // Sticky CTA elements
+    const stickyCta = document.getElementById('sticky-cta');
+    const heroSection = document.querySelector('.hero');
+    const ctaPreventivoSection = document.querySelector('.cta-preventivo-hero');
+
+    // Calcola offset totale (header + submenu sticky)
+    const getOffset = () => {
+      const headerHeight = header ? header.offsetHeight : 0;
+      const submenuHeight = submenu ? submenu.offsetHeight : 0;
+      return headerHeight + submenuHeight + 60;
+    };
+
+    // Scrolla il submenu orizzontalmente per mostrare il link attivo
+    const scrollSubmenuToActiveLink = (activeLink) => {
+      if (!submenuList || !activeLink) return;
+      if (window.innerWidth > 768) return;
+
+      submenuList.scrollTo({
+        left: activeLink.offsetLeft - 16,
+        behavior: 'smooth'
+      });
+    };
+
+    // Gestisce la visibilità della sticky CTA
+    const handleStickyCta = () => {
+      if (!stickyCta || !heroSection || !ctaPreventivoSection) return;
+
+      const heroBottom = heroSection.getBoundingClientRect().bottom;
+      const ctaTop = ctaPreventivoSection.getBoundingClientRect().top;
+
+      const shouldShow = heroBottom < 0 && ctaTop > window.innerHeight - 100;
+
+      if (shouldShow) {
+        stickyCta.classList.add('visible');
+      } else {
+        stickyCta.classList.remove('visible');
+      }
+    };
+
+    // Highlight link attivo in base allo scroll
+    const highlightActiveLink = () => {
+      const scrollPos = window.scrollY + getOffset() + 50;
+
+      sections.forEach((section) => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        const sectionId = section.getAttribute('id');
+
+        if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+          submenuLinks.forEach((link) => {
+            const wasActive = link.classList.contains('active');
+            link.classList.remove('active');
+
+            if (link.getAttribute('href') === `#${sectionId}`) {
+              link.classList.add('active');
+              if (!wasActive) {
+                scrollSubmenuToActiveLink(link);
+              }
+            }
+          });
+        }
+      });
+    };
+
+    const onScroll = () => {
+      highlightActiveLink();
+      handleStickyCta();
+    };
+
+    window.addEventListener('scroll', onScroll);
+    handleStickyCta();
+
+    // Smooth scroll per i link ancora
+    document.querySelectorAll('a[href^="#"]').forEach((link) => {
+      link.addEventListener('click', (e) => {
+        const targetId = link.getAttribute('href');
+        if (targetId === '#' || targetId === '#!') return;
+
+        e.preventDefault();
+        const targetSection = document.querySelector(targetId);
+        if (targetSection) {
+          window.scrollTo({
+            top: targetSection.offsetTop - getOffset() + 20,
+            behavior: 'smooth'
+          });
+
+          if (link.classList.contains('submenu-link')) {
+            scrollSubmenuToActiveLink(link);
+          }
+        }
+      });
+    });
+  });
+</script>

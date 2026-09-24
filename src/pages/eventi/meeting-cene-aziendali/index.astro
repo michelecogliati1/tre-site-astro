@@ -1,11 +1,11 @@
 ﻿---
-import Layout from "../../layouts/Layout.astro";
+import Layout from "../../../layouts/Layout.astro";
 
 // SEO Data
 const seoData = {
   title: "Organizza Meeting e Cene Aziendali - TRE Grill + Pizzeria",
   description: "Personalizza il tuo meeting con le nostre formule: Cena Gourmet, Pizza Party o Rinfresco Aziendale. Richiedi ora un preventivo online!",
-  canonical: "https://www.ristorantepizzeriatre.it/meeting-cene-aziendali/",
+  canonical: "https://www.ristorantepizzeriatre.it/eventi/meeting-cene-aziendali/",
   ogImage: "https://www.ristorantepizzeriatre.it/img/meeting/menu-meeting-cene-aziendali-ristorante-pizzeria-tre-hero.webp",
   preloadImage: "/img/meeting/menu-meeting-cene-aziendali-ristorante-pizzeria-tre-hero.webp",
 };
@@ -16,10 +16,10 @@ const schemaOrg = {
   "@graph": [
     {
       "@type": "Service",
-      "@id": "https://www.ristorantepizzeriatre.it/meeting-cene-aziendali/#service",
+      "@id": "https://www.ristorantepizzeriatre.it/eventi/meeting-cene-aziendali/#service",
       "name": "Meeting e Cene Aziendali - Ristorante Pizzeria TRE",
       "description": "Organizza meeting e cene aziendali al Ristorante Pizzeria TRE a Merate. Formule personalizzate con menù gourmet, attrezzature tecnologiche e servizio dedicato per il business.",
-      "url": "https://www.ristorantepizzeriatre.it/meeting-cene-aziendali/",
+      "url": "https://www.ristorantepizzeriatre.it/eventi/meeting-cene-aziendali/",
       "serviceType": "Organizzazione Meeting e Cene Aziendali",
       "provider": {
         "@id": "https://www.ristorantepizzeriatre.it/#restaurant"
@@ -75,7 +75,7 @@ const schemaOrg = {
     },
     {
       "@type": "BreadcrumbList",
-      "@id": "https://www.ristorantepizzeriatre.it/meeting-cene-aziendali/#breadcrumb",
+      "@id": "https://www.ristorantepizzeriatre.it/eventi/meeting-cene-aziendali/#breadcrumb",
       "itemListElement": [
         {
           "@type": "ListItem",
@@ -86,15 +86,21 @@ const schemaOrg = {
         {
           "@type": "ListItem",
           "position": 2,
+          "name": "Eventi",
+          "item": "https://www.ristorantepizzeriatre.it/eventi/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
           "name": "Meeting e Cene Aziendali",
-          "item": "https://www.ristorantepizzeriatre.it/meeting-cene-aziendali/"
+          "item": "https://www.ristorantepizzeriatre.it/eventi/meeting-cene-aziendali/"
         }
       ]
     },
     {
       "@type": "WebPage",
-      "@id": "https://www.ristorantepizzeriatre.it/meeting-cene-aziendali/#webpage",
-      "url": "https://www.ristorantepizzeriatre.it/meeting-cene-aziendali/",
+      "@id": "https://www.ristorantepizzeriatre.it/eventi/meeting-cene-aziendali/#webpage",
+      "url": "https://www.ristorantepizzeriatre.it/eventi/meeting-cene-aziendali/",
       "name": "Organizza Meeting e Cene Aziendali | Ristorante Pizzeria TRE Merate",
       "isPartOf": {
         "@id": "https://www.ristorantepizzeriatre.it/#website"
@@ -104,13 +110,13 @@ const schemaOrg = {
         "url": "https://www.ristorantepizzeriatre.it/img/meeting/menu-meeting-cene-aziendali-ristorante-pizzeria-tre-hero.webp"
       },
       "breadcrumb": {
-        "@id": "https://www.ristorantepizzeriatre.it/meeting-cene-aziendali/#breadcrumb"
+        "@id": "https://www.ristorantepizzeriatre.it/eventi/meeting-cene-aziendali/#breadcrumb"
       },
       "inLanguage": "it-IT"
     },
     {
       "@type": "FAQPage",
-      "@id": "https://www.ristorantepizzeriatre.it/meeting-cene-aziendali/#faq",
+      "@id": "https://www.ristorantepizzeriatre.it/eventi/meeting-cene-aziendali/#faq",
       "mainEntity": [
         {
           "@type": "Question",
@@ -174,6 +180,7 @@ const schemaOrg = {
     <div class="container">
       <ol class="breadcrumb">
         <li><a href="/">Home</a></li>
+        <li><a href="/eventi/">Eventi</a></li>
         <li aria-current="page">Meeting e Cene Aziendali</li>
       </ol>
     </div>
@@ -397,6 +404,43 @@ const schemaOrg = {
             height="450"
           />
         </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Altri Eventi - internal linking verso la categoria -->
+  <section class="landing-section bg-light-section altri-eventi-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Scopri gli Altri Eventi</h2>
+        <p>Ogni occasione ha la sua formula: dai un'occhiata alle altre proposte del TRE</p>
+      </div>
+      <div class="link-cards-grid">
+        <a href="/eventi/compleanni/" class="link-card">
+          <h4>Compleanni</h4>
+          <p>Gran Festa Gourmet, Pizza Party o Buffet Dinamico</p>
+        </a>
+        <a href="/eventi/battesimi-comunioni-cresime/" class="link-card">
+          <h4>Cerimonie</h4>
+          <p>Menù dedicati a battesimi, comunioni e cresime</p>
+        </a>
+        <a href="/eventi/lauree/" class="link-card">
+          <h4>Lauree</h4>
+          <p>Celebra il traguardo con un pranzo o una cena speciale</p>
+        </a>
+        <a href="/eventi/anniversari/" class="link-card">
+          <h4>Anniversari</h4>
+          <p>Cena romantica o rinfresco con gli amici</p>
+        </a>
+        <a href="/cene-a-tema/" class="link-card">
+          <h4>Cene a Tema</h4>
+          <p>Serate a calendario con menù degustazione</p>
+        </a>
+      </div>
+      <div class="section-cta">
+        <a href="/eventi/" class="btn btn-outline">Tutti gli Eventi</a>
       </div>
     </div>
   </section>

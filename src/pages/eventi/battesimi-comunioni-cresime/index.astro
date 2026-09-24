@@ -1,11 +1,11 @@
 ﻿---
-import Layout from "../../layouts/Layout.astro";
+import Layout from "../../../layouts/Layout.astro";
 
 // SEO Data
 const seoData = {
   title: "Battesimo, Comunione o Cresima - TRE Grill + Pizzeria",
   description: "Personalizza il tuo evento con le nostre formule: Festa in Famiglia Gourmet, Pizza in Famiglia o Rinfresco. Richiedi un preventivo online.",
-  canonical: "https://www.ristorantepizzeriatre.it/battesimi-comunioni-cresime/",
+  canonical: "https://www.ristorantepizzeriatre.it/eventi/battesimi-comunioni-cresime/",
   ogImage: "https://www.ristorantepizzeriatre.it/img/cerimonie/menu-battesimo-comunione-cresima-ristorante-pizzeria-tre-merate-hero.webp",
   preloadImage: "/img/cerimonie/menu-battesimo-comunione-cresima-ristorante-pizzeria-tre-merate-hero.webp",
 };
@@ -16,10 +16,10 @@ const schemaOrg = {
   "@graph": [
     {
       "@type": "Service",
-      "@id": "https://www.ristorantepizzeriatre.it/battesimi-comunioni-cresime/#service",
+      "@id": "https://www.ristorantepizzeriatre.it/eventi/battesimi-comunioni-cresime/#service",
       "name": "Battesimi, Comunioni e Cresime - Ristorante Pizzeria TRE",
       "description": "Organizza il battesimo, la comunione o la cresima al Ristorante Pizzeria TRE a Merate. Scegli tra menù Gourmet o Rinfresco con preventivi personalizzati.",
-      "url": "https://www.ristorantepizzeriatre.it/battesimi-comunioni-cresime/",
+      "url": "https://www.ristorantepizzeriatre.it/eventi/battesimi-comunioni-cresime/",
       "serviceType": "Organizzazione Cerimonie Religiose",
       "provider": {
         "@id": "https://www.ristorantepizzeriatre.it/#restaurant"
@@ -58,7 +58,7 @@ const schemaOrg = {
     },
     {
       "@type": "BreadcrumbList",
-      "@id": "https://www.ristorantepizzeriatre.it/battesimi-comunioni-cresime/#breadcrumb",
+      "@id": "https://www.ristorantepizzeriatre.it/eventi/battesimi-comunioni-cresime/#breadcrumb",
       "itemListElement": [
         {
           "@type": "ListItem",
@@ -69,15 +69,21 @@ const schemaOrg = {
         {
           "@type": "ListItem",
           "position": 2,
+          "name": "Eventi",
+          "item": "https://www.ristorantepizzeriatre.it/eventi/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
           "name": "Battesimi, Comunioni e Cresime",
-          "item": "https://www.ristorantepizzeriatre.it/battesimi-comunioni-cresime/"
+          "item": "https://www.ristorantepizzeriatre.it/eventi/battesimi-comunioni-cresime/"
         }
       ]
     },
     {
       "@type": "WebPage",
-      "@id": "https://www.ristorantepizzeriatre.it/battesimi-comunioni-cresime/#webpage",
-      "url": "https://www.ristorantepizzeriatre.it/battesimi-comunioni-cresime/",
+      "@id": "https://www.ristorantepizzeriatre.it/eventi/battesimi-comunioni-cresime/#webpage",
+      "url": "https://www.ristorantepizzeriatre.it/eventi/battesimi-comunioni-cresime/",
       "name": "Battesimo, Comunione o Cresima | Ristorante Pizzeria TRE Merate",
       "isPartOf": {
         "@id": "https://www.ristorantepizzeriatre.it/#website"
@@ -87,7 +93,7 @@ const schemaOrg = {
         "url": "https://www.ristorantepizzeriatre.it/img/cerimonie/menu-battesimo-comunione-cresima-ristorante-pizzeria-tre-merate-hero.webp"
       },
       "breadcrumb": {
-        "@id": "https://www.ristorantepizzeriatre.it/battesimi-comunioni-cresime/#breadcrumb"
+        "@id": "https://www.ristorantepizzeriatre.it/eventi/battesimi-comunioni-cresime/#breadcrumb"
       },
       "inLanguage": "it-IT"
     }
@@ -127,6 +133,7 @@ const schemaOrg = {
     <div class="container">
       <ol class="breadcrumb">
         <li><a href="/">Home</a></li>
+        <li><a href="/eventi/">Eventi</a></li>
         <li aria-current="page">Menù Cerimonie</li>
       </ol>
     </div>
@@ -372,6 +379,43 @@ const schemaOrg = {
             height="450"
           />
         </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Altri Eventi - internal linking verso la categoria -->
+  <section class="landing-section bg-light-section altri-eventi-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Scopri gli Altri Eventi</h2>
+        <p>Ogni occasione ha la sua formula: dai un'occhiata alle altre proposte del TRE</p>
+      </div>
+      <div class="link-cards-grid">
+        <a href="/eventi/compleanni/" class="link-card">
+          <h4>Compleanni</h4>
+          <p>Gran Festa Gourmet, Pizza Party o Buffet Dinamico</p>
+        </a>
+        <a href="/eventi/lauree/" class="link-card">
+          <h4>Lauree</h4>
+          <p>Celebra il traguardo con un pranzo o una cena speciale</p>
+        </a>
+        <a href="/eventi/anniversari/" class="link-card">
+          <h4>Anniversari</h4>
+          <p>Cena romantica o rinfresco con gli amici</p>
+        </a>
+        <a href="/eventi/meeting-cene-aziendali/" class="link-card">
+          <h4>Cene Aziendali</h4>
+          <p>Meeting, team building e cene di lavoro</p>
+        </a>
+        <a href="/cene-a-tema/" class="link-card">
+          <h4>Cene a Tema</h4>
+          <p>Serate a calendario con menù degustazione</p>
+        </a>
+      </div>
+      <div class="section-cta">
+        <a href="/eventi/" class="btn btn-outline">Tutti gli Eventi</a>
       </div>
     </div>
   </section>

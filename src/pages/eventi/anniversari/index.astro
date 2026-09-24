@@ -1,11 +1,11 @@
 ﻿---
-import Layout from "../../layouts/Layout.astro";
+import Layout from "../../../layouts/Layout.astro";
 
 // SEO Data
 const seoData = {
   title: "Personalizza il Tuo Anniversario - TRE Grill + Pizzeria",
   description: "Festeggia il tuo anniversario con un menù su misura: Cena Romantica Gourmet, Pizza Party con amici o Rinfresco. Richiedi un preventivo online!",
-  canonical: "https://www.ristorantepizzeriatre.it/anniversari/",
+  canonical: "https://www.ristorantepizzeriatre.it/eventi/anniversari/",
   ogImage: "https://www.ristorantepizzeriatre.it/img/anniversario/menu-anniversari-ristorante-pizzeria-tre-merate-hero.webp",
   preloadImage: "/img/anniversario/menu-anniversari-ristorante-pizzeria-tre-merate-hero.webp",
 };
@@ -16,10 +16,10 @@ const schemaOrg = {
   "@graph": [
     {
       "@type": "Service",
-      "@id": "https://www.ristorantepizzeriatre.it/anniversari/#service",
+      "@id": "https://www.ristorantepizzeriatre.it/eventi/anniversari/#service",
       "name": "Anniversari - Ristorante Pizzeria TRE",
       "description": "Festeggia il tuo anniversario al Ristorante Pizzeria TRE a Merate. Scegli tra Cena Romantica Gourmet o Rinfresco con preventivi personalizzati.",
-      "url": "https://www.ristorantepizzeriatre.it/anniversari/",
+      "url": "https://www.ristorantepizzeriatre.it/eventi/anniversari/",
       "serviceType": "Organizzazione Cene di Anniversario",
       "provider": {
         "@id": "https://www.ristorantepizzeriatre.it/#restaurant"
@@ -58,7 +58,7 @@ const schemaOrg = {
     },
     {
       "@type": "BreadcrumbList",
-      "@id": "https://www.ristorantepizzeriatre.it/anniversari/#breadcrumb",
+      "@id": "https://www.ristorantepizzeriatre.it/eventi/anniversari/#breadcrumb",
       "itemListElement": [
         {
           "@type": "ListItem",
@@ -69,15 +69,21 @@ const schemaOrg = {
         {
           "@type": "ListItem",
           "position": 2,
+          "name": "Eventi",
+          "item": "https://www.ristorantepizzeriatre.it/eventi/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
           "name": "Anniversari",
-          "item": "https://www.ristorantepizzeriatre.it/anniversari/"
+          "item": "https://www.ristorantepizzeriatre.it/eventi/anniversari/"
         }
       ]
     },
     {
       "@type": "WebPage",
-      "@id": "https://www.ristorantepizzeriatre.it/anniversari/#webpage",
-      "url": "https://www.ristorantepizzeriatre.it/anniversari/",
+      "@id": "https://www.ristorantepizzeriatre.it/eventi/anniversari/#webpage",
+      "url": "https://www.ristorantepizzeriatre.it/eventi/anniversari/",
       "name": "Personalizza il Tuo Anniversario | Ristorante Pizzeria TRE Merate",
       "isPartOf": {
         "@id": "https://www.ristorantepizzeriatre.it/#website"
@@ -87,7 +93,7 @@ const schemaOrg = {
         "url": "https://www.ristorantepizzeriatre.it/img/anniversario/menu-anniversari-ristorante-pizzeria-tre-merate-hero.webp"
       },
       "breadcrumb": {
-        "@id": "https://www.ristorantepizzeriatre.it/anniversari/#breadcrumb"
+        "@id": "https://www.ristorantepizzeriatre.it/eventi/anniversari/#breadcrumb"
       },
       "inLanguage": "it-IT"
     }
@@ -127,6 +133,7 @@ const schemaOrg = {
     <div class="container">
       <ol class="breadcrumb">
         <li><a href="/">Home</a></li>
+        <li><a href="/eventi/">Eventi</a></li>
         <li aria-current="page">Menù Anniversario</li>
       </ol>
     </div>
@@ -355,6 +362,43 @@ const schemaOrg = {
             height="450"
           />
         </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Altri Eventi - internal linking verso la categoria -->
+  <section class="landing-section bg-light-section altri-eventi-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Scopri gli Altri Eventi</h2>
+        <p>Ogni occasione ha la sua formula: dai un'occhiata alle altre proposte del TRE</p>
+      </div>
+      <div class="link-cards-grid">
+        <a href="/eventi/compleanni/" class="link-card">
+          <h4>Compleanni</h4>
+          <p>Gran Festa Gourmet, Pizza Party o Buffet Dinamico</p>
+        </a>
+        <a href="/eventi/battesimi-comunioni-cresime/" class="link-card">
+          <h4>Cerimonie</h4>
+          <p>Menù dedicati a battesimi, comunioni e cresime</p>
+        </a>
+        <a href="/eventi/lauree/" class="link-card">
+          <h4>Lauree</h4>
+          <p>Celebra il traguardo con un pranzo o una cena speciale</p>
+        </a>
+        <a href="/eventi/meeting-cene-aziendali/" class="link-card">
+          <h4>Cene Aziendali</h4>
+          <p>Meeting, team building e cene di lavoro</p>
+        </a>
+        <a href="/cene-a-tema/" class="link-card">
+          <h4>Cene a Tema</h4>
+          <p>Serate a calendario con menù degustazione</p>
+        </a>
+      </div>
+      <div class="section-cta">
+        <a href="/eventi/" class="btn btn-outline">Tutti gli Eventi</a>
       </div>
     </div>
   </section>
