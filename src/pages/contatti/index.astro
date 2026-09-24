@@ -1437,15 +1437,77 @@ const schemaOrg = {
     // Form submission - invio tramite API Brevo
     const form = document.getElementById('preventivo-form');
     if (form) {
+      // Testi leggibili per il fallback mailto
+      const eventiLabel = {
+        'compleanno': 'Compleanno',
+        'battesimo': 'Battesimo',
+        'comunione': 'Comunione',
+        'cresima': 'Cresima',
+        'laurea': 'Laurea',
+        'anniversario': 'Anniversario',
+        'meeting': 'Meeting / Cena Aziendale',
+        'altro': 'Altro'
+      };
+
+      // Costruisce un mailto precompilato: se l'API fallisce la richiesta non si perde
+      const buildMailtoFallback = (d) => {
+        const eventoText = eventiLabel[d.evento] || d.evento || 'Non specificato';
+        const servizioText = d.servizio === 'pranzo' ? 'Pranzo' : 'Cena';
+        const partecipantiText = d.numeroDaDefinire ? 'Da definire' : (d.partecipanti || 'Non specificato');
+
+        let dataText = 'Da definire';
+        if (d.data && !d.dataDaDefinire) {
+          const dt = new Date(d.data);
+          if (!isNaN(dt.getTime())) {
+            dataText = dt.toLocaleDateString('it-IT', { day: '2-digit', month: '2-digit', year: 'numeric' });
+          }
+        }
+
+        const oggetto = 'Richiesta Preventivo: ' + eventoText + ' - ' + dataText + ' - ' + servizioText + ' - ' + partecipantiText + ' persone';
+
+        const corpo = [
+          'RICHIESTA PREVENTIVO',
+          '',
+          'DETTAGLI EVENTO',
+          'Tipo Evento: ' + eventoText,
+          'Data: ' + dataText,
+          'Servizio: ' + servizioText,
+          'N. Partecipanti: ' + partecipantiText,
+          '',
+          'DATI DI CONTATTO',
+          'Nome: ' + (d.nome || '') + ' ' + (d.cognome || ''),
+          'Email: ' + (d.email || ''),
+          'Telefono: ' + (d.telefono || 'Non specificato'),
+          '',
+          'MESSAGGIO',
+          d.messaggio || 'Nessun messaggio aggiuntivo'
+        ].join('\n');
+
+        return 'mailto:info@ristorantepizzeriatre.it'
+          + '?subject=' + encodeURIComponent(oggetto)
+          + '&body=' + encodeURIComponent(corpo);
+      };
+
+      // Messaggio utente in base al tipo di errore
+      const messaggioErrore = (code) => {
+        if (code === 'VALIDATION' || code === 'INVALID_JSON') {
+          return 'Alcuni dati del modulo non sono validi.\n\nControlla i campi obbligatori e riprova.';
+        }
+        if (code === 'BREVO_RATE_LIMIT' || code === 'BREVO_SERVER' || code === 'NETWORK') {
+          return 'Il servizio di invio non risponde in questo momento.\n\nRiprova tra qualche minuto oppure contattaci direttamente:';
+        }
+        return 'Si e\' verificato un errore nell\'invio della richiesta.\n\nPuoi riprovare oppure contattarci direttamente:';
+      };
+
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
+
         // Disabilita il bottone durante l'invio
         const submitBtn = form.querySelector('.btn-submit');
         const originalBtnText = submitBtn.textContent;
         submitBtn.disabled = true;
         submitBtn.textContent = 'Invio in corso...';
-        
+
         // Raccogli i dati del form
         const formData = {
           evento: document.getElementById('evento').value,
@@ -1473,6 +1535,8 @@ const schemaOrg = {
           'altro': '/contatti/grazie/'
         };
 
+        let codiceErrore = null;
+
         try {
           // Invia i dati all'API
           const response = await fetch('/api/send-preventivo', {
@@ -1483,31 +1547,58 @@ const schemaOrg = {
             body: JSON.stringify(formData)
           });
 
-          const result = await response.json();
+          // La risposta puo' non essere JSON (es. pagina di errore HTML)
+          let result = null;
+          const rawBody = await response.text();
+          try {
+            result = JSON.parse(rawBody);
+          } catch (parseError) {
+            console.error(
+              '[preventivo] Risposta non JSON dall\'API',
+              '\n  HTTP status:', response.status, response.statusText,
+              '\n  Corpo ricevuto:', rawBody.slice(0, 500)
+            );
+            codiceErrore = 'BAD_RESPONSE';
+            throw new Error('Risposta non valida dal server (HTTP ' + response.status + ')');
+          }
 
-          if (result.success) {
+          if (response.ok && result.success) {
             // Successo! Redirect alla thank you page
             const thankYouPage = thankYouPages[formData.evento] || '/contatti/grazie/';
             window.location.href = thankYouPage;
-          } else {
-            // Errore dall'API
-            throw new Error(result.error || 'Errore nell\'invio');
+            return;
           }
 
+          // Errore applicativo: logga TUTTO, serve per diagnosticare
+          codiceErrore = result.code || 'UNKNOWN';
+          console.error(
+            '[preventivo] Invio fallito',
+            '\n  HTTP status:', response.status,
+            '\n  code:', codiceErrore,
+            '\n  error:', result.error,
+            '\n  details:', result.details
+          );
+          throw new Error(result.error || 'Errore nell\'invio');
+
         } catch (error) {
-          console.error('Errore invio preventivo:', error);
-          
+          console.error('[preventivo] Eccezione:', error);
+
           // Riabilita il bottone
           submitBtn.disabled = false;
           submitBtn.textContent = originalBtnText;
-          
-          // Mostra messaggio di errore user-friendly
-          alert(
-            'Si è verificato un errore nell\'invio della richiesta.\n\n' +
-            'Puoi riprovare oppure contattarci direttamente:\n' +
-            '📞 Telefono: 039 990 9913\n' +
-            '📧 Email: info@ristorantepizzeriatre.it'
+
+          // Messaggio + proposta di fallback via client email
+          const vuoleFallback = confirm(
+            messaggioErrore(codiceErrore) + '\n' +
+            '\u260E Telefono: 039 990 9913\n' +
+            '\u2709 Email: info@ristorantepizzeriatre.it\n\n' +
+            'Premi OK per aprire il tuo programma di posta con la richiesta gia\' compilata,\n' +
+            'oppure Annulla per restare sulla pagina e riprovare.'
           );
+
+          if (vuoleFallback) {
+            window.location.href = buildMailtoFallback(formData);
+          }
         }
       });
     }

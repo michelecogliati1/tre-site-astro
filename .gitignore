@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # Vercel build output
 .vercel/
+
+# scratch payload per test API
+body.json
