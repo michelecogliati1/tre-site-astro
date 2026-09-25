@@ -1,0 +1,12 @@
+---
+// Pagina spostata sotto /eventi/ (settembre 2026): qui resta solo il 301.
+//
+// Il redirect sta in una pagina e non in vercel.json / astro.config.mjs perché
+// entrambi mancano la forma con slash finale — che è quella indicizzata da
+// Google: un `source` "/battesimi-comunioni-cresime/:path*" non matcha "/battesimi-comunioni-cresime/" e i
+// `redirects` di Astro generano ^/battesimi-comunioni-cresime$ . La route di questa pagina
+// è invece ^/battesimi-comunioni-cresime/?$ e copre entrambe le forme.
+//
+// Astro.url.search preserva le UTM del traffico advertising.
+return Astro.redirect('/eventi/battesimi-comunioni-cresime/' + Astro.url.search, 301);
+---

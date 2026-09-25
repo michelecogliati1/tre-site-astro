@@ -19,56 +19,6 @@
       "source": "/menu",
       "destination": "/#scopri-menu",
       "permanent": true
-    },
-    {
-      "source": "/compleanni",
-      "destination": "/eventi/compleanni/",
-      "permanent": true
-    },
-    {
-      "source": "/compleanni/:path*",
-      "destination": "/eventi/compleanni/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/battesimi-comunioni-cresime",
-      "destination": "/eventi/battesimi-comunioni-cresime/",
-      "permanent": true
-    },
-    {
-      "source": "/battesimi-comunioni-cresime/:path*",
-      "destination": "/eventi/battesimi-comunioni-cresime/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/lauree",
-      "destination": "/eventi/lauree/",
-      "permanent": true
-    },
-    {
-      "source": "/lauree/:path*",
-      "destination": "/eventi/lauree/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/anniversari",
-      "destination": "/eventi/anniversari/",
-      "permanent": true
-    },
-    {
-      "source": "/anniversari/:path*",
-      "destination": "/eventi/anniversari/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/meeting-cene-aziendali",
-      "destination": "/eventi/meeting-cene-aziendali/",
-      "permanent": true
-    },
-    {
-      "source": "/meeting-cene-aziendali/:path*",
-      "destination": "/eventi/meeting-cene-aziendali/:path*",
-      "permanent": true
     }
   ]
 }
